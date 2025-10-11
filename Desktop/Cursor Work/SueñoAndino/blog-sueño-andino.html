@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Sueño Andino</title>
+    <style>
+        :root {
+            --sa-primary: #0e5e6f;
+            --sa-accent: #7fb069;
+            --sa-cloud: #f8f9fa;
+            --sa-ink: #1a1a1a;
+            --sa-text: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--sa-ink);
+            background-color: var(--sa-cloud);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .site-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .site-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--sa-ink);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--sa-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sa-ink);
+        }
+
+        .main-navigation ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .main-navigation a {
+            text-decoration: none;
+            color: var(--sa-ink);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .main-navigation a:hover {
+            color: var(--sa-primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--sa-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0a4a57;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--sa-accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #6a9a5a;
+            transform: translateY(-2px);
+        }
+
+        /* Blog Hero */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--sa-primary) 0%, var(--sa-accent) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .blog-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .article-header {
+            padding: 3rem 3rem 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .article-date {
+            color: var(--sa-text);
+            font-size: 0.9rem;
+        }
+
+        .article-category {
+            background: var(--sa-accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--sa-ink);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-excerpt {
+            font-size: 1.125rem;
+            color: var(--sa-text);
+            line-height: 1.6;
+        }
+
+        .article-body {
+            padding: 3rem;
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-body h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--sa-primary);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--sa-ink);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            color: var(--sa-text);
+        }
+
+        .article-body ul, .article-body ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.5rem;
+            color: var(--sa-text);
+        }
+
+        .article-body blockquote {
+            border-left: 4px solid var(--sa-primary);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--sa-text);
+            background: var(--sa-cloud);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+        }
+
+        /* Back to Blog */
+        .back-to-blog {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .back-to-blog a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--sa-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-blog a:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--sa-ink);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--sa-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-description {
+            opacity: 0.8;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-menu a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-menu a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .main-navigation ul {
+                gap: 1rem;
+            }
+
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .blog-hero p {
+                font-size: 1rem;
+            }
+
+            .article-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .article-body {
+                padding: 2rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="sueño-andino-wordpress.html" class="site-logo">
+                    <div class="logo-icon">SA</div>
+                    <span class="site-title">Sueño Andino</span>
+                </a>
+
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="sueño-andino-wordpress.html#servicios">Servicios</a></li>
+                        <li><a href="sueño-andino-wordpress.html#nosotros">Nosotros</a></li>
+                        <li><a href="sueño-andino-wordpress.html#equipo">Equipo</a></li>
+                        <li><a href="sueño-andino-wordpress.html#contacto">Contacto</a></li>
+                        <li><a href="blog-sueño-andino.html">Blog</a></li>
+                    </ul>
+                    <a href="sueño-andino-wordpress.html" class="btn btn-secondary">Volver al Sitio</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Blog Sueño Andino</h1>
+            <p>Artículos y reflexiones sobre desarrollo territorial regenerativo y las comunidades andinas</p>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <div class="container">
+        <div class="article-content" id="article-content">
+            <!-- El contenido del artículo se cargará aquí dinámicamente -->
+        </div>
+
+        <div class="back-to-blog">
+            <a href="sueño-andino-wordpress.html#blog">
+                ← Volver al Blog
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="sueño-andino-wordpress.html" class="site-logo">
+                        <div class="footer-logo">SA</div>
+                        <span class="footer-title">Sueño Andino</span>
+                    </a>
+                    <p class="footer-description">
+                        Organización para el desarrollo territorial regenerativo
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navegación</h3>
+                    <ul class="footer-menu">
+                        <li><a href="sueño-andino-wordpress.html#servicios">Servicios</a></li>
+                        <li><a href="sueño-andino-wordpress.html#nosotros">Nosotros</a></li>
+                        <li><a href="sueño-andino-wordpress.html#equipo">Equipo</a></li>
+                        <li><a href="sueño-andino-wordpress.html#contacto">Contacto</a></li>
+                        <li><a href="blog-sueño-andino.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul class="footer-menu">
+                        <li>Lima, Perú</li>
+                        <li>+51-999-888-777</li>
+                        <li>hola@sueñoandino.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Sueño Andino. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Artículos del blog
+        const articles = {
+            'agricultura-regenerativa': {
+                title: '5 Principios de la Agricultura Regenerativa',
+                date: '15 Enero 2025',
+                category: 'Regeneración',
+                excerpt: 'Descubre cómo la agricultura regenerativa puede transformar nuestros sistemas alimentarios y restaurar la salud del suelo.',
+                content: `
+                    <h2>Introducción a la Agricultura Regenerativa</h2>
+                    <p>La agricultura regenerativa representa un paradigma transformador que va más allá de la sostenibilidad tradicional. En Sueño Andino, hemos implementado estos principios en más de 25 comunidades andinas, observando resultados extraordinarios en la salud del suelo y la productividad agrícola.</p>
+                    
+                    <h2>Los 5 Principios Fundamentales</h2>
+                    
+                    <h3>1. Minimizar la Perturbación del Suelo</h3>
+                    <p>El suelo es un ecosistema vivo complejo. Cada vez que lo perturbamos con labranza intensiva, destruimos la estructura microbiana que tarda años en reconstruirse. En nuestras comunidades andinas, hemos implementado técnicas de labranza mínima que preservan la estructura del suelo.</p>
+                    
+                    <blockquote>
+                        "En Puno, hemos reducido la labranza en un 80% y aumentado la productividad en un 40% en solo dos años."
+                    </blockquote>
+                    
+                    <h3>2. Maximizar la Diversidad</h3>
+                    <p>La diversidad es la clave de la resiliencia. En lugar de monocultivos, promovemos sistemas policulturales que imitan los ecosistemas naturales. Esto incluye:</p>
+                    <ul>
+                        <li>Rotación de cultivos estratégica</li>
+                        <li>Cultivos de cobertura</li>
+                        <li>Agroforestería integrada</li>
+                        <li>Asociaciones de plantas complementarias</li>
+                    </ul>
+                    
+                    <h3>3. Mantener Cobertura del Suelo</h3>
+                    <p>Un suelo desnudo es un suelo vulnerable. La cobertura vegetal protege contra la erosión, retiene humedad y proporciona hábitat para microorganismos beneficiosos.</p>
+                    
+                    <h3>4. Integrar Animales</h3>
+                    <p>Los animales juegan un papel crucial en los ecosistemas regenerativos. Sus movimientos, deposiciones y comportamiento de pastoreo contribuyen a la salud del suelo y la biodiversidad.</p>
+                    
+                    <h3>5. Contexto y Adaptación</h3>
+                    <p>Cada territorio tiene sus propias características. Lo que funciona en Cusco puede no funcionar en Puno. Por eso, nuestros programas se adaptan a las condiciones específicas de cada comunidad.</p>
+                    
+                    <h2>Resultados en las Comunidades Andinas</h2>
+                    <p>En los últimos tres años, hemos documentado:</p>
+                    <ul>
+                        <li>Incremento del 60% en la materia orgánica del suelo</li>
+                        <li>Reducción del 70% en el uso de fertilizantes químicos</li>
+                        <li>Aumento del 45% en la biodiversidad de cultivos</li>
+                        <li>Mejora del 80% en la retención de agua</li>
+                    </ul>
+                    
+                    <h2>Conclusión</h2>
+                    <p>La agricultura regenerativa no es solo una técnica, es una filosofía de vida que reconoce nuestra interdependencia con la naturaleza. En Sueño Andino, creemos que cada comunidad puede ser protagonista de su propia transformación regenerativa.</p>
+                `
+            },
+            'participacion-comunitaria': {
+                title: 'El Poder de la Participación Comunitaria',
+                date: '10 Enero 2025',
+                category: 'Comunidad',
+                excerpt: 'Exploramos cómo la participación activa de las comunidades es clave para el éxito de los proyectos de desarrollo territorial.',
+                content: `
+                    <h2>La Participación como Motor de Transformación</h2>
+                    <p>En Sueño Andino, hemos aprendido que los proyectos más exitosos no son aquellos que llegan con soluciones prefabricadas, sino aquellos que nacen de la participación genuina de las comunidades. La participación comunitaria es el corazón de nuestro enfoque regenerativo.</p>
+                    
+                    <h2>¿Qué es la Participación Comunitaria Real?</h2>
+                    <p>La participación comunitaria real va más allá de consultas o reuniones informativas. Implica:</p>
+                    <ul>
+                        <li><strong>Copropiedad del proceso:</strong> Las comunidades no son beneficiarias pasivas, sino co-creadoras activas</li>
+                        <li><strong>Decisión compartida:</strong> Desde la planificación hasta la implementación y evaluación</li>
+                        <li><strong>Conocimiento local valorado:</strong> El saber ancestral se integra con metodologías modernas</li>
+                        <li><strong>Liderazgo distribuido:</strong> Múltiples voces y perspectivas en la toma de decisiones</li>
+                    </ul>
+                    
+                    <h2>Metodologías de Participación en Sueño Andino</h2>
+                    
+                    <h3>1. Diagnóstico Participativo</h3>
+                    <p>Cada proyecto comienza con un diagnóstico donde la comunidad identifica sus propios desafíos y oportunidades. Utilizamos herramientas como:</p>
+                    <ul>
+                        <li>Mapeo comunitario participativo</li>
+                        <li>Análisis FODA comunitario</li>
+                        <li>Historias de vida y narrativas locales</li>
+                        <li>Calendarios estacionales participativos</li>
+                    </ul>
+                    
+                    <h3>2. Planificación Colaborativa</h3>
+                    <p>Los planes de desarrollo territorial se construyen colectivamente, incorporando tanto la visión técnica como la sabiduría local.</p>
+                    
+                    <blockquote>
+                        "En Cusco, el plan de desarrollo territorial fue creado en 15 sesiones participativas con más de 200 miembros de la comunidad. El resultado fue un documento que realmente reflejaba las aspiraciones locales."
+                    </blockquote>
+                    
+                    <h3>3. Implementación Colectiva</h3>
+                    <p>La implementación no es responsabilidad exclusiva de técnicos externos, sino un esfuerzo conjunto donde cada miembro de la comunidad tiene un rol definido.</p>
+                    
+                    <h2>Casos de Éxito</h2>
+                    
+                    <h3>Comunidad de Puno: Sistema de Agua Regenerativo</h3>
+                    <p>En una comunidad de Puno, el sistema de agua tradicional estaba colapsando. A través de un proceso participativo de 6 meses, la comunidad:</p>
+                    <ul>
+                        <li>Identificó las causas raíz del problema</li>
+                        <li>Diseñó una solución que combinaba tecnología moderna con técnicas ancestrales</li>
+                        <li>Implementó el sistema con trabajo comunitario organizado</li>
+                        <li>Estableció un sistema de mantenimiento autogestionado</li>
+                    </ul>
+                    
+                    <h3>Comunidad de Cusco: Mercado Local Regenerativo</h3>
+                    <p>Una comunidad en Cusco quería crear un mercado local para sus productos regenerativos. El proceso participativo resultó en:</p>
+                    <ul>
+                        <li>Un mercado que opera los fines de semana</li>
+                        <li>Sistema de intercambio que incluye trueque</li>
+                        <li>Certificación comunitaria de productos regenerativos</li>
+                        <li>Red de productores que se extiende a otras comunidades</li>
+                    </ul>
+                    
+                    <h2>Desafíos y Lecciones Aprendidas</h2>
+                    <p>La participación comunitaria no está exenta de desafíos:</p>
+                    <ul>
+                        <li><strong>Tiempo:</strong> Los procesos participativos requieren más tiempo que las intervenciones tradicionales</li>
+                        <li><strong>Conflictos:</strong> Las diferencias de opinión pueden surgir y deben manejarse constructivamente</li>
+                        <li><strong>Representatividad:</strong> Asegurar que todas las voces sean escuchadas, especialmente las de grupos marginados</li>
+                        <li><strong>Sostenibilidad:</strong> Mantener el impulso participativo a largo plazo</li>
+                    </ul>
+                    
+                    <h2>Herramientas para Facilitar la Participación</h2>
+                    <p>Hemos desarrollado varias herramientas para facilitar procesos participativos efectivos:</p>
+                    <ul>
+                        <li><strong>Circulos de Diálogo:</strong> Espacios seguros para el intercambio de ideas</li>
+                        <li><strong>Teatro Comunitario:</strong> Usando el arte para explorar temas complejos</li>
+                        <li><strong>Fotovoz:</strong> Las comunidades documentan su realidad a través de fotos</li>
+                        <li><strong>Asambleas Rotativas:</strong> Diferentes grupos lideran las reuniones</li>
+                    </ul>
+                    
+                    <h2>El Impacto de la Participación</h2>
+                    <p>Los proyectos con alta participación comunitaria muestran:</p>
+                    <ul>
+                        <li>Mayor sostenibilidad a largo plazo</li>
+                        <li>Mejor adaptación a condiciones locales</li>
+                        <li>Fortalecimiento del capital social</li>
+                        <li>Empoderamiento de líderes locales</li>
+                        <li>Innovación basada en conocimiento local</li>
+                    </ul>
+                    
+                    <h2>Conclusión</h2>
+                    <p>La participación comunitaria no es solo una metodología, es una filosofía que reconoce la dignidad y capacidad de cada comunidad para ser protagonista de su propio desarrollo. En Sueño Andino, hemos visto cómo comunidades que antes se sentían impotentes ante sus desafíos, ahora lideran procesos de transformación regenerativa que inspiran a otras comunidades.</p>
+                    
+                    <p>El poder de la participación comunitaria radica en que transforma no solo el territorio, sino también a las personas que lo habitan, creando un círculo virtuoso de empoderamiento y regeneración.</p>
+                `
+            },
+            'cambio-climatico': {
+                title: 'Desarrollo Territorial en Tiempos de Cambio Climático',
+                date: '5 Enero 2025',
+                category: 'Sostenibilidad',
+                excerpt: 'Estrategias adaptativas para enfrentar los desafíos del cambio climático en territorios rurales de Latinoamérica.',
+                content: `
+                    <h2>El Cambio Climático en los Territorios Andinos</h2>
+                    <p>Los territorios andinos de Latinoamérica están experimentando los efectos del cambio climático de manera más intensa que muchas otras regiones. Glaciares que retroceden, patrones de lluvia alterados, temperaturas extremas y eventos climáticos más frecuentes están transformando los paisajes que las comunidades han conocido por generaciones.</p>
+                    
+                    <p>En Sueño Andino, hemos trabajado con comunidades que enfrentan estos desafíos directamente, desarrollando estrategias adaptativas que no solo mitigan los efectos del cambio climático, sino que fortalecen la resiliencia comunitaria.</p>
+                    
+                    <h2>Impactos Observados en las Comunidades</h2>
+                    
+                    <h3>Cambios en los Patrones de Lluvia</h3>
+                    <p>Las comunidades reportan cambios significativos en los patrones de lluvia:</p>
+                    <ul>
+                        <li>Estaciones lluviosas más cortas pero más intensas</li>
+                        <li>Períodos de sequía más prolongados</li>
+                        <li>Lluvias fuera de temporada que afectan los cultivos</li>
+                        <li>Granizo más frecuente y destructivo</li>
+                    </ul>
+                    
+                    <h3>Variaciones de Temperatura</h3>
+                    <p>Los cambios de temperatura están afectando:</p>
+                    <ul>
+                        <li>Ciclos de cultivo tradicionales</li>
+                        <li>Disponibilidad de agua</li>
+                        <li>Salud del ganado</li>
+                        <li>Distribución de especies nativas</li>
+                    </ul>
+                    
+                    <h3>Erosión y Degradación del Suelo</h3>
+                    <p>Los eventos climáticos extremos están acelerando la erosión del suelo, especialmente en terrenos inclinados característicos de los Andes.</p>
+                    
+                    <h2>Estrategias Adaptativas Implementadas</h2>
+                    
+                    <h3>1. Sistemas de Captación y Almacenamiento de Agua</h3>
+                    <p>Ante la variabilidad de lluvias, hemos implementado sistemas innovadores:</p>
+                    <ul>
+                        <li><strong>Qochas mejoradas:</strong> Sistemas tradicionales de almacenamiento de agua optimizados</li>
+                        <li><strong>Cosecha de agua de lluvia:</strong> Captación en techos y superficies</li>
+                        <li><strong>Infiltración dirigida:</strong> Técnicas para recargar acuíferos</li>
+                        <li><strong>Sistemas de riego eficiente:</strong> Goteo y aspersión adaptados a condiciones locales</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "En Puno, implementamos un sistema de qochas que captura agua durante la temporada lluviosa y la distribuye durante la sequía. Esto ha permitido mantener cultivos durante todo el año."
+                    </blockquote>
+                    
+                    <h3>2. Agricultura Adaptativa</h3>
+                    <p>Hemos desarrollado prácticas agrícolas que se adaptan a las nuevas condiciones:</p>
+                    <ul>
+                        <li><strong>Cultivos resistentes:</strong> Variedades nativas adaptadas a condiciones extremas</li>
+                        <li><strong>Rotación inteligente:</strong> Sistemas que optimizan el uso del agua</li>
+                        <li><strong>Cobertura del suelo:</strong> Protección contra erosión y pérdida de humedad</li>
+                        <li><strong>Agroforestería:</strong> Sistemas que combinan árboles y cultivos</li>
+                    </ul>
+                    
+                    <h3>3. Diversificación de Medios de Vida</h3>
+                    <p>Para reducir la vulnerabilidad, promovemos:</p>
+                    <ul>
+                        <li>Múltiples fuentes de ingresos</li>
+                        <li>Actividades económicas complementarias</li>
+                        <li>Valor agregado a productos locales</li>
+                        <li>Turismo comunitario sostenible</li>
+                    </ul>
+                    
+                    <h3>4. Sistemas de Alerta Temprana</h3>
+                    <p>Las comunidades han desarrollado sistemas de monitoreo:</p>
+                    <ul>
+                        <li>Observación de indicadores naturales</li>
+                        <li>Redes de comunicación comunitaria</li>
+                        <li>Protocolos de respuesta a emergencias</li>
+                        <li>Almacenamiento de semillas y alimentos</li>
+                    </ul>
+                    
+                    <h2>Casos de Éxito</h2>
+                    
+                    <h3>Comunidad de Cusco: Adaptación a Sequías</h3>
+                    <p>Una comunidad en Cusco enfrentaba sequías cada vez más severas. A través de un proceso participativo, implementaron:</p>
+                    <ul>
+                        <li>Sistema de captación de agua de 5 qochas interconectadas</li>
+                        <li>Cultivos de cobertura para proteger el suelo</li>
+                        <li>Variedades de papa resistentes a sequía</li>
+                        <li>Sistema de riego por goteo alimentado por gravedad</li>
+                    </ul>
+                    <p>Resultado: Reducción del 70% en pérdidas de cultivos durante sequías.</p>
+                    
+                    <h3>Comunidad de Puno: Adaptación a Lluvias Intensas</h3>
+                    <p>Otra comunidad enfrentaba lluvias más intensas que causaban erosión. Implementaron:</p>
+                    <ul>
+                        <li>Terrazas mejoradas con sistemas de drenaje</li>
+                        <li>Barreras vivas con especies nativas</li>
+                        <li>Sistemas de infiltración en puntos estratégicos</li>
+                        <li>Cultivos en contorno para reducir erosión</li>
+                    </ul>
+                    <p>Resultado: Reducción del 60% en pérdidas de suelo por erosión.</p>
+                    
+                    <h2>Conocimiento Tradicional y Ciencia Moderna</h2>
+                    <p>Una de las fortalezas de nuestro enfoque es la integración del conocimiento tradicional con la ciencia moderna:</p>
+                    
+                    <h3>Conocimiento Tradicional</h3>
+                    <ul>
+                        <li>Observación de indicadores naturales del clima</li>
+                        <li>Técnicas ancestrales de conservación de agua</li>
+                        <li>Variedades de cultivos adaptadas localmente</li>
+                        <li>Calendarios agrícolas basados en ciclos naturales</li>
+                    </ul>
+                    
+                    <h3>Ciencia Moderna</h3>
+                    <ul>
+                        <li>Datos meteorológicos y proyecciones climáticas</li>
+                        <li>Tecnologías de riego eficiente</li>
+                        <li>Mejoramiento genético participativo</li>
+                        <li>Sistemas de monitoreo remoto</li>
+                    </ul>
+                    
+                    <h2>Desafíos y Oportunidades</h2>
+                    
+                    <h3>Desafíos</h3>
+                    <ul>
+                        <li><strong>Recursos limitados:</strong> Las comunidades rurales tienen acceso limitado a financiamiento</li>
+                        <li><strong>Información:</strong> Falta de datos climáticos locales precisos</li>
+                        <li><strong>Capacitación:</strong> Necesidad de formación en nuevas técnicas</li>
+                        <li><strong>Coordinación:</strong> Integración entre diferentes niveles de gobierno</li>
+                    </ul>
+                    
+                    <h3>Oportunidades</h3>
+                    <ul>
+                        <li><strong>Innovación local:</strong> Las comunidades desarrollan soluciones creativas</li>
+                        <li><strong>Redes de apoyo:</strong> Colaboración entre comunidades</li>
+                        <li><strong>Financiamiento climático:</strong> Acceso a fondos internacionales</li>
+                        <li><strong>Tecnología apropiada:</strong> Soluciones de bajo costo y alto impacto</li>
+                    </ul>
+                    
+                    <h2>Lecciones Aprendidas</h2>
+                    <p>Después de años trabajando con comunidades en adaptación al cambio climático, hemos aprendido que:</p>
+                    <ul>
+                        <li>Las soluciones deben ser específicas para cada contexto</li>
+                        <li>La participación comunitaria es esencial para la sostenibilidad</li>
+                        <li>La combinación de conocimiento tradicional y moderno es poderosa</li>
+                        <li>Los procesos de adaptación requieren tiempo y paciencia</li>
+                        <li>El apoyo mutuo entre comunidades es crucial</li>
+                    </ul>
+                    
+                    <h2>Futuro del Desarrollo Territorial Regenerativo</h2>
+                    <p>El cambio climático no es solo un desafío, también es una oportunidad para repensar cómo desarrollamos nuestros territorios. En Sueño Andino, creemos que:</p>
+                    <ul>
+                        <li>La regeneración es la mejor adaptación</li>
+                        <li>Las comunidades locales son los mejores guardianes de sus territorios</li>
+                        <li>La diversidad es la clave de la resiliencia</li>
+                        <li>La colaboración es más poderosa que la competencia</li>
+                    </ul>
+                    
+                    <h2>Conclusión</h2>
+                    <p>El cambio climático está transformando los territorios andinos, pero también está creando oportunidades para desarrollar enfoques más regenerativos y resilientes. Las comunidades que hemos acompañado demuestran que es posible no solo adaptarse al cambio climático, sino prosperar en el proceso.</p>
+                    
+                    <p>El futuro del desarrollo territorial regenerativo depende de nuestra capacidad para trabajar con las comunidades, respetar su conocimiento tradicional, y combinar sabiduría ancestral con innovación moderna. Solo así podremos crear territorios verdaderamente resilientes que puedan enfrentar los desafíos del siglo XXI.</p>
+                `
+            }
+        };
+
+        // Función para cargar el artículo
+        function loadArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
+            
+            if (articleId && articles[articleId]) {
+                const article = articles[articleId];
+                const articleContent = document.getElementById('article-content');
+                
+                articleContent.innerHTML = `
+                    <div class="article-header">
+                        <div class="article-meta">
+                            <span class="article-date">${article.date}</span>
+                            <span class="article-category">${article.category}</span>
+                        </div>
+                        <h1 class="article-title">${article.title}</h1>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                    </div>
+                    <div class="article-body">
+                        ${article.content}
+                    </div>
+                `;
+                
+                // Actualizar el título de la página
+                document.title = `${article.title} - Blog Sueño Andino`;
+            } else {
+                // Si no hay artículo específico, mostrar lista de artículos
+                showArticleList();
+            }
+        }
+
+        // Función para mostrar la lista de artículos
+        function showArticleList() {
+            const articleContent = document.getElementById('article-content');
+            let articlesHtml = '<div class="article-header"><h1 class="article-title">Artículos del Blog</h1></div><div class="article-body">';
+            
+            Object.keys(articles).forEach(id => {
+                const article = articles[id];
+                articlesHtml += `
+                    <div style="border-bottom: 1px solid #eee; padding: 2rem 0; margin-bottom: 2rem;">
+                        <div class="article-meta" style="margin-bottom: 1rem;">
+                            <span class="article-date">${article.date}</span>
+                            <span class="article-category">${article.category}</span>
+                        </div>
+                        <h2 style="margin-bottom: 1rem;"><a href="?id=${id}" style="color: var(--sa-primary); text-decoration: none;">${article.title}</a></h2>
+                        <p style="margin-bottom: 1rem;">${article.excerpt}</p>
+                        <a href="?id=${id}" class="btn btn-primary">Leer Artículo Completo</a>
+                    </div>
+                `;
+            });
+            
+            articlesHtml += '</div>';
+            articleContent.innerHTML = articlesHtml;
+        }
+
+        // Cargar el artículo cuando se carga la página
+        document.addEventListener('DOMContentLoaded', loadArticle);
+    </script>
+</body>
+</html>
