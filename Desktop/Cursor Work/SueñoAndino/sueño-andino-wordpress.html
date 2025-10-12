@@ -522,7 +522,8 @@
             align-items: center;
             margin-bottom: 6rem;
             position: relative;
-            min-height: 200px;
+            min-height: 300px;
+            justify-content: center;
         }
 
         .anne-timeline-item:nth-child(odd) {
@@ -534,13 +535,13 @@
         }
 
         .anne-timeline-image {
-            flex: 0 0 45%;
-            height: 200px;
-            margin: 0 2rem;
+            flex: 0 0 300px;
+            height: 250px;
+            margin: 0 3rem;
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 16px;
+            transition: all 0.3s ease;
         }
 
         .anne-timeline-image .image-placeholder {
@@ -578,23 +579,28 @@
             top: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: #0e5e6f;
-            border: 3px solid #f8f6f3;
+            background: var(--sa-primary);
+            border: 4px solid #f8f6f3;
+            box-shadow: 0 0 0 4px #f8f6f3, 0 4px 15px rgba(14, 94, 111, 0.3);
+            transition: all 0.3s ease;
         }
 
         .anne-timeline-item:nth-child(even) .anne-timeline-dot {
-            background: #7fb069;
+            background: var(--sa-accent);
+            box-shadow: 0 0 0 4px #f8f6f3, 0 4px 15px rgba(127, 176, 105, 0.3);
         }
 
         .anne-timeline-item:nth-child(3n) .anne-timeline-dot {
             background: #d4a574;
+            box-shadow: 0 0 0 4px #f8f6f3, 0 4px 15px rgba(212, 165, 116, 0.3);
         }
 
         .anne-timeline-item:nth-child(4n) .anne-timeline-dot {
             background: #8b5a3c;
+            box-shadow: 0 0 0 4px #f8f6f3, 0 4px 15px rgba(139, 90, 60, 0.3);
         }
 
         .anne-year {
@@ -603,53 +609,64 @@
             top: 50%;
             transform: translate(-50%, -50%);
             background: #f8f6f3;
-            color: #333;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+            color: var(--sa-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 1rem;
             z-index: 5;
-            border: 2px solid #0e5e6f;
+            border: 2px solid var(--sa-primary);
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(14, 94, 111, 0.2);
+            transition: all 0.3s ease;
         }
 
         .anne-timeline-item:nth-child(even) .anne-year {
-            border-color: #7fb069;
-            color: #7fb069;
+            border-color: var(--sa-accent);
+            color: var(--sa-accent);
+            box-shadow: 0 4px 15px rgba(127, 176, 105, 0.2);
         }
 
         .anne-timeline-item:nth-child(3n) .anne-year {
             border-color: #d4a574;
             color: #d4a574;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
         }
 
         .anne-timeline-item:nth-child(4n) .anne-year {
             border-color: #8b5a3c;
             color: #8b5a3c;
+            box-shadow: 0 4px 15px rgba(139, 90, 60, 0.2);
         }
 
         .anne-timeline-content {
-            flex: 0 0 45%;
-            padding: 2rem;
+            flex: 0 0 300px;
+            max-width: 350px;
+            padding: 2.5rem;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin: 0 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin: 0 3rem;
             position: relative;
+            transition: all 0.3s ease;
         }
 
         .anne-timeline-content h3 {
-            color: #333;
-            margin-bottom: 1rem;
             font-size: 1.4rem;
             font-weight: 700;
+            color: var(--sa-primary);
+            margin-bottom: 1rem;
             line-height: 1.3;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.5px;
         }
 
         .anne-timeline-content p {
-            color: #666;
+            color: var(--sa-text);
             line-height: 1.6;
             font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
         }
 
         .placeholder-content {
@@ -794,53 +811,21 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .anne-timeline-item:nth-child(odd) .anne-timeline-content {
-            transform: translateX(-20px);
-        }
-
-        .anne-timeline-item:nth-child(even) .anne-timeline-content {
-            transform: translateX(20px);
-        }
-
         .anne-timeline-item:hover .anne-timeline-content {
-            transform: translateX(0);
-            background: #fafafa;
-            padding: 5.2rem 4.2rem;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
-        .anne-timeline-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.5px;
-            transition: all 0.3s ease;
+        .anne-timeline-item:hover .anne-timeline-image {
+            transform: translateY(-5px);
         }
 
-        .anne-timeline-item:hover .anne-timeline-content h3 {
-            color: #0e5e6f;
-            transform: translateY(-2px);
+        .anne-timeline-item:hover .anne-timeline-dot {
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
-        .anne-timeline-item:nth-child(even):hover .anne-timeline-content h3 {
-            color: #7fb069;
-        }
-
-        .anne-timeline-content p {
-            color: #666;
-            opacity: 0.7;
-            font-size: 1rem;
-            line-height: 1.6;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            transition: all 0.3s ease;
-        }
-
-        .anne-timeline-item:hover .anne-timeline-content p {
-            opacity: 0.8;
-            transform: translateY(-1px);
+        .anne-timeline-item:hover .anne-year {
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
         /* Placeholder content for images */
@@ -916,6 +901,14 @@
             padding: 100px 0 150px 0;
         }
 
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .section-subtitle {
             font-size: 1rem;
             font-weight: 600;
@@ -924,6 +917,14 @@
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--sa-ink);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
 
         .section-description {
@@ -1515,9 +1516,116 @@
              font-weight: 600;
          }
 
-         .read-more:hover {
-             text-decoration: underline;
-         }
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== BLOG CTA NEWSLETTER ===== */
+        .blog-cta {
+            background: var(--sa-gradient);
+            padding: 4rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .blog-cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .blog-cta h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-cta p {
+            font-size: 1.1rem;
+            color: white;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            color: var(--sa-ink);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .newsletter-form input::placeholder {
+            color: #999;
+        }
+
+        .newsletter-btn {
+            background: var(--sa-accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 176, 105, 0.3);
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            background: #6a9a5a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(127, 176, 105, 0.4);
+        }
+
+        .newsletter-privacy {
+            font-size: 0.85rem;
+            color: white;
+            opacity: 0.8;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
 
             /* ===== MODAL DE GUÍA ===== */
             .guide-modal {
@@ -1824,6 +1932,23 @@
 
             .footer-brand {
                 justify-content: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .newsletter-form input {
+                min-width: 100%;
+            }
+
+            .blog-cta h3 {
+                font-size: 1.5rem;
+            }
+
+            .blog-cta p {
+                font-size: 1rem;
             }
 
             .hero-title {
@@ -3052,6 +3177,24 @@
                     </div>
                 </article>
             </div>
+            
+            <!-- Blog CTA Newsletter -->
+            <div class="blog-cta">
+                <div class="container">
+                    <div class="blog-cta-content">
+                        <h3>📧 Mantente Actualizado</h3>
+                        <p>Recibe nuestros últimos artículos sobre desarrollo territorial regenerativo directamente en tu correo</p>
+                        <form class="newsletter-form" onsubmit="handleNewsletterForm(event)">
+                            <input type="email" placeholder="tu@email.com" required>
+                            <button type="submit" class="newsletter-btn">Suscribirse</button>
+                        </form>
+                        <div class="newsletter-privacy">
+                            <span>🔒</span>
+                            <span>Privacidad garantizada. Sin spam.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -3226,6 +3369,19 @@
                 
                 // Cerrar el modal
                 closeGuideModal();
+                
+                // Limpiar el formulario
+                event.target.reset();
+            }
+            
+            // Función para manejar el formulario del newsletter
+            function handleNewsletterForm(event) {
+                event.preventDefault();
+                
+                const email = event.target.querySelector('input[type="email"]').value;
+                
+                // Simular suscripción
+                alert(`¡Gracias! Te has suscrito exitosamente con ${email}. Recibirás nuestros artículos semanalmente.`);
                 
                 // Limpiar el formulario
                 event.target.reset();
