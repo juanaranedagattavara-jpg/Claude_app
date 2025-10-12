@@ -606,8 +606,8 @@
         .anne-year {
             position: absolute;
             left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            top: calc(50% - 35px);
+            transform: translateX(-50%);
             background: white;
             color: var(--sa-primary);
             padding: 0.4rem 0.8rem;
@@ -618,7 +618,6 @@
             border: 2px solid var(--sa-primary);
             white-space: nowrap;
             box-shadow: 0 2px 8px rgba(14, 94, 111, 0.2);
-            transition: all 0.3s ease;
             min-width: 60px;
             text-align: center;
         }
@@ -830,7 +829,7 @@
         }
 
         .anne-timeline-item:hover .anne-year {
-            transform: translate(-50%, -50%) scale(1.05);
+            transform: translateX(-50%) scale(1.05);
         }
 
         /* Placeholder content for images */
