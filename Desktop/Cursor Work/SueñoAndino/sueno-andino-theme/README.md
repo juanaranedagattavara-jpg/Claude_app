@@ -4,6 +4,7 @@ Un tema personalizado para WordPress diseñado específicamente para Sueño Andi
 
 ## Características
 
+- **Compatible con Elementor**: Diseño completamente editable con Elementor
 - **Diseño Responsive**: Optimizado para todos los dispositivos
 - **Timeline World-Class**: Sección de historia con diseño profesional
 - **Colores Personalizables**: Sistema de colores que se puede modificar desde el personalizador
@@ -11,6 +12,7 @@ Un tema personalizado para WordPress diseñado específicamente para Sueño Andi
 - **Widgets**: Área de widgets configurable
 - **SEO Optimizado**: Estructura semántica HTML5
 - **Rendimiento Optimizado**: CSS y JavaScript optimizados
+- **Elementor Kit**: Configuración automática de colores y tipografías
 
 ## Instalación
 
@@ -22,10 +24,19 @@ Un tema personalizado para WordPress diseñado específicamente para Sueño Andi
 
 ## Personalización
 
+### Elementor
+Este tema está completamente optimizado para Elementor:
+- **Edición Visual**: Todas las páginas son editables con Elementor
+- **Kit Configurado**: Colores y tipografías pre-configurados
+- **Templates**: Templates específicos para diferentes tipos de página
+- **Widgets Personalizados**: Elementos específicos de Sueño Andino
+
 ### Colores
 Puedes personalizar los colores del tema desde **Apariencia > Personalizar > Colores del Tema**:
-- Color Primario
-- Color de Acento
+- Color Primario: `#0e5e6f`
+- Color de Acento: `#7fb069`
+- Color de Texto: `#1a1a1a`
+- Color Adicional: `#8b5a3c`
 
 ### Menús
 Configura los menús desde **Apariencia > Menús**:
@@ -40,14 +51,24 @@ Añade widgets desde **Apariencia > Widgets**:
 
 ```
 sueno-andino/
-├── style.css          # Estilos principales del tema
-├── index.php          # Template principal
-├── header.php         # Header del sitio
-├── footer.php         # Footer del sitio
-├── functions.php      # Funciones del tema
+├── style.css              # Estilos principales del tema
+├── index.php              # Template principal
+├── front-page.php         # Template de página de inicio
+├── page.php               # Template de páginas
+├── single.php             # Template de posts individuales
+├── archive.php            # Template de archivos
+├── header.php             # Header del sitio
+├── footer.php             # Footer del sitio
+├── sidebar.php            # Sidebar del sitio
+├── functions.php          # Funciones del tema
+├── elementor-config.php   # Configuración específica de Elementor
 ├── js/
-│   └── main.js       # JavaScript del tema
-└── README.md         # Este archivo
+│   └── main.js           # JavaScript del tema
+├── template-parts/
+│   ├── content.php       # Template de contenido
+│   └── content-none.php  # Template cuando no hay contenido
+├── screenshot.png         # Vista previa del tema
+└── README.md             # Este archivo
 ```
 
 ## Soporte
