@@ -1,88 +1,108 @@
 # Sueño Andino WordPress Theme
 
-Un tema personalizado para WordPress diseñado específicamente para Sueño Andino - Desarrollo Territorial Regenerativo.
+## Descripción
+Tema personalizado para Sueño Andino - Desarrollo Territorial Regenerativo. Un tema WordPress moderno, responsive y optimizado para organizaciones que trabajan en desarrollo territorial regenerativo en Latinoamérica.
 
 ## Características
 
-- **Compatible con Elementor**: Diseño completamente editable con Elementor
-- **Diseño Responsive**: Optimizado para todos los dispositivos
-- **Timeline World-Class**: Sección de historia con diseño profesional
-- **Colores Personalizables**: Sistema de colores que se puede modificar desde el personalizador
-- **Menús Dinámicos**: Soporte para menús de WordPress
-- **Widgets**: Área de widgets configurable
-- **SEO Optimizado**: Estructura semántica HTML5
-- **Rendimiento Optimizado**: CSS y JavaScript optimizados
-- **Elementor Kit**: Configuración automática de colores y tipografías
+### 🎨 Diseño
+- Diseño moderno y responsive
+- Colores personalizables desde el Customizer
+- Tipografía optimizada con Google Fonts (Inter)
+- Animaciones suaves y transiciones
+
+### 🛠️ Funcionalidades
+- Compatible con WordPress 5.0+
+- Compatible con Elementor y Elementor Pro
+- Menús dinámicos (Principal y Footer)
+- Áreas de widgets personalizables
+- Formularios de contacto funcionales
+- Modal de lead magnet integrado
+- Sistema de testimonios
+- Sección de equipo
+- Blog integrado
+
+### 📱 Responsive
+- Diseño mobile-first
+- Breakpoints optimizados para todos los dispositivos
+- Menú móvil funcional
+- Imágenes responsive
+
+### ⚡ Rendimiento
+- CSS optimizado y minificado
+- JavaScript modular y eficiente
+- Carga asíncrona de fuentes
+- Imágenes optimizadas
 
 ## Instalación
 
-1. Descarga el archivo ZIP del tema
-2. Ve a **Apariencia > Temas** en tu panel de WordPress
-3. Haz clic en **Añadir nuevo** y luego **Subir tema**
-4. Selecciona el archivo ZIP y haz clic en **Instalar ahora**
-5. Activa el tema
+1. Sube el archivo ZIP del tema a WordPress
+2. Ve a **Apariencia > Temas**
+3. Activa el tema "Sueño Andino"
+4. Configura los menús en **Apariencia > Menús**
+5. Personaliza el contenido en **Personalizar**
 
 ## Personalización
 
-### Elementor
-Este tema está completamente optimizado para Elementor:
-- **Edición Visual**: Todas las páginas son editables con Elementor
-- **Kit Configurado**: Colores y tipografías pre-configurados
-- **Templates**: Templates específicos para diferentes tipos de página
-- **Widgets Personalizados**: Elementos específicos de Sueño Andino
-
 ### Colores
-Puedes personalizar los colores del tema desde **Apariencia > Personalizar > Colores del Tema**:
-- Color Primario: `#0e5e6f`
-- Color de Acento: `#7fb069`
-- Color de Texto: `#1a1a1a`
-- Color Adicional: `#8b5a3c`
+Los colores del tema se pueden personalizar desde **Personalizar > Colores**:
+- Color primario
+- Color de acento
+- Color de fondo
+- Color de texto
+
+### Contenido
+El contenido de la página principal se puede editar desde **Personalizar > Contenido de la Página Principal**:
+- Título principal
+- Descripción
+- Estadísticas
+- Información de contacto
 
 ### Menús
 Configura los menús desde **Apariencia > Menús**:
-- Menú Principal
+- Menú Principal (header)
 - Menú Footer
-
-### Widgets
-Añade widgets desde **Apariencia > Widgets**:
-- Sidebar Principal
 
 ## Estructura de Archivos
 
 ```
-sueno-andino/
-├── style.css              # Estilos principales del tema
-├── index.php              # Template principal
-├── front-page.php         # Template de página de inicio
-├── page.php               # Template de páginas
-├── single.php             # Template de posts individuales
-├── archive.php            # Template de archivos
+sueno-andino-theme/
+├── style.css              # Estilos principales
+├── functions.php           # Funciones del tema
 ├── header.php             # Header del sitio
 ├── footer.php             # Footer del sitio
-├── sidebar.php            # Sidebar del sitio
-├── functions.php          # Funciones del tema
-├── elementor-config.php   # Configuración específica de Elementor
+├── front-page.php         # Página principal
+├── index.php              # Template principal
+├── page.php               # Template de páginas
+├── single.php             # Template de posts
+├── archive.php            # Template de archivos
+├── sidebar.php            # Sidebar
 ├── js/
-│   └── main.js           # JavaScript del tema
-├── template-parts/
-│   ├── content.php       # Template de contenido
-│   └── content-none.php  # Template cuando no hay contenido
-├── screenshot.png         # Vista previa del tema
-└── README.md             # Este archivo
+│   └── main.js            # JavaScript del tema
+└── README.md              # Documentación
 ```
+
+## Compatibilidad
+
+- **WordPress:** 5.0+
+- **PHP:** 7.4+
+- **Elementor:** 3.0+
+- **Navegadores:** Chrome, Firefox, Safari, Edge (últimas 2 versiones)
 
 ## Soporte
 
-Para soporte técnico o consultas sobre el tema, contacta al equipo de desarrollo de Sueño Andino.
+Para soporte técnico o consultas sobre el tema, contacta al equipo de desarrollo.
+
+## Changelog
+
+### Versión 1.0
+- Lanzamiento inicial
+- Diseño responsive completo
+- Compatibilidad con Elementor
+- Sistema de personalización
+- Formularios funcionales
+- Modal de lead magnet
 
 ## Licencia
 
 Este tema está desarrollado específicamente para Sueño Andino. Todos los derechos reservados.
-
-## Versión
-
-**Versión 1.0** - Enero 2025
-
----
-
-Desarrollado con ❤️ para Sueño Andino

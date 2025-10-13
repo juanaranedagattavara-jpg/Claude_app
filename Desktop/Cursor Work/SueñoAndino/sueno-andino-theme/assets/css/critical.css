@@ -1,0 +1,212 @@
+/* ===== CSS CRÍTICO - ABOVE THE FOLD ===== */
+
+/* Variables CSS */
+:root {
+    --sa-primary: #0e5e6f;
+    --sa-accent: #7fb069;
+    --sa-cloud: #f8f9fa;
+    --sa-ink: #1a1a1a;
+    --sa-text: #666;
+    --sa-light: #ffffff;
+    --sa-shadow: rgba(0, 0, 0, 0.1);
+    --sa-shadow-hover: rgba(0, 0, 0, 0.15);
+    --sa-gradient: linear-gradient(135deg, var(--sa-primary) 0%, var(--sa-accent) 100%);
+    --sa-gradient-light: linear-gradient(135deg, rgba(14, 94, 111, 0.1) 0%, rgba(127, 176, 105, 0.1) 100%);
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--sa-ink);
+    background-color: var(--sa-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header crítico */
+.site-header {
+    background: var(--sa-light);
+    box-shadow: 0 2px 10px var(--sa-shadow);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.site-branding {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--sa-ink);
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--sa-gradient);
+    color: var(--sa-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--sa-ink);
+}
+
+/* Navegación crítica */
+.main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    color: var(--sa-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--sa-primary);
+}
+
+/* Botones críticos */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--sa-gradient);
+    color: var(--sa-light);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--sa-shadow-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--sa-primary);
+    border: 2px solid var(--sa-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--sa-primary);
+    color: var(--sa-light);
+}
+
+/* Hero section crítico */
+.hero-section {
+    background: var(--sa-gradient-light);
+    padding: 8rem 0 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--sa-ink);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    color: var(--sa-text);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+/* Responsive crítico */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .main-navigation {
+        gap: 1rem;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+    }
+}

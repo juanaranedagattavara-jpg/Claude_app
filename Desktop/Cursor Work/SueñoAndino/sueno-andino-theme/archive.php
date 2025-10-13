@@ -6,49 +6,78 @@
  * @version 1.0
  */
 
-get_header(); ?>
+get_header();
+?>
 
-<div id="primary" class="content-area">
-    <main id="main" class="site-main">
+<main id="main" class="site-main">
+    <div class="container">
+        <header class="page-header">
+            <?php
+            the_archive_title('<h1 class="page-title">', '</h1>');
+            the_archive_description('<div class="archive-description">', '</div>');
+            ?>
+        </header>
+
         <?php if (have_posts()) : ?>
-            <header class="page-header">
-                <?php
-                the_archive_title('<h1 class="page-title">', '</h1>');
-                the_archive_description('<div class="archive-description">', '</div>');
-                ?>
-            </header>
-
             <div class="posts-container">
-                <?php
-                while (have_posts()) :
-                    the_post();
+                <?php while (have_posts()) : the_post(); ?>
+                    <article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
+                        <header class="entry-header">
+                            <?php the_title('<h2 class="entry-title"><a href="' . esc_url(get_permalink()) . '" rel="bookmark">', '</a></h2>'); ?>
+                            <div class="entry-meta">
+                                <span class="posted-on">
+                                    <time class="entry-date published" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
+                                        <?php echo get_the_date(); ?>
+                                    </time>
+                                </span>
+                                <span class="byline">
+                                    <?php esc_html_e('por', 'sueno-andino'); ?> 
+                                    <span class="author vcard">
+                                        <a class="url fn n" href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
+                                            <?php echo get_the_author(); ?>
+                                        </a>
+                                    </span>
+                                </span>
+                            </div>
+                        </header>
 
-                    /*
-                     * Include the Post-Type-specific template for the content.
-                     * If you want to override this in a child theme, then include a file
-                     * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-                     */
-                    get_template_part('template-parts/content', get_post_type());
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="post-thumbnail">
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php the_post_thumbnail('medium'); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
 
-                endwhile;
-                ?>
+                        <div class="entry-content">
+                            <?php the_excerpt(); ?>
+                        </div>
+
+                        <footer class="entry-footer">
+                            <a href="<?php the_permalink(); ?>" class="read-more">
+                                <?php esc_html_e('Leer más →', 'sueno-andino'); ?>
+                            </a>
+                        </footer>
+                    </article>
+                <?php endwhile; ?>
             </div>
 
             <?php
-            the_posts_navigation(array(
-                'prev_text' => esc_html__('Older posts', 'sueno-andino'),
-                'next_text' => esc_html__('Newer posts', 'sueno-andino'),
+            // Paginación
+            the_posts_pagination(array(
+                'prev_text' => __('← Anterior', 'sueno-andino'),
+                'next_text' => __('Siguiente →', 'sueno-andino'),
             ));
+            ?>
 
-        else :
-
-            get_template_part('template-parts/content', 'none');
-
-        endif;
-        ?>
-    </main>
-</div>
+        <?php else : ?>
+            <div class="no-posts">
+                <h2><?php esc_html_e('No se encontraron publicaciones', 'sueno-andino'); ?></h2>
+                <p><?php esc_html_e('Lo sentimos, no hay contenido disponible en este momento.', 'sueno-andino'); ?></p>
+            </div>
+        <?php endif; ?>
+    </div>
+</main>
 
 <?php
-get_sidebar();
 get_footer();

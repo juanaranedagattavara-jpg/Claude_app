@@ -32,7 +32,7 @@
                         ?>
                         <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo" rel="home">
                             <div class="logo-icon">SA</div>
-                            <div class="site-title"><?php bloginfo('name'); ?></div>
+                            <span class="site-title"><?php bloginfo('name'); ?></span>
                         </a>
                         <?php
                     }
@@ -50,10 +50,11 @@
                         'menu_id'        => 'primary-menu',
                         'menu_class'     => 'nav-menu',
                         'container'      => false,
+                        'fallback_cb'    => 'sueno_andino_fallback_menu',
                     ));
                     ?>
                     
-                    <a href="#guia" class="btn btn-primary"><?php esc_html_e('Descarga Guía Gratuita', 'sueno-andino'); ?></a>
+                    <a href="#" onclick="showGuideModal(); return false;" class="btn btn-secondary"><?php esc_html_e('Descarga Guía Gratuita', 'sueno-andino'); ?></a>
                 </nav>
             </div>
         </div>

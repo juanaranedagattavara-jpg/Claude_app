@@ -6,45 +6,67 @@
  * @version 1.0
  */
 
-get_header(); ?>
+get_header();
+?>
 
-<div id="primary" class="content-area">
-    <main id="main" class="site-main">
-        <?php
-        while (have_posts()) :
-            the_post();
-            
-            // Si el post está construido con Elementor, usar Elementor
-            if (\Elementor\Plugin::$instance->documents->get(get_the_ID())->is_built_with_elementor()) {
-                the_content();
-            } else {
-                // Si no está construido con Elementor, usar template tradicional
-                ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <header class="entry-header">
-                        <?php
-                        if (is_singular()) :
-                            the_title('<h1 class="entry-title">', '</h1>');
-                        else :
-                            the_title('<h2 class="entry-title"><a href="' . esc_url(get_permalink()) . '" rel="bookmark">', '</a></h2>');
-                        endif;
-                        ?>
+<main id="main" class="site-main">
+    <div class="container">
+        <?php while (have_posts()) : the_post(); ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('single-post'); ?>>
+                <header class="entry-header">
+                    <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+                    <div class="entry-meta">
+                        <span class="posted-on">
+                            <time class="entry-date published" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
+                                <?php echo get_the_date(); ?>
+                            </time>
+                        </span>
+                        <span class="byline">
+                            <?php esc_html_e('por', 'sueno-andino'); ?> 
+                            <span class="author vcard">
+                                <a class="url fn n" href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
+                                    <?php echo get_the_author(); ?>
+                                </a>
+                            </span>
+                        </span>
+                        <?php if (has_category()) : ?>
+                            <span class="cat-links">
+                                <?php esc_html_e('en', 'sueno-andino'); ?> 
+                                <?php the_category(', '); ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </header>
 
-                        <div class="entry-meta">
-                            <?php
-                            sueno_andino_posted_on();
-                            sueno_andino_posted_by();
-                            ?>
+                <?php if (has_post_thumbnail()) : ?>
+                    <div class="post-thumbnail">
+                        <?php the_post_thumbnail('large'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="entry-content">
+                    <?php
+                    the_content();
+
+                    wp_link_pages(array(
+                        'before' => '<div class="page-links">' . esc_html__('Páginas:', 'sueno-andino'),
+                        'after'  => '</div>',
+                    ));
+                    ?>
+                </div>
+
+                <footer class="entry-footer">
+                    <?php if (has_tag()) : ?>
+                        <div class="tag-links">
+                            <?php the_tags('', ', ', ''); ?>
                         </div>
-                    </header>
+                    <?php endif; ?>
 
-                    <?php sueno_andino_post_thumbnail(); ?>
-
-                    <div class="entry-content">
-                        <?php
-                        the_content(sprintf(
+                    <?php
+                    edit_post_link(
+                        sprintf(
                             wp_kses(
-                                __('Continue reading<span class="screen-reader-text"> "%s"</span>', 'sueno-andino'),
+                                __('Editar <span class="screen-reader-text">%s</span>', 'sueno-andino'),
                                 array(
                                     'span' => array(
                                         'class' => array(),
@@ -52,37 +74,25 @@ get_header(); ?>
                                 )
                             ),
                             get_the_title()
-                        ));
+                        ),
+                        '<span class="edit-link">',
+                        '</span>'
+                    );
+                    ?>
+                </footer>
+            </article>
 
-                        wp_link_pages(array(
-                            'before' => '<div class="page-links">' . esc_html__('Pages:', 'sueno-andino'),
-                            'after'  => '</div>',
-                        ));
-                        ?>
-                    </div>
-
-                    <footer class="entry-footer">
-                        <?php sueno_andino_entry_footer(); ?>
-                    </footer>
-                </article>
-                <?php
-            }
-
+            <?php
+            // Navegación de posts
             the_post_navigation(array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Previous:', 'sueno-andino') . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__('Next:', 'sueno-andino') . '</span> <span class="nav-title">%title</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Anterior:', 'sueno-andino') . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__('Siguiente:', 'sueno-andino') . '</span> <span class="nav-title">%title</span>',
             ));
+            ?>
 
-            // If comments are open or we have at least one comment, load up the comment template.
-            if (comments_open() || get_comments_number()) :
-                comments_template();
-            endif;
-
-        endwhile;
-        ?>
-    </main>
-</div>
+        <?php endwhile; ?>
+    </div>
+</main>
 
 <?php
-get_sidebar();
 get_footer();
