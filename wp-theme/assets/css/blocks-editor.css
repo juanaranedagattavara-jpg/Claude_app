@@ -1,0 +1,271 @@
+/* Estilos para bloques personalizados en el editor de WordPress */
+
+/* Categoría de bloques personalizados */
+.block-editor-block-types-list__item[data-type="sueno-andino/hero-block"] .block-editor-block-types-list__item-icon,
+.block-editor-block-types-list__item[data-type="sueno-andino/servicios-block"] .block-editor-block-types-list__item-icon {
+    color: #d3600f;
+}
+
+/* Hero Block Editor Styles */
+.wp-block-sueno-andino-hero-block {
+    margin: 0;
+}
+
+.wp-block-sueno-andino-hero-block .hero-preview {
+    background: linear-gradient(135deg, #2a4351 0%, #1e3a47 100%);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.wp-block-sueno-andino-hero-block .hero-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+}
+
+.wp-block-sueno-andino-hero-block .hero-content {
+    max-width: 900px;
+    z-index: 2;
+    position: relative;
+}
+
+.wp-block-sueno-andino-hero-block .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 2rem 0;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 6px 12px rgba(0,0,0,0.6);
+}
+
+.wp-block-sueno-andino-hero-block .hero-title-line1 {
+    color: white;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.wp-block-sueno-andino-hero-block .hero-title-line2 {
+    color: #d3600f;
+    display: block;
+}
+
+.wp-block-sueno-andino-hero-block .hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 300;
+    line-height: 1.4;
+    margin: 0 0 2rem 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.wp-block-sueno-andino-hero-block .hero-button {
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    box-shadow: 0 10px 25px -5px rgba(211,96,15,0.4);
+    transition: all 0.3s ease;
+}
+
+.wp-block-sueno-andino-hero-block .hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(211,96,15,0.6);
+}
+
+/* Servicios Block Editor Styles */
+.wp-block-sueno-andino-servicios-block {
+    margin: 0;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-preview {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+    margin: 1rem 0;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-badge {
+    display: inline-block;
+    margin-bottom: 1rem;
+    background: rgba(211,96,15,0.08);
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(211,96,15,0.15);
+    color: #d3600f;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-title {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #2a4351;
+    margin: 0 0 1rem 0;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.015em;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-subtitle {
+    font-size: 1.125rem;
+    color: #6b6b6b;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+.wp-block-sueno-andino-servicios-block .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.wp-block-sueno-andino-servicios-block .servicio-card {
+    background: #2a4351;
+    border-radius: 1rem;
+    padding: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.wp-block-sueno-andino-servicios-block .servicio-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.wp-block-sueno-andino-servicios-block .servicio-icon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(211,96,15,0.08);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.wp-block-sueno-andino-servicios-block .servicio-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.01em;
+}
+
+.wp-block-sueno-andino-servicios-block .servicio-description {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Inspector Controls Styles */
+.components-panel__body .components-base-control {
+    margin-bottom: 1rem;
+}
+
+.components-panel__body .components-base-control__label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.components-panel__body .components-text-control__input,
+.components-panel__body .components-textarea-control__input {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.components-panel__body .components-text-control__input:focus,
+.components-panel__body .components-textarea-control__input:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+/* Button Styles */
+.components-button.is-primary {
+    background-color: #d3600f;
+    border-color: #d3600f;
+}
+
+.components-button.is-primary:hover {
+    background-color: #c16134;
+    border-color: #c16134;
+}
+
+.components-button.is-destructive {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+.components-button.is-destructive:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wp-block-sueno-andino-hero-block .hero-preview {
+        min-height: 50vh;
+        padding: 1rem;
+    }
+    
+    .wp-block-sueno-andino-hero-block .hero-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+    }
+    
+    .wp-block-sueno-andino-hero-block .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+    
+    .wp-block-sueno-andino-servicios-block .servicios-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .wp-block-sueno-andino-servicios-block .servicio-card {
+        padding: 1.5rem;
+    }
+    
+    .wp-block-sueno-andino-servicios-block .servicios-title {
+        font-size: 1.5rem;
+    }
+    
+    .wp-block-sueno-andino-servicios-block .servicios-subtitle {
+        font-size: 1rem;
+    }
+}

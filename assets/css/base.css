@@ -1,0 +1,314 @@
+/* Base CSS para Sueño Andino */
+
+/* Reset y base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  margin: 0;
+  padding: 0;
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Grid system */
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Flexbox utilities */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Spacing utilities */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Estilos para secciones de equipo y directorio - Diseño Worldclass */
+.wp-block-group .wp-block-group {
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wp-block-image {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.wp-block-image img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: grayscale(0.2);
+  border: 1px solid rgba(44, 85, 48, 0.1);
+}
+
+.wp-block-image:hover img {
+  transform: scale(1.02);
+  filter: grayscale(0);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(44, 85, 48, 0.15);
+}
+
+.wp-block-heading h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.wp-block-paragraph p {
+  color: var(--color-secondary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Espaciado elegante */
+.wp-block-spacer {
+  display: block;
+}
+
+/* Títulos principales con tipografía elegante */
+.wp-block-heading h2 {
+  font-family: var(--font-primary);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+}
+
+/* Subtítulos descriptivos */
+.wp-block-paragraph {
+  font-weight: 300;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* Columnas con espaciado perfecto */
+.wp-block-columns.alignwide {
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 3rem;
+}
+
+.wp-block-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Efectos sutiles de hover en las columnas */
+.wp-block-column:hover .wp-block-image img {
+  transform: scale(1.02);
+  filter: grayscale(0);
+}
+
+.wp-block-column:hover .wp-block-heading h3 {
+  color: var(--color-primary);
+}
+
+/* Separadores minimalistas */
+.wp-block-separator.is-style-wide {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  border: none;
+  margin: 2rem auto;
+  width: 100px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  .wp-block-group .wp-block-group {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .wp-block-image img {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .wp-block-columns {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .wp-block-column {
+    margin-bottom: 3rem;
+  }
+  
+  .wp-block-heading h2 {
+    font-size: 2.5rem;
+  }
+  
+  .wp-block-heading h3 {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .wp-block-image img {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .wp-block-heading h2 {
+    font-size: 2rem;
+  }
+  
+  .wp-block-heading h3 {
+    font-size: 1rem;
+  }
+  
+  .wp-block-paragraph p {
+    font-size: 0.8rem;
+  }
+}

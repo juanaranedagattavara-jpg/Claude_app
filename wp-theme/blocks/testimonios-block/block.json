@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/testimonios-block",
+    "version": "1.0.0",
+    "title": "Testimonios Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección de testimonios con slider y estadísticas",
+    "keywords": ["testimonios", "casos", "exito", "slider"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Casos de Éxito"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Historias reales de transformación en las comunidades andinas."
+        },
+        "backgroundImage": {
+            "type": "string",
+            "default": ""
+        },
+        "testimonios": {
+            "type": "array",
+            "default": [
+                {
+                    "statistic": "+150%",
+                    "statisticLabel": "en ingresos familiares",
+                    "title": "Comunidad de Huancavelica",
+                    "quote": "Gracias al programa de emprendimiento, pudimos crear una cooperativa de artesanías que ahora exporta a nivel nacional.",
+                    "author": "María Quispe",
+                    "position": "Líder Comunitaria",
+                    "color": "#d3600f"
+                },
+                {
+                    "statistic": "95%",
+                    "statisticLabel": "de aprobación estudiantil",
+                    "title": "Escuela Rural de Cusco",
+                    "quote": "Nuestros estudiantes ahora tienen acceso a tecnología educativa y metodologías modernas que los preparan para el futuro.",
+                    "author": "Prof. Carlos Mamani",
+                    "position": "Director Escolar",
+                    "color": "#2a4351"
+                },
+                {
+                    "statistic": "300+",
+                    "statisticLabel": "familias beneficiadas",
+                    "title": "Proyecto Agrícola de Puno",
+                    "quote": "Implementamos técnicas de agricultura regenerativa que triplicaron la productividad de nuestros cultivos.",
+                    "author": "Ana Condori",
+                    "position": "Coordinadora Agrícola",
+                    "color": "#c16134"
+                }
+            ]
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}

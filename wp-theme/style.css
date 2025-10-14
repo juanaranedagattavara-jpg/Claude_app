@@ -1,0 +1,111 @@
+/*
+Theme Name: Sueño Andino
+Description: Tema personalizado para Sueño Andino - Desarrollo Territorial Regenerativo
+Version: 1.0
+Author: Sueño Andino
+Text Domain: sueno-andino
+*/
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #2a4351;
+    background-color: #e5d5c0;
+}
+
+/* Variables CSS */
+:root {
+    --color-primary: #d3600f;
+    --color-secondary: #2a4351;
+    --color-accent: #c16134;
+    --color-text: #2a4351;
+    --color-text-light: #6b7280;
+    --color-white: #ffffff;
+    --color-bg: #e5d5c0;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+/* Contenedores */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section {
+    padding: 8rem 0;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: var(--color-white);
+    box-shadow: 0 10px 25px -5px rgba(211, 96, 15, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -5px rgba(211, 96, 15, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-white);
+    transform: translateY(-4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .section {
+        padding: 4rem 0;
+    }
+    
+    h1 {
+        font-size: clamp(2rem, 8vw, 3rem) !important;
+    }
+    
+    h2 {
+        font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+    }
+}

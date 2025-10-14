@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - Sueño Andino</title>
+    <meta name="description" content="Política de Privacidad de Sueño Andino. Conoce cómo protegemos y utilizamos tu información personal.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2a4351;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header-premium {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(42, 67, 81, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(211, 96, 15, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 80px;
+        }
+
+        .header-premium.scrolled {
+            background: rgba(42, 67, 81, 0.98);
+            height: 70px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo img {
+            height: 4rem;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .header-premium.scrolled .header-logo img {
+            width: 5.5rem;
+            max-height: 3.5rem;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link-premium {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-link-premium::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link-premium:hover::after {
+            width: 100%;
+        }
+
+        .nav-link-premium:hover {
+            color: #d3600f;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #d3600f;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #2a4351;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #2a4351;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #d3600f;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #2a4351;
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(211,96,15,0.1) 0%, rgba(211,96,15,0.05) 100%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #d3600f;
+            margin: 1.5rem 0;
+        }
+
+        .contact-info {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #d3600f;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, rgba(211,96,15,0.1) 0%, rgba(211,96,15,0.05) 100%);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(211,96,15,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #c16134;
+            transform: translateX(-5px);
+            background: linear-gradient(135deg, rgba(211,96,15,0.15) 0%, rgba(211,96,15,0.08) 100%);
+            box-shadow: 0 4px 12px rgba(211,96,15,0.2);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #2a4351;
+            color: white;
+            padding: 4rem 0 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: #d3600f;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #d3600f;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.875rem;
+        }
+
+        .footer-legal {
+            margin-bottom: 1rem;
+        }
+
+        .footer-legal a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #d3600f;
+        }
+
+        .footer-legal button {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            margin: 0 1rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal button:hover {
+            color: #d3600f;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1.5rem;
+            }
+            
+            .header-nav {
+                gap: 1.5rem;
+            }
+            
+            .nav-link-premium {
+                font-size: 0.9rem;
+            }
+            
+            .header-logo img {
+                width: 5rem;
+                max-height: 3rem;
+            }
+
+            .main-content {
+                margin-top: 70px;
+            }
+
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-nav {
+                gap: 1rem;
+            }
+            
+            .nav-link-premium {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header-premium">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="assets/img/logo-sa-blanco.png" 
+                         alt="Logo de Sueño Andino - Transformando Vidas en los Andes" 
+                         loading="eager"
+                         decoding="async">
+                </a>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="header-nav" aria-label="Navegación principal">
+                <a href="index.html#servicios" class="nav-link-premium" aria-label="Ir a la sección de servicios">
+                    Servicios
+                </a>
+                <a href="index.html#equipo" class="nav-link-premium" aria-label="Ir a la sección de nosotros">
+                    Nosotros
+                </a>
+                <a href="blog.html" class="nav-link-premium" aria-label="Ir al blog">
+                    Blog
+                </a>
+                <a href="index.html#contacto" class="nav-link-premium" aria-label="Ir a la sección de contacto">
+                    Contacto
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 0.5rem;">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Volver al inicio
+            </a>
+            
+            <div class="page-header">
+                <h1>Política de Privacidad</h1>
+                <p class="page-subtitle">Conoce cómo protegemos y utilizamos tu información personal</p>
+            </div>
+
+        <div class="highlight">
+            <p><strong>Última actualización:</strong> Diciembre 2024</p>
+            <p>En Sueño Andino, nos comprometemos a proteger tu privacidad y garantizar la seguridad de tu información personal. Esta política describe cómo recopilamos, utilizamos y protegemos tu información.</p>
+        </div>
+
+        <h2>1. Información que Recopilamos</h2>
+        
+        <h3>1.1 Información Personal</h3>
+        <p>Recopilamos información que nos proporcionas directamente, incluyendo:</p>
+        <ul>
+            <li>Nombre completo</li>
+            <li>Dirección de correo electrónico</li>
+            <li>Número de teléfono</li>
+            <li>Información de la organización</li>
+            <li>Mensajes y consultas que nos envíes</li>
+        </ul>
+
+        <h3>1.2 Información Técnica</h3>
+        <p>Automáticamente recopilamos cierta información técnica, como:</p>
+        <ul>
+            <li>Dirección IP</li>
+            <li>Tipo de navegador y dispositivo</li>
+            <li>Páginas visitadas y tiempo de permanencia</li>
+            <li>Referencias de sitios web</li>
+            <li>Cookies y tecnologías similares</li>
+        </ul>
+
+        <h2>2. Cómo Utilizamos tu Información</h2>
+        
+        <p>Utilizamos tu información personal para:</p>
+        <ul>
+            <li>Proporcionar y mejorar nuestros servicios</li>
+            <li>Responder a tus consultas y solicitudes</li>
+            <li>Enviar comunicaciones relacionadas con nuestros servicios</li>
+            <li>Personalizar tu experiencia en nuestro sitio web</li>
+            <li>Analizar el uso del sitio web para mejoras</li>
+            <li>Cumplir con obligaciones legales</li>
+        </ul>
+
+        <h2>3. Compartir Información</h2>
+        
+        <p>No vendemos, alquilamos ni compartimos tu información personal con terceros, excepto en los siguientes casos:</p>
+        <ul>
+            <li>Con tu consentimiento explícito</li>
+            <li>Para cumplir con obligaciones legales</li>
+            <li>Con proveedores de servicios que nos ayudan a operar nuestro negocio</li>
+            <li>En caso de fusión, adquisición o venta de activos</li>
+        </ul>
+
+        <h2>4. Cookies y Tecnologías de Seguimiento</h2>
+        
+        <p>Utilizamos cookies y tecnologías similares para:</p>
+        <ul>
+            <li>Mejorar la funcionalidad del sitio web</li>
+            <li>Analizar el tráfico y comportamiento de los usuarios</li>
+            <li>Personalizar contenido y anuncios</li>
+            <li>Recordar tus preferencias</li>
+        </ul>
+        
+        <p>Puedes controlar el uso de cookies a través de la configuración de tu navegador o nuestro banner de cookies.</p>
+
+        <h2>5. Seguridad de la Información</h2>
+        
+        <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tu información:</p>
+        <ul>
+            <li>Encriptación de datos sensibles</li>
+            <li>Acceso restringido a información personal</li>
+            <li>Monitoreo regular de sistemas de seguridad</li>
+            <li>Capacitación del personal en protección de datos</li>
+        </ul>
+
+        <h2>6. Retención de Datos</h2>
+        
+        <p>Conservamos tu información personal solo durante el tiempo necesario para cumplir con los propósitos descritos en esta política, a menos que la ley requiera un período de retención más largo.</p>
+
+        <h2>7. Tus Derechos</h2>
+        
+        <p>Tienes derecho a:</p>
+        <ul>
+            <li>Acceder a tu información personal</li>
+            <li>Rectificar información inexacta</li>
+            <li>Solicitar la eliminación de tus datos</li>
+            <li>Limitar el procesamiento de tu información</li>
+            <li>Portabilidad de datos</li>
+            <li>Oponerte al procesamiento</li>
+            <li>Retirar tu consentimiento en cualquier momento</li>
+        </ul>
+
+        <h2>8. Transferencias Internacionales</h2>
+        
+        <p>Si transferimos tu información fuera de tu país de residencia, nos aseguraremos de que existan salvaguardas adecuadas para proteger tu privacidad.</p>
+
+        <h2>9. Menores de Edad</h2>
+        
+        <p>Nuestros servicios no están dirigidos a menores de 16 años. No recopilamos intencionalmente información personal de menores sin el consentimiento de sus padres o tutores.</p>
+
+        <h2>10. Cambios a esta Política</h2>
+        
+        <p>Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos sobre cambios significativos a través de nuestro sitio web o por correo electrónico.</p>
+
+        <div class="contact-info">
+            <h3>Contacto</h3>
+            <p>Si tienes preguntas sobre esta política de privacidad o deseas ejercer tus derechos, puedes contactarnos:</p>
+            <ul>
+                <li><strong>Email:</strong> privacidad@sueñoandino.com</li>
+                <li><strong>Teléfono:</strong> +57 (1) 234-5678</li>
+                <li><strong>Dirección:</strong> Bogotá, Colombia</li>
+            </ul>
+        </div>
+
+        <div class="last-updated">
+            <p>Esta política de privacidad fue actualizada por última vez el 15 de diciembre de 2024.</p>
+        </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="assets/img/logo-sa-blanco.png" alt="Sueño Andino Logo" style="width:8rem;height:auto;margin-bottom:1.5rem">
+                    <p>Transformando vidas y regenerando territorios en los Andes a través del desarrollo sostenible y la innovación social.</p>
+                    <div style="display:flex;gap:1rem">
+                        <a href="#" style="color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.3s ease" onmouseover="this.style.color='#d3600f'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" style="color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.3s ease" onmouseover="this.style.color='#d3600f'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#" style="color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.3s ease" onmouseover="this.style.color='#d3600f'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <div class="footer-links">
+                        <a href="index.html#servicios">Servicios</a>
+                        <a href="index.html#equipo">Nosotros</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="index.html#contacto">Contacto</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <div class="footer-contact">
+                        <div class="footer-contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Lima, Perú
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                            +51 999 888 777
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            info@sueñoandino.org
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="politica-privacidad.html">Política de Privacidad</a>
+                    <a href="terminos-condiciones.html">Términos y Condiciones</a>
+                    <a href="cookies-policy.html">Política de Cookies</a>
+                    <button onclick="showCookieSettings()">Gestionar Cookies</button>
+                </div>
+                <p>© 2024 Sueño Andino. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Popup Script -->
+    <script src="cookie-popup.js"></script>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

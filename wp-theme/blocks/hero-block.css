@@ -1,0 +1,99 @@
+/* Estilos para el bloque Hero en el editor */
+.wp-block-sueno-andino-hero-block {
+    margin: 0;
+}
+
+.wp-block-sueno-andino-hero-block .hero-preview {
+    background: linear-gradient(135deg, #2a4351 0%, #1e3a47 100%);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+.wp-block-sueno-andino-hero-block .hero-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+}
+
+.wp-block-sueno-andino-hero-block .hero-content {
+    max-width: 900px;
+    z-index: 2;
+    position: relative;
+}
+
+.wp-block-sueno-andino-hero-block .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 2rem 0;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 6px 12px rgba(0,0,0,0.6);
+}
+
+.wp-block-sueno-andino-hero-block .hero-title-line1 {
+    color: white;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.wp-block-sueno-andino-hero-block .hero-title-line2 {
+    color: #d3600f;
+    display: block;
+}
+
+.wp-block-sueno-andino-hero-block .hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 300;
+    line-height: 1.4;
+    margin: 0 0 2rem 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.wp-block-sueno-andino-hero-block .hero-button {
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    box-shadow: 0 10px 25px -5px rgba(211,96,15,0.4);
+    transition: all 0.3s ease;
+}
+
+.wp-block-sueno-andino-hero-block .hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(211,96,15,0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wp-block-sueno-andino-hero-block .hero-preview {
+        min-height: 50vh;
+        padding: 1rem;
+    }
+    
+    .wp-block-sueno-andino-hero-block .hero-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+    }
+    
+    .wp-block-sueno-andino-hero-block .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+}

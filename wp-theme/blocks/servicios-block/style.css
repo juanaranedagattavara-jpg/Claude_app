@@ -1,0 +1,304 @@
+/* Servicios Block Styles */
+.wp-block-group.section-optimized {
+    position: relative;
+    background-color: #ffffff;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+    margin-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+    .servicios-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 4rem !important;
+    }
+}
+
+.servicio-card {
+    position: relative;
+    background: #2a4351;
+    border-radius: 2rem;
+    padding: 3rem 2.5rem;
+    height: 100%;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(42,67,81,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.servicio-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 40px 80px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(211,96,15,0.1);
+}
+
+.servicio-card .decorative-element {
+    position: absolute;
+    top: -2rem;
+    right: -2rem;
+    width: 8rem;
+    height: 8rem;
+    background: linear-gradient(135deg, rgba(211,96,15,0.03) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.servicio-card .icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: rgba(211,96,15,0.08);
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem;
+}
+
+.servicio-card .content {
+    position: relative;
+    z-index: 1;
+}
+
+.servicio-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.3;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.01em;
+}
+
+.servicio-card p {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+}
+
+.servicio-card .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.servicio-card .features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+}
+
+.servicio-card .features li::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #d3600f;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.servicio-card .action-button {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.servicio-card .action-button:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.4);
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(42,67,81,0.05) 0%, rgba(211,96,15,0.05) 100%);
+    border-radius: 2rem;
+    border: 1px solid rgba(211,96,15,0.1);
+}
+
+.cta-section h3 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.2;
+    font-family: 'Playfair Display', serif;
+}
+
+.cta-section p {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: #6b6b6b;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-section button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: white;
+    color: #d3600f;
+    border: none;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.01em;
+    cursor: pointer;
+}
+
+.cta-section button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px -4px rgba(255,255,255,0.3);
+}
+
+/* Modal Styles */
+.modal-calendario {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: none;
+}
+
+.modal-calendario .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+.modal-calendario .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.modal-calendario .close-btn:hover {
+    color: #d3600f;
+}
+
+.modal-calendario .placeholder {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 1rem;
+    border: 2px dashed #d3600f;
+}
+
+.modal-calendario .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.modal-calendario .placeholder-text {
+    color: #666;
+    margin: 0;
+}
+
+.modal-calendario .contact-info {
+    color: #d3600f;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wp-block-group.section-optimized {
+        padding: 4rem 0;
+    }
+    
+    .servicios-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    .servicio-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .cta-section {
+        padding: 3rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .servicio-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .servicio-card .icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+    
+    .servicio-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .servicio-card p {
+        font-size: 0.9rem;
+    }
+    
+    .cta-section h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cta-section p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Focus removal for all elements */
+*:focus,
+*:focus-visible,
+*:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+

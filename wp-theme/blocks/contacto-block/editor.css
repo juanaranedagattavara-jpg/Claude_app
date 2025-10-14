@@ -1,0 +1,223 @@
+/* Contacto Block Editor Styles */
+.contacto-section {
+    background: linear-gradient(135deg, #2a4351 0%, #1e3a47 100%);
+    padding: 40px 20px;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    margin: 20px 0;
+    color: white;
+}
+
+.contacto-section .contacto-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contacto-section .contacto-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 20px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.contacto-section .contacto-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0 0 40px 0;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contacto-section .contacto-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contacto-section .contacto-form {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.contacto-section .form-fields {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.contacto-section .form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-section .form-label {
+    display: block;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.contacto-section .form-label .required {
+    color: #d3600f;
+}
+
+.contacto-section .form-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 0.75rem;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+.contacto-section .form-input:focus {
+    border-color: #d3600f;
+    background: rgba(255,255,255,0.2);
+}
+
+.contacto-section .form-input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.contacto-section .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contacto-section .submit-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px -5px rgba(211,96,15,0.4);
+}
+
+/* Inspector Controls */
+.components-panel__body .components-base-control {
+    margin-bottom: 16px;
+}
+
+.components-panel__body .components-base-control__label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.components-panel__body .components-text-control__input,
+.components-panel__body .components-textarea-control__input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.components-panel__body .components-text-control__input:focus,
+.components-panel__body .components-textarea-control__input:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+.components-panel__body .form-field-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.components-panel__body .form-field-item h4 {
+    margin: 0 0 10px 0;
+    color: #2a4351;
+}
+
+.components-panel__body .form-field-item .components-button {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.components-panel__body .form-field-item .components-button-group {
+    margin-bottom: 10px;
+}
+
+.components-panel__body .form-field-item .components-button-group .components-button {
+    margin-right: 5px;
+}
+
+.components-panel__body .form-field-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.components-panel__body .form-field-item input[type="checkbox"] {
+    margin: 0;
+}
+
+/* Editor specific styles */
+.block-editor-block-list__layout .contacto-section {
+    margin: 0;
+    border: none;
+}
+
+.block-editor-block-list__layout .contacto-section .contacto-title {
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin: 0 0 20px 0 !important;
+    font-family: 'Playfair Display', serif !important;
+}
+
+.block-editor-block-list__layout .contacto-section .contacto-subtitle {
+    font-size: 1.3rem !important;
+    color: rgba(255,255,255,0.8) !important;
+    margin: 0 0 40px 0 !important;
+    line-height: 1.6 !important;
+}
+
+/* Responsive in editor */
+@media (max-width: 768px) {
+    .contacto-section .contacto-form {
+        padding: 2rem;
+    }
+    
+    .contacto-section .contacto-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .contacto-section .contacto-subtitle {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-section .contacto-form {
+        padding: 1.5rem;
+    }
+    
+    .contacto-section .contacto-title {
+        font-size: 2rem !important;
+    }
+    
+    .contacto-section .contacto-subtitle {
+        font-size: 1rem !important;
+    }
+}

@@ -1,0 +1,188 @@
+/* Golden Circle Block Editor Styles */
+.wp-block-group.golden-circle-optimized {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 40px 20px;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    margin: 20px 0;
+}
+
+.golden-circle-optimized .golden-circle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.golden-circle-optimized .circle-card {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(211,96,15,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.golden-circle-optimized .circle-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.golden-circle-optimized .circle-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.golden-circle-optimized .circle-icon.why {
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+}
+
+.golden-circle-optimized .circle-icon.how {
+    background: linear-gradient(135deg, #2a4351 0%, #1e3a47 100%);
+}
+
+.golden-circle-optimized .circle-icon.what {
+    background: linear-gradient(135deg, #c16134 0%, #d3600f 100%);
+}
+
+.golden-circle-optimized .circle-title {
+    color: #2a4351;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.golden-circle-optimized .circle-description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.golden-circle-optimized .newsletter-section {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(211,96,15,0.05) 0%, rgba(42,67,81,0.05) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(211,96,15,0.1);
+}
+
+.golden-circle-optimized .newsletter-title {
+    color: #2a4351;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.golden-circle-optimized .newsletter-description {
+    color: #666;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+}
+
+.golden-circle-optimized .newsletter-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.golden-circle-optimized .newsletter-form input[type="email"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 15px;
+    border: 2px solid #e5d5c0;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.golden-circle-optimized .newsletter-form input[type="email"]:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+.golden-circle-optimized .newsletter-form button[type="submit"] {
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Inspector Controls */
+.components-panel__body .components-base-control {
+    margin-bottom: 16px;
+}
+
+.components-panel__body .components-base-control__label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.components-panel__body .components-text-control__input,
+.components-panel__body .components-textarea-control__input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.components-panel__body .components-text-control__input:focus,
+.components-panel__body .components-textarea-control__input:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+/* Editor specific styles */
+.block-editor-block-list__layout .wp-block-group.golden-circle-optimized {
+    margin: 0;
+    border: none;
+}
+
+.block-editor-block-list__layout .golden-circle-optimized h2 {
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    color: #2a4351 !important;
+    margin: 0 0 20px 0 !important;
+}
+
+.block-editor-block-list__layout .golden-circle-optimized p {
+    font-size: 1.2rem !important;
+    color: #666 !important;
+    margin: 0 0 40px 0 !important;
+    line-height: 1.6 !important;
+}
+
+/* Responsive in editor */
+@media (max-width: 768px) {
+    .golden-circle-optimized .golden-circle-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .golden-circle-optimized .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .golden-circle-optimized .newsletter-form input[type="email"] {
+        min-width: 100%;
+    }
+}
+

@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/hero-block",
+    "version": "1.0.0",
+    "title": "Hero Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección principal con título, subtítulo y botón CTA",
+    "keywords": ["hero", "titulo", "cta", "principal"],
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./hero-block.js",
+    "editorStyle": "file:./hero-block.css",
+    "style": "file:./hero-block.css",
+    "supports": {
+        "html": false,
+        "align": ["full", "wide"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "tituloLinea1": {
+            "type": "string",
+            "default": "DESARROLLO TERRITORIAL REGENERATIVO"
+        },
+        "tituloLinea2": {
+            "type": "string",
+            "default": "DESDE Y HACIA LATINOAMÉRICA"
+        },
+        "subtitulo": {
+            "type": "string",
+            "default": "Impulsamos proyectos de desarrollo territorial que devuelven vitalidad a los ecosistemas, fortalecen comunidades y generan prosperidad consciente y regenerativa"
+        },
+        "textoBoton": {
+            "type": "string",
+            "default": "Conoce Nuestros Servicios"
+        },
+        "enlaceBoton": {
+            "type": "string",
+            "default": "#servicios"
+        }
+    }
+}

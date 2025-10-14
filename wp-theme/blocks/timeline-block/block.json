@@ -1,0 +1,70 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/timeline-block",
+    "version": "1.0.0",
+    "title": "Timeline Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección Timeline con hitos históricos y animaciones",
+    "keywords": ["timeline", "historia", "hitos", "cronología"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Hitos Transformadores"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Seis años de impacto regenerativo en las comunidades andinas."
+        },
+        "backgroundImage": {
+            "type": "string",
+            "default": ""
+        },
+        "timelineItems": {
+            "type": "array",
+            "default": [
+                {
+                    "year": "2018",
+                    "shortYear": "18",
+                    "title": "Fundación",
+                    "description": "Nace Sueño Andino con la misión de transformar vidas en las comunidades andinas.",
+                    "color": "#d3600f"
+                },
+                {
+                    "year": "2020",
+                    "shortYear": "20",
+                    "title": "Primeros Proyectos",
+                    "description": "Implementamos programas educativos en 5 comunidades, beneficiando a 200+ familias.",
+                    "color": "#2a4351"
+                },
+                {
+                    "year": "2022",
+                    "shortYear": "22",
+                    "title": "Expansión",
+                    "description": "Ampliamos servicios a empresas y gobiernos, estableciendo alianzas estratégicas.",
+                    "color": "#c16134"
+                },
+                {
+                    "year": "2024",
+                    "shortYear": "24",
+                    "title": "Presente",
+                    "description": "Continuamos transformando vidas con proyectos innovadores y sostenibles.",
+                    "color": "#d3600f"
+                }
+            ]
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}

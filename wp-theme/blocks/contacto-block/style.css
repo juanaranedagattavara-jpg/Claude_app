@@ -1,0 +1,213 @@
+/* Contacto Block Styles */
+.contacto-section {
+    background: linear-gradient(135deg, #2a4351 0%, #1e3a47 100%);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+    scroll-margin-top: 100px;
+    padding: 6rem 0;
+    color: white;
+}
+
+.contacto-section .contacto-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.contacto-section .contacto-badge {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.contacto-section .contacto-badge span {
+    color: #d3600f;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.contacto-section .contacto-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: white;
+    margin: 0 0 2rem 0;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.contacto-section .contacto-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 600px;
+    font-weight: 300;
+}
+
+.contacto-section .contacto-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contacto-section .contacto-form {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.contacto-section .form-fields {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.contacto-section .form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-section .form-label {
+    display: block;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.contacto-section .form-label .required {
+    color: #d3600f;
+}
+
+.contacto-section .form-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 0.75rem;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.contacto-section .form-input:focus {
+    border-color: #d3600f;
+    background: rgba(255,255,255,0.2);
+}
+
+.contacto-section .form-input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.contacto-section .form-input:focus::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.contacto-section .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contacto-section .form-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.contacto-section .submit-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #d3600f 0%, #c16134 100%);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(211,96,15,0.4);
+}
+
+.contacto-section .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(211,96,15,0.6);
+}
+
+.contacto-section .form-message {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+    display: none;
+}
+
+.contacto-section .form-message.success {
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.2);
+    color: #16a34a;
+}
+
+.contacto-section .form-message.error {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contacto-section {
+        padding: 4rem 0;
+    }
+    
+    .contacto-section .contacto-form {
+        padding: 2rem;
+    }
+    
+    .contacto-section .contacto-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .contacto-section .contacto-subtitle {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-section .contacto-form {
+        padding: 1.5rem;
+    }
+    
+    .contacto-section .contacto-title {
+        font-size: 2rem !important;
+    }
+    
+    .contacto-section .contacto-subtitle {
+        font-size: 1rem !important;
+    }
+    
+    .contacto-section .form-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .contacto-section .submit-button {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Focus removal for all elements */
+*:focus,
+*:focus-visible,
+*:active {
+    outline: none !important;
+    box-shadow: none !important;
+}

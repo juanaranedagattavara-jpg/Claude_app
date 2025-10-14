@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/hero-block",
+    "version": "1.0.0",
+    "title": "Hero Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección Hero principal con formulario lead magnet",
+    "keywords": ["hero", "lead", "magnet", "formulario"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Transformando Vidas en los Andes"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Desarrollamos comunidades sostenibles a través de la educación, el emprendimiento y la regeneración ambiental en las montañas andinas."
+        },
+        "backgroundImage": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Conoce Nuestros Servicios"
+        },
+        "leadMagnetText": {
+            "type": "string",
+            "default": "Descarga Guía Gratuita"
+        },
+        "leadMagnetTitle": {
+            "type": "string",
+            "default": "Guía Gratuita: Desarrollo Sostenible en los Andes"
+        },
+        "leadMagnetDescription": {
+            "type": "string",
+            "default": "Descubre las claves para implementar proyectos de desarrollo sostenible en comunidades andinas."
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}
+

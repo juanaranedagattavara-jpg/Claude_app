@@ -1,0 +1,213 @@
+/* Testimonios Block Styles */
+.testimonios-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    scroll-margin-top: 100px;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.testimonios-section .testimonios-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.8) 100%);
+    z-index: 1;
+}
+
+.testimonios-section .testimonios-content {
+    position: relative;
+    z-index: 2;
+}
+
+.testimonios-section .testimonios-header {
+    text-align: center;
+    margin-bottom: 6rem;
+}
+
+.testimonios-section .testimonios-badge {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    background: rgba(211,96,15,0.08);
+    padding: 0.625rem 1.75rem;
+    border-radius: 2.5rem;
+    border: 1px solid rgba(211,96,15,0.15);
+}
+
+.testimonios-section .testimonios-badge span {
+    color: #d3600f;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.testimonios-section .testimonios-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.015em;
+}
+
+.testimonios-section .testimonios-subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    color: #6b6b6b;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+.testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+    .testimonios-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+.testimonios-section .testimonio-card {
+    position: relative;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    border: 1px solid #f3f4f6;
+    height: 100%;
+    transition: all 0.5s ease;
+}
+
+.testimonios-section .testimonio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 35px 60px -12px rgba(0,0,0,0.35);
+}
+
+.testimonios-section .testimonio-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.testimonios-section .testimonio-statistic {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    transition: transform 0.3s ease;
+}
+
+.testimonios-section .testimonio-statistic:hover {
+    transform: scale(1.1);
+}
+
+.testimonios-section .testimonio-statistic span {
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.testimonios-section .testimonio-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 0.5rem 0;
+}
+
+.testimonios-section .testimonio-label {
+    color: #d3600f;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.testimonios-section .testimonio-quote {
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+    font-style: italic;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.testimonios-section .testimonio-footer {
+    border-top: 1px solid #f3f4f6;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.testimonios-section .testimonio-author {
+    font-weight: 600;
+    color: #2a4351;
+    font-size: 1rem;
+}
+
+.testimonios-section .testimonio-position {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .testimonios-section {
+        padding: 4rem 0;
+    }
+    
+    .testimonios-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+    
+    .testimonios-section .testimonio-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonios-section .testimonio-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonios-section .testimonio-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .testimonios-section .testimonio-quote {
+        font-size: 0.9rem !important;
+    }
+    
+    .testimonios-section .testimonio-statistic {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    
+    .testimonios-section .testimonio-statistic span {
+        font-size: 1rem;
+    }
+}
+
+/* Focus removal for all elements */
+*:focus,
+*:focus-visible,
+*:active {
+    outline: none !important;
+    box-shadow: none !important;
+}

@@ -1,0 +1,229 @@
+/* Servicios Block Editor Styles */
+.wp-block-group.section-optimized {
+    background: #ffffff;
+    padding: 40px 20px;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    margin: 20px 0;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.servicio-card {
+    background: #2a4351;
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.servicio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.servicio-card .icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(211,96,15,0.08);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.servicio-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.servicio-card p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+}
+
+.servicio-card .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.servicio-card .features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.servicio-card .features li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #d3600f;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.servicio-card .action-button {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.cta-section {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(42,67,81,0.05) 0%, rgba(211,96,15,0.05) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(211,96,15,0.1);
+}
+
+.cta-section h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 15px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.cta-section p {
+    font-size: 1rem;
+    color: #6b6b6b;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-section button {
+    background: white;
+    color: #d3600f;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Inspector Controls */
+.components-panel__body .components-base-control {
+    margin-bottom: 16px;
+}
+
+.components-panel__body .components-base-control__label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.components-panel__body .components-text-control__input,
+.components-panel__body .components-textarea-control__input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.components-panel__body .components-text-control__input:focus,
+.components-panel__body .components-textarea-control__input:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+.components-panel__body .components-button {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.components-panel__body .service-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.components-panel__body .service-item h4 {
+    margin: 0 0 10px 0;
+    color: #2a4351;
+}
+
+.components-panel__body .feature-item {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.components-panel__body .feature-item .components-text-control {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.components-panel__body .feature-item .components-button {
+    margin: 0;
+    min-width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+/* Editor specific styles */
+.block-editor-block-list__layout .wp-block-group.section-optimized {
+    margin: 0;
+    border: none;
+}
+
+.block-editor-block-list__layout .section-optimized h2 {
+    font-size: 2.5rem !important;
+    font-weight: 400 !important;
+    color: #2a4351 !important;
+    margin: 0 0 20px 0 !important;
+    font-family: 'Playfair Display', serif !important;
+}
+
+.block-editor-block-list__layout .section-optimized p {
+    font-size: 1.2rem !important;
+    color: #6b6b6b !important;
+    margin: 0 0 40px 0 !important;
+    line-height: 1.6 !important;
+}
+
+/* Responsive in editor */
+@media (max-width: 768px) {
+    .servicios-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    .servicio-card {
+        padding: 20px;
+    }
+    
+    .cta-section {
+        padding: 30px 20px;
+    }
+}
+

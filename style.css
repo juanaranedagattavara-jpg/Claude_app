@@ -1,0 +1,104 @@
+/*
+Theme Name: Sueño Andino
+Description: Tema WordPress Block Theme para Sueño Andino - MVP listo para Cursor → WordPress
+Version: 1.0.0
+Author: Sueño Andino Team
+Text Domain: sueno-andino
+*/
+
+/* Estilos base del tema */
+@import url('assets/css/base.css');
+
+/* Variables CSS personalizadas */
+:root {
+  --color-primary: #2c5530;
+  --color-secondary: #8b4513;
+  --color-accent: #d4af37;
+  --color-text: #333333;
+  --color-background: #ffffff;
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Playfair Display', serif;
+}
+
+/* Clases utilitarias */
+.section {
+  padding: 4rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.kicker {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+}
+
+/* Estilos del carrusel de galería - 4 columnas fijas */
+.carrusel-columna {
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.carrusel-columna img {
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.carrusel-columna:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+
+/* Responsive para el carrusel de 4 columnas */
+@media (max-width: 1024px) {
+  .carrusel-columna {
+    aspect-ratio: 3/2 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .carrusel-columna {
+    aspect-ratio: 4/3 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .carrusel-columna {
+    aspect-ratio: 1/1 !important;
+  }
+}

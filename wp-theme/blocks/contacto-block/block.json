@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/contacto-block",
+    "version": "1.0.0",
+    "title": "Contacto Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección de contacto con formulario avanzado",
+    "keywords": ["contacto", "formulario", "comunicacion"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Trabajemos Juntos"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "¿Listo para transformar tu territorio? Conectemos y exploremos cómo podemos impulsar el desarrollo regenerativo en tu región."
+        },
+        "formFields": {
+            "type": "array",
+            "default": [
+                {
+                    "name": "nombre",
+                    "label": "Nombre Completo",
+                    "type": "text",
+                    "placeholder": "Tu nombre completo",
+                    "required": true
+                },
+                {
+                    "name": "email",
+                    "label": "Email",
+                    "type": "email",
+                    "placeholder": "tu@email.com",
+                    "required": true
+                },
+                {
+                    "name": "telefono",
+                    "label": "Teléfono",
+                    "type": "tel",
+                    "placeholder": "+51 999 888 777",
+                    "required": false
+                },
+                {
+                    "name": "organizacion",
+                    "label": "Organización",
+                    "type": "text",
+                    "placeholder": "Nombre de tu organización",
+                    "required": false
+                },
+                {
+                    "name": "mensaje",
+                    "label": "Mensaje",
+                    "type": "textarea",
+                    "placeholder": "Cuéntanos sobre tu proyecto y cómo podemos ayudarte...",
+                    "required": true,
+                    "rows": 5
+                }
+            ]
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Enviar Mensaje"
+        },
+        "successMessage": {
+            "type": "string",
+            "default": "¡Gracias por tu mensaje! Te contactaremos pronto."
+        },
+        "errorMessage": {
+            "type": "string",
+            "default": "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo."
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}

@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/servicios-block",
+    "version": "1.0.0",
+    "title": "Servicios Section",
+    "category": "sueno-andino",
+    "icon": "admin-tools",
+    "description": "Sección de servicios con tarjetas editables",
+    "keywords": ["servicios", "tarjetas", "empresas", "gobiernos"],
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./servicios-block.js",
+    "editorStyle": "file:./servicios-block.css",
+    "style": "file:./servicios-block.css",
+    "supports": {
+        "html": false,
+        "align": ["full", "wide"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "titulo": {
+            "type": "string",
+            "default": "Soluciones Especializadas"
+        },
+        "subtitulo": {
+            "type": "string",
+            "default": "Desarrollamos programas integrales que combinan metodologías probadas con innovación constante para cada tipo de organización."
+        },
+        "servicios": {
+            "type": "array",
+            "default": [
+                {
+                    "titulo": "Para Personas",
+                    "descripcion": "Programas de educación básica y técnica, capacitación en emprendimiento, desarrollo de habilidades digitales y apoyo psicosocial para empoderar a las comunidades andinas.",
+                    "icono": "personas"
+                },
+                {
+                    "titulo": "Para Empresas",
+                    "descripcion": "Consultoría en responsabilidad social, programas de desarrollo comunitario, capacitación de personal local y proyectos de impacto social para empresas comprometidas.",
+                    "icono": "empresas"
+                },
+                {
+                    "titulo": "Para Gobiernos",
+                    "descripcion": "Políticas públicas de desarrollo, programas de inclusión social, capacitación de funcionarios y evaluación de impacto social para gobiernos locales y nacionales.",
+                    "icono": "gobiernos"
+                }
+            ]
+        }
+    }
+}

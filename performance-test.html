@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Performance - Sueño Andino</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #d3600f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #c16134; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Test de Performance - Sueño Andino</h1>
+    
+    <div class="test-section">
+        <h2>1. Verificación de Archivos</h2>
+        <button onclick="checkFiles()">Verificar Archivos</button>
+        <div id="file-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test de Service Worker</h2>
+        <button onclick="testServiceWorker()">Probar Service Worker</button>
+        <div id="sw-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Test de Lazy Loading</h2>
+        <button onclick="testLazyLoading()">Probar Lazy Loading</button>
+        <div id="lazy-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Core Web Vitals</h2>
+        <button onclick="testWebVitals()">Medir Web Vitals</button>
+        <div id="vitals-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Test de Caché</h2>
+        <button onclick="testCache()">Probar Caché</button>
+        <div id="cache-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>6. Test de Compresión</h2>
+        <button onclick="testCompression()">Probar Compresión</button>
+        <div id="compression-results"></div>
+    </div>
+
+    <script>
+        function addResult(containerId, message, type = 'info') {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            container.appendChild(div);
+        }
+
+        function checkFiles() {
+            const container = document.getElementById('file-results');
+            container.innerHTML = '';
+            
+            const files = [
+                { name: '.htaccess', url: '/.htaccess' },
+                { name: 'sw.js', url: '/sw.js' },
+                { name: 'manifest.json', url: '/manifest.json' },
+                { name: 'index.html', url: '/index.html' }
+            ];
+            
+            files.forEach(file => {
+                fetch(file.url)
+                    .then(response => {
+                        if (response.ok) {
+                            addResult('file-results', `✅ ${file.name} - OK`, 'pass');
+                        } else {
+                            addResult('file-results', `❌ ${file.name} - Error ${response.status}`, 'fail');
+                        }
+                    })
+                    .catch(error => {
+                        addResult('file-results', `❌ ${file.name} - ${error.message}`, 'fail');
+                    });
+            });
+        }
+
+        function testServiceWorker() {
+            const container = document.getElementById('sw-results');
+            container.innerHTML = '';
+            
+            if ('serviceWorker' in navigator) {
+                addResult('sw-results', '✅ Service Worker soportado', 'pass');
+                
+                navigator.serviceWorker.getRegistrations()
+                    .then(registrations => {
+                        if (registrations.length > 0) {
+                            addResult('sw-results', `✅ Service Worker registrado (${registrations.length})`, 'pass');
+                        } else {
+                            addResult('sw-results', '⚠️ Service Worker no registrado', 'warning');
+                        }
+                    });
+            } else {
+                addResult('sw-results', '❌ Service Worker no soportado', 'fail');
+            }
+        }
+
+        function testLazyLoading() {
+            const container = document.getElementById('lazy-results');
+            container.innerHTML = '';
+            
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            const eagerImages = document.querySelectorAll('img[loading="eager"]');
+            
+            addResult('lazy-results', `✅ Imágenes con lazy loading: ${lazyImages.length}`, 'pass');
+            addResult('lazy-results', `✅ Imágenes críticas (eager): ${eagerImages.length}`, 'pass');
+            
+            // Verificar si hay imágenes sin loading attribute
+            const allImages = document.querySelectorAll('img');
+            const imagesWithoutLoading = Array.from(allImages).filter(img => !img.hasAttribute('loading'));
+            
+            if (imagesWithoutLoading.length > 0) {
+                addResult('lazy-results', `⚠️ Imágenes sin loading attribute: ${imagesWithoutLoading.length}`, 'warning');
+            } else {
+                addResult('lazy-results', '✅ Todas las imágenes tienen loading attribute', 'pass');
+            }
+        }
+
+        function testWebVitals() {
+            const container = document.getElementById('vitals-results');
+            container.innerHTML = '';
+            
+            if ('PerformanceObserver' in window) {
+                addResult('vitals-results', '✅ PerformanceObserver soportado', 'pass');
+                
+                // Test FCP
+                const fcpObserver = new PerformanceObserver((list) => {
+                    for (const entry of list.getEntries()) {
+                        if (entry.name === 'first-contentful-paint') {
+                            const fcp = entry.startTime;
+                            if (fcp < 1500) {
+                                addResult('vitals-results', `✅ FCP: ${fcp.toFixed(2)}ms (Excelente)`, 'pass');
+                            } else if (fcp < 2500) {
+                                addResult('vitals-results', `⚠️ FCP: ${fcp.toFixed(2)}ms (Bueno)`, 'warning');
+                            } else {
+                                addResult('vitals-results', `❌ FCP: ${fcp.toFixed(2)}ms (Necesita mejora)`, 'fail');
+                            }
+                        }
+                    }
+                });
+                fcpObserver.observe({ entryTypes: ['paint'] });
+                
+                // Test LCP
+                const lcpObserver = new PerformanceObserver((list) => {
+                    const entries = list.getEntries();
+                    const lastEntry = entries[entries.length - 1];
+                    const lcp = lastEntry.startTime;
+                    if (lcp < 2500) {
+                        addResult('vitals-results', `✅ LCP: ${lcp.toFixed(2)}ms (Excelente)`, 'pass');
+                    } else if (lcp < 4000) {
+                        addResult('vitals-results', `⚠️ LCP: ${lcp.toFixed(2)}ms (Bueno)`, 'warning');
+                    } else {
+                        addResult('vitals-results', `❌ LCP: ${lcp.toFixed(2)}ms (Necesita mejora)`, 'fail');
+                    }
+                });
+                lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+                
+            } else {
+                addResult('vitals-results', '❌ PerformanceObserver no soportado', 'fail');
+            }
+        }
+
+        function testCache() {
+            const container = document.getElementById('cache-results');
+            container.innerHTML = '';
+            
+            if ('caches' in window) {
+                addResult('cache-results', '✅ Cache API soportado', 'pass');
+                
+                caches.keys().then(cacheNames => {
+                    if (cacheNames.length > 0) {
+                        addResult('cache-results', `✅ Caches encontrados: ${cacheNames.join(', ')}`, 'pass');
+                    } else {
+                        addResult('cache-results', '⚠️ No hay caches activos', 'warning');
+                    }
+                });
+            } else {
+                addResult('cache-results', '❌ Cache API no soportado', 'fail');
+            }
+        }
+
+        function testCompression() {
+            const container = document.getElementById('compression-results');
+            container.innerHTML = '';
+            
+            // Test de compresión GZIP
+            fetch('/index.html', {
+                headers: {
+                    'Accept-Encoding': 'gzip, deflate, br'
+                }
+            })
+            .then(response => {
+                const encoding = response.headers.get('content-encoding');
+                if (encoding) {
+                    addResult('compression-results', `✅ Compresión activa: ${encoding}`, 'pass');
+                } else {
+                    addResult('compression-results', '⚠️ Compresión no detectada', 'warning');
+                }
+                
+                // Verificar tamaño
+                const contentLength = response.headers.get('content-length');
+                if (contentLength) {
+                    const sizeKB = Math.round(parseInt(contentLength) / 1024);
+                    addResult('compression-results', `📊 Tamaño del archivo: ${sizeKB}KB`, 'info');
+                }
+            })
+            .catch(error => {
+                addResult('compression-results', `❌ Error al probar compresión: ${error.message}`, 'fail');
+            });
+        }
+
+        // Auto-ejecutar algunos tests al cargar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkFiles();
+                testServiceWorker();
+                testLazyLoading();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

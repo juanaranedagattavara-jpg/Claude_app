@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/servicios-block",
+    "version": "1.0.0",
+    "title": "Servicios Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección de servicios con grid elegante y carrusel",
+    "keywords": ["servicios", "grid", "carrusel", "soluciones"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Soluciones Especializadas"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Desarrollamos programas integrales que combinan metodologías probadas con innovación constante para cada tipo de organización."
+        },
+        "services": {
+            "type": "array",
+            "default": [
+                {
+                    "title": "Para Personas",
+                    "description": "Programas de desarrollo personal y profesional diseñados para empoderar a individuos en comunidades andinas.",
+                    "features": ["Capacitación técnica", "Liderazgo comunitario", "Emprendimiento personal"],
+                    "icon": "👥",
+                    "color": "#2a4351"
+                },
+                {
+                    "title": "Para Organizaciones",
+                    "description": "Soluciones corporativas de responsabilidad social y desarrollo sostenible para empresas.",
+                    "features": ["Consultoría estratégica", "Programas RSE", "Impacto medible"],
+                    "icon": "🏢",
+                    "color": "#d3600f"
+                },
+                {
+                    "title": "Para Comunidades",
+                    "description": "Proyectos integrales de desarrollo territorial regenerativo para comunidades andinas.",
+                    "features": ["Desarrollo territorial", "Sostenibilidad ambiental", "Cohesión social"],
+                    "icon": "🏔️",
+                    "color": "#c16134"
+                }
+            ]
+        },
+        "ctaTitle": {
+            "type": "string",
+            "default": "¿Listo para Transformar tu Comunidad?"
+        },
+        "ctaDescription": {
+            "type": "string",
+            "default": "Descubre cómo nuestros servicios pueden impulsar el desarrollo regenerativo en tu comunidad o empresa."
+        },
+        "ctaButton": {
+            "type": "string",
+            "default": "Agendar Consulta"
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}
+

@@ -1,0 +1,199 @@
+/* Testimonios Block Editor Styles */
+.testimonios-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 40px 20px;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonios-section .testimonios-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.8) 100%);
+    z-index: 1;
+}
+
+.testimonios-section .testimonios-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonios-section .testimonios-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 20px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.testimonios-section .testimonios-subtitle {
+    font-size: 1.2rem;
+    color: #6b6b6b;
+    margin: 0 0 40px 0;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.testimonios-section .testimonio-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #f3f4f6;
+    transition: all 0.3s ease;
+}
+
+.testimonios-section .testimonio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.testimonios-section .testimonio-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.testimonios-section .testimonio-statistic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.testimonios-section .testimonio-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2a4351;
+    margin: 0 0 5px 0;
+}
+
+.testimonios-section .testimonio-label {
+    color: #d3600f;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.testimonios-section .testimonio-quote {
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0 0 15px 0;
+    font-style: italic;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.testimonios-section .testimonio-footer {
+    border-top: 1px solid #f3f4f6;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.testimonios-section .testimonio-author {
+    font-weight: 600;
+    color: #2a4351;
+    font-size: 0.9rem;
+}
+
+.testimonios-section .testimonio-position {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* Inspector Controls */
+.components-panel__body .components-base-control {
+    margin-bottom: 16px;
+}
+
+.components-panel__body .components-base-control__label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.components-panel__body .components-text-control__input,
+.components-panel__body .components-textarea-control__input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.components-panel__body .components-text-control__input:focus,
+.components-panel__body .components-textarea-control__input:focus {
+    border-color: #d3600f;
+    box-shadow: 0 0 0 1px #d3600f;
+}
+
+.components-panel__body .testimonio-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.components-panel__body .testimonio-item h4 {
+    margin: 0 0 10px 0;
+    color: #2a4351;
+}
+
+.components-panel__body .testimonio-item .components-button {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* Editor specific styles */
+.block-editor-block-list__layout .testimonios-section {
+    margin: 0;
+    border: none;
+}
+
+.block-editor-block-list__layout .testimonios-section .testimonios-title {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #2a4351 !important;
+    margin: 0 0 20px 0 !important;
+    font-family: 'Playfair Display', serif !important;
+}
+
+.block-editor-block-list__layout .testimonios-section .testimonios-subtitle {
+    font-size: 1.2rem !important;
+    color: #6b6b6b !important;
+    margin: 0 0 40px 0 !important;
+    line-height: 1.6 !important;
+}
+
+/* Responsive in editor */
+@media (max-width: 768px) {
+    .testimonios-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "sueno-andino/golden-circle-block",
+    "version": "1.0.0",
+    "title": "Golden Circle Section",
+    "category": "sueno-andino",
+    "icon": "admin-site-alt3",
+    "description": "Sección Golden Circle con newsletter integrado",
+    "keywords": ["golden", "circle", "newsletter", "nosotros"],
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "¿Por qué Sueño Andino?"
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "Nuestra misión es transformar vidas a través de la educación y el desarrollo sostenible en los Andes."
+        },
+        "whyTitle": {
+            "type": "string",
+            "default": "¿Por qué?"
+        },
+        "whyDescription": {
+            "type": "string",
+            "default": "Creemos que cada comunidad andina tiene el potencial de convertirse en un modelo de desarrollo sostenible."
+        },
+        "howTitle": {
+            "type": "string",
+            "default": "¿Cómo?"
+        },
+        "howDescription": {
+            "type": "string",
+            "default": "A través de programas educativos, emprendimiento social y proyectos de regeneración ambiental."
+        },
+        "whatTitle": {
+            "type": "string",
+            "default": "¿Qué?"
+        },
+        "whatDescription": {
+            "type": "string",
+            "default": "Desarrollamos comunidades prósperas y sostenibles en las montañas andinas."
+        },
+        "newsletterTitle": {
+            "type": "string",
+            "default": "Mantente Conectado"
+        },
+        "newsletterDescription": {
+            "type": "string",
+            "default": "Recibe actualizaciones sobre nuestros proyectos y oportunidades de colaboración."
+        },
+        "newsletterPlaceholder": {
+            "type": "string",
+            "default": "tu@email.com"
+        },
+        "newsletterButton": {
+            "type": "string",
+            "default": "Suscribirse"
+        }
+    },
+    "textdomain": "sueno-andino",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}
+
