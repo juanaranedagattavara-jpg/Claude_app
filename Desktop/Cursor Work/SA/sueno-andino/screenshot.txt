@@ -1,0 +1,4 @@
+Screenshot placeholder
+Este archivo es un placeholder para la captura de pantalla del tema.
+En un tema real, aquí habría un archivo screenshot.png que muestra
+cómo se ve el tema en el administrador de WordPress.
