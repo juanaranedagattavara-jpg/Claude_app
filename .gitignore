@@ -17,3 +17,4 @@ Thumbs.db
 # Archivos problemáticos
 h origin master
 tore .
+node_modules
