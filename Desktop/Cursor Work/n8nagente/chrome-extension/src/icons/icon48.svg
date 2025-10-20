@@ -1,0 +1,10 @@
+<!-- Icono 48x48 -->
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="9" fill="#2563eb"/>
+  <path d="M12 18h24v18H12V18z" fill="white"/>
+  <path d="M18 12h18v6H18v-6z" fill="white" opacity="0.7"/>
+  <circle cx="36" cy="12" r="4.5" fill="#2563eb"/>
+  <path d="M21 24h6v3h-6v-3z" fill="#2563eb"/>
+  <path d="M21 28.5h9v1.5h-9v-1.5z" fill="#2563eb"/>
+  <path d="M21 31.5h7v1.5h-7v-1.5z" fill="#2563eb"/>
+</svg>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      width: 380px;
+      min-height: 500px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+    .config-section {
+      margin-bottom: 24px;
+    }
+    .config-section h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #374151;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    .config-section h3::before {
+      content: "⚙️";
+      margin-right: 8px;
+    }
+    .input-group {
+      margin-bottom: 16px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .input-group input:invalid {
+      border-color: #ef4444;
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: white;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: #e5e7eb;
+    }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+    .status.info {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+    }
+    .status.loading {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .page-info {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .page-info h4 {
+      margin: 0 0 8px 0;
+      color: #374151;
+      font-size: 14px;
+    }
+    .page-info p {
+      margin: 4px 0;
+      color: #6b7280;
+    }
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .help-text {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .version {
+      text-align: center;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">N8N Web Cloner</div>
+      <div class="subtitle">Clona páginas web con 95% de fidelidad visual</div>
+    </div>
+
+    <div class="page-info" id="pageInfo" style="display: none;">
+      <h4>📄 Página Actual</h4>
+      <p id="pageTitle">Cargando...</p>
+      <p id="pageUrl">Cargando...</p>
+    </div>
+
+    <div class="config-section">
+      <h3>Configuración del Backend</h3>
+      <div class="input-group">
+        <label for="backendUrl">URL del Backend:</label>
+        <input type="url" id="backendUrl" placeholder="http://localhost:3000" required>
+        <div class="help-text">URL donde está ejecutándose el servidor backend</div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <h3>Credenciales WordPress</h3>
+      <div class="input-group">
+        <label for="wpUrl">URL del sitio WordPress:</label>
+        <input type="url" id="wpUrl" placeholder="https://mi-sitio.com" required>
+      </div>
+      <div class="input-group">
+        <label for="wpUsername">Usuario:</label>
+        <input type="text" id="wpUsername" placeholder="admin" required>
+      </div>
+      <div class="input-group">
+        <label for="wpPassword">Contraseña de Aplicación:</label>
+        <input type="password" id="wpPassword" placeholder="xxxx xxxx xxxx xxxx" required>
+        <div class="help-text">Genera una en Usuarios > Tu Perfil > Contraseñas de Aplicación</div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="saveConfig" class="btn btn-secondary">
+        💾 Guardar
+      </button>
+      <button id="clonePage" class="btn btn-primary">
+        🚀 Clonar Página
+      </button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="version">v1.0.0 - MVP Clonador Web</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
