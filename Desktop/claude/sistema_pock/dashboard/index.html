@@ -241,6 +241,11 @@
     .modal-b [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
     /* WhatsApp reply textarea */
     .modal-b textarea, .modal textarea { font-size: 16px; /* prevent zoom on iOS */ }
+    /* WhatsApp conversation modal - mobile fixes */
+    #wa-thread { max-height: 40vh !important; }
+    #wa-thread + div { padding: 10px 14px !important; }
+    #wa-thread .chat-msg { max-width: 90%; font-size: 13px; }
+    .info { word-break: break-word; overflow-wrap: break-word; }
     /* Attention items - stack better */
     .panel-body [style*="display:grid"] { gap: 6px !important; }
   }
@@ -249,6 +254,11 @@
     .topbar h2 { font-size: 16px; }
     .hero h2 { font-size: 18px; }
     .kpi-value { font-size: 18px; }
+    /* WhatsApp modal - narrow phones */
+    #wa-thread { max-height: 35vh !important; }
+    #wa-thread + div div[style*="display:flex"] { flex-direction: column; }
+    #wa-thread + div div[style*="display:flex"] button { align-self: stretch !important; }
+    #wa-thread .chat-msg { max-width: 95%; }
   }
 </style>
 </head>
@@ -845,7 +855,7 @@ async function renderWhatsapp() {
           '<table><thead><tr><th>Cliente</th><th>Ultimo mensaje</th><th>Estado</th><th>Mensajes</th><th>Cuando</th></tr></thead><tbody>' +
           convs.map(c => `<tr class="row-click" onclick="openWaConversation(${c.id}, ${c.chatwoot_conversation_id})">
             <td><b>${esc(c.contact_name||'Cliente sin nombre')}</b><div class="muted">${esc(c.contact_phone||c.contact_email||'-')}</div></td>
-            <td><div class="truncate" style="max-width:380px"><span class="muted">${c.last_msg_type==='outgoing'?'Vos:':'Cliente:'}</span> ${esc((c.last_message_preview||'').slice(0,120))}</div></td>
+            <td><div class="truncate"><span class="muted">${c.last_msg_type==='outgoing'?'Vos:':'Cliente:'}</span> ${esc((c.last_message_preview||'').slice(0,120))}</div></td>
             <td><span class="pill ${c.status==='open'?'lead':c.status==='resolved'?'accepted':'expired'}">${c.status || '-'}</span></td>
             <td><b>${c.msg_count}</b></td>
             <td><span class="muted">${ago(c.last_message_at)}</span></td>
