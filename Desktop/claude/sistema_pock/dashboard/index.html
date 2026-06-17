@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#dc2626">
+<title>POCK | Panel Ejecutivo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23dc2626'/%3E%3Ctext x='50' y='70' font-family='Helvetica' font-size='62' font-weight='900' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: light;
+    --red: #dc2626; --red-dark: #991b1b; --red-soft: #fef2f2;
+    --black: #0a0a0a; --gray-900: #1a1a1a; --gray-800: #2a2a2a; --gray-700: #3a3a3a;
+    --gray-500: #6b7280; --gray-400: #9ca3af; --gray-200: #e5e7eb;
+    --gray-100: #f3f4f6; --gray-50: #fafafa; --white: #fff;
+    --success: #16a34a; --warn: #d97706; --info: #2563eb;
+    --whatsapp: #25d366;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gray-50); color: var(--gray-900); }
+
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sidebar { background: var(--black); color: white; padding: 22px 0 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .brand { padding: 0 22px 24px; border-bottom: 1px solid var(--gray-800); }
+  .brand-row { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 36px; height: 36px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; }
+  .brand-name { font-size: 18px; font-weight: 800; letter-spacing: 1px; }
+  .brand-tag { font-size: 10px; color: var(--gray-400); margin-top: 2px; letter-spacing: 0.6px; }
+  .nav { padding: 14px 12px; }
+  .nav-section { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 1.2px; padding: 14px 12px 6px; }
+  .nav a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 7px; color: var(--gray-200); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 2px; transition: background 0.15s; }
+  .nav a:hover { background: var(--gray-900); color: white; }
+  .nav a.active { background: var(--red); color: white; }
+  .nav a .ico { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav a .badge { margin-left: auto; background: var(--red); color: white; border-radius: 10px; padding: 1px 7px; font-size: 10px; font-weight: 700; }
+  .nav a.active .badge { background: rgba(255,255,255,0.25); }
+  .nav a.wa-link.active { background: var(--whatsapp); }
+  .sidebar-foot { padding: 14px 22px; border-top: 1px solid var(--gray-800); font-size: 11px; color: var(--gray-500); margin-top: 12px; }
+  .ceo-card { padding: 14px 22px; margin: 6px 0 0; border-top: 1px solid var(--gray-800); }
+  .ceo-name { font-size: 13px; font-weight: 700; color: white; }
+  .ceo-role { font-size: 10px; color: var(--gray-400); margin-top: 2px; letter-spacing: 0.4px; }
+
+  .main { display: flex; flex-direction: column; min-height: 100vh; }
+  .topbar { background: white; border-bottom: 1px solid var(--gray-200); padding: 16px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 5; }
+  .topbar h2 { margin: 0; font-size: 20px; font-weight: 700; color: var(--gray-900); }
+  .topbar .subtitle { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .topbar .actions { display: flex; gap: 10px; align-items: center; }
+  .updated { font-size: 11px; color: var(--gray-500); }
+  .content { padding: 24px 28px; max-width: 1320px; width: 100%; }
+
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration: none; transition: all 0.15s; }
+  .btn-primary { background: var(--red); color: white; }
+  .btn-primary:hover { background: var(--red-dark); }
+  .btn-dark { background: var(--black); color: white; }
+  .btn-dark:hover { background: var(--gray-800); }
+  .btn-outline { background: white; border-color: var(--gray-200); color: var(--gray-900); }
+  .btn-outline:hover { border-color: var(--black); }
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .panel { background: white; border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; margin-bottom: 18px; }
+  .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
+  .panel-title { font-size: 14px; font-weight: 700; color: var(--gray-900); }
+  .panel-subtitle { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .panel-body { padding: 20px; }
+  .panel-body.flush { padding: 0; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .kpi { background: white; border: 1px solid var(--gray-200); border-radius: 12px; padding: 16px 18px; position: relative; overflow: hidden; }
+  .kpi.accent { background: var(--black); color: white; border-color: var(--black); }
+  .kpi.accent .kpi-label { color: var(--gray-400); }
+  .kpi.accent .kpi-value { color: white; }
+  .kpi.accent .kpi-sub { color: var(--gray-400); }
+  .kpi.accent::after { content: ''; position: absolute; right: -20px; bottom: -20px; width: 80px; height: 80px; background: var(--red); border-radius: 50%; opacity: 0.15; }
+  .kpi.wa { background: var(--whatsapp); color: white; border-color: var(--whatsapp); }
+  .kpi.wa .kpi-label, .kpi.wa .kpi-sub { color: rgba(255,255,255,0.85); }
+  .kpi.wa .kpi-value { color: white; }
+  .kpi-label { font-size: 11px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+  .kpi-value { font-size: 28px; font-weight: 800; color: var(--gray-900); margin-top: 6px; line-height: 1.1; }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.success { color: var(--success); }
+  .kpi-value.warn { color: var(--warn); }
+  .kpi-sub { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+  .kpi-trend { font-size: 11px; margin-top: 6px; font-weight: 600; }
+  .kpi-trend.up { color: var(--success); }
+  .kpi-trend.down { color: var(--red); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--gray-200); vertical-align: top; }
+  th { background: var(--gray-50); font-size: 11px; text-transform: uppercase; color: var(--gray-500); letter-spacing: 0.4px; font-weight: 700; }
+  tr:last-child td { border-bottom: none; }
+  tr.row-click { cursor: pointer; }
+  tr.row-click:hover td { background: var(--red-soft); }
+
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+  .pill.lead { background: #fef2f2; color: var(--red); }
+  .pill.cliente { background: #fff4e0; color: var(--warn); }
+  .pill.colaborador { background: #e0e8f0; color: #2e5780; }
+  .pill.spam, .pill.rechazado, .pill.rejected { background: var(--gray-100); color: var(--gray-700); }
+  .pill.proveedor, .pill.desconocido, .pill.digest { background: var(--gray-100); color: var(--gray-700); }
+  .pill.draft, .pill.generated { background: #fff4e0; color: var(--warn); }
+  .pill.sent, .pill.approved { background: #e0f0e0; color: var(--success); }
+  .pill.accepted { background: #c8e6c2; color: #155f0f; }
+  .pill.expired { background: var(--gray-100); color: var(--gray-500); }
+  .pill.discarded { background: var(--gray-100); color: var(--gray-500); }
+  .pill.live { background: #e0f0e0; color: var(--success); }
+  .pill.live::before { content: '●'; margin-right: 4px; color: var(--success); animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .empty { padding: 40px 20px; text-align: center; color: var(--gray-500); font-size: 13px; }
+  .empty-icon { font-size: 32px; opacity: 0.4; margin-bottom: 10px; }
+  .empty-title { font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
+
+  .loading { text-align: center; padding: 50px; color: var(--gray-500); font-size: 13px; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
+  .spinner.dark { border-color: rgba(0,0,0,0.15); border-top-color: var(--gray-700); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .err { padding: 14px 18px; color: white; background: var(--red); border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+  .info { padding: 14px 18px; color: var(--black); background: #fef3c7; border-radius: 8px; margin-bottom: 16px; font-size: 13px; border-left: 4px solid var(--warn); }
+  .success-msg { padding: 14px 18px; color: white; background: var(--success); border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+
+  .muted { color: var(--gray-500); font-size: 11px; }
+  .truncate { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(10,10,10,0.65); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; backdrop-filter: blur(2px); }
+  .modal { background: white; border-radius: 14px; max-width: 760px; width: 100%; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .modal-h { padding: 18px 22px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; background: var(--black); color: white; }
+  .modal-title { font-size: 16px; font-weight: 700; }
+  .modal-close { background: transparent; color: white; border: none; cursor: pointer; font-size: 22px; padding: 4px 10px; border-radius: 6px; }
+  .modal-close:hover { background: var(--gray-800); }
+  .modal-b { padding: 22px; overflow-y: auto; }
+  .modal-f { padding: 14px 22px; border-top: 1px solid var(--gray-200); display: flex; gap: 10px; justify-content: flex-end; background: var(--gray-50); }
+
+  .detail-row { display: flex; gap: 6px; margin-bottom: 6px; font-size: 13px; }
+  .detail-row .k { color: var(--gray-500); min-width: 110px; }
+  .detail-row .v { color: var(--gray-900); font-weight: 500; }
+
+  .filter-bar { display: flex; gap: 10px; padding: 14px 20px; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); align-items: center; flex-wrap: wrap; }
+  .filter-bar input, .filter-bar select { width: auto; min-width: 140px; padding: 8px 12px; border: 1px solid var(--gray-200); border-radius: 7px; font-size: 13px; }
+  .input-search { padding: 8px 12px 8px 32px !important; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.35-4.35'/></svg>"); background-repeat: no-repeat; background-position: 10px center; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, var(--black), var(--gray-800)); color: white; padding: 32px; border-radius: 14px; margin-bottom: 22px; position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(220,38,38,0.3) 0%, transparent 60%); transform: rotate(20deg); }
+  .hero-greet { font-size: 12px; color: var(--gray-400); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; position: relative; z-index: 1; }
+  .hero h2 { margin: 0 0 8px; font-size: 28px; font-weight: 800; position: relative; z-index: 1; }
+  .hero p { margin: 0; opacity: 0.85; font-size: 15px; position: relative; z-index: 1; line-height: 1.55; max-width: 720px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .chart-wrap { padding: 16px; height: 240px; }
+  .bar-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12px; }
+  .bar-row .bar-label { min-width: 70px; color: var(--gray-700); }
+  .bar-row .bar-track { flex: 1; height: 16px; background: var(--gray-100); border-radius: 4px; overflow: hidden; position: relative; }
+  .bar-row .bar-fill { height: 100%; background: var(--red); border-radius: 4px; transition: width 0.4s; }
+  .bar-row .bar-value { min-width: 32px; text-align: right; color: var(--gray-700); font-weight: 600; }
+
+  /* Chat messages */
+  .chat-msg { padding: 10px 14px; border-radius: 12px; margin-bottom: 8px; max-width: 80%; font-size: 13px; line-height: 1.5; white-space: pre-wrap; }
+  .chat-msg.human { background: var(--gray-100); margin-right: auto; border-bottom-left-radius: 4px; }
+  .chat-msg.ai { background: #d4f5dc; color: var(--gray-900); margin-left: auto; border-bottom-right-radius: 4px; }
+  .chat-author { font-size: 10px; color: var(--gray-500); margin-bottom: 2px; }
+
+  /* MOBILE - bottom nav style */
+  .mobile-only { display: none; }
+  .menu-btn { display: none; }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 50; transform: translateX(-100%); transition: transform 0.25s; box-shadow: 0 0 30px rgba(0,0,0,0.3); }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; }
+    .sidebar-backdrop.show { display: block; }
+    .menu-btn { display: inline-flex; background: var(--black); color: white; border: none; padding: 8px 12px; border-radius: 7px; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; cursor: pointer; margin-right: 10px; }
+    .menu-btn svg { width: 18px; height: 18px; }
+    .topbar { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
+    .topbar h2 { font-size: 17px; }
+    .topbar .subtitle { font-size: 11px; }
+    .topbar .actions { gap: 6px; }
+    .topbar .actions .updated { display: none; }
+    .content { padding: 14px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .kpi { padding: 12px 14px; }
+    .kpi-value { font-size: 20px; }
+    .kpi-label { font-size: 10px; }
+    .kpi-sub { font-size: 10px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero { padding: 22px 18px; }
+    .hero h2 { font-size: 20px; }
+    .hero p { font-size: 13px; }
+    .panel-body.flush { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 520px; font-size: 12px; }
+    th, td { padding: 9px 12px; }
+    .truncate { max-width: 180px; }
+    .modal-bg { padding: 0; align-items: flex-end; }
+    .modal { max-height: 95vh; border-radius: 14px 14px 0 0; }
+    .modal-h { padding: 14px 18px; }
+    .modal-title { font-size: 14px; }
+    .modal-b { padding: 16px; }
+    .modal-f { padding: 12px 16px; flex-wrap: wrap; }
+    .form-row { grid-template-columns: 1fr; }
+    .filter-bar { padding: 10px 14px; }
+    .filter-bar input, .filter-bar select { min-width: 100%; width: 100%; }
+    .nav { padding: 18px 14px; }
+    .nav a { font-size: 14px; padding: 12px; }
+    .mobile-only { display: flex; }
+    .desktop-only { display: none; }
+  }
+  @media (max-width: 480px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .topbar h2 { font-size: 16px; }
+    .hero h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleSidebar()"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-row">
+        <div class="brand-mark">P</div>
+        <div>
+          <div class="brand-name">POCK</div>
+          <div class="brand-tag">PANEL EJECUTIVO</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <a href="#/hoy" data-route="hoy">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Resumen
+      </a>
+      <a href="#/analisis" data-route="analisis">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
+        Analisis
+      </a>
+      <div class="nav-section">Comercial</div>
+      <a href="#/leads" data-route="leads">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a2 2 0 00-2-2H9a2 2 0 00-2 2"/><circle cx="12" cy="11" r="3"/><circle cx="12" cy="12" r="10"/></svg>
+        Leads
+        <span class="badge" id="bdg-leads" style="display:none"></span>
+      </a>
+      <a href="#/cotizaciones" data-route="cotizaciones">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        Cotizaciones
+        <span class="badge" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);font-size:9px;display:inline-block">PRONTO</span>
+      </a>
+      <a href="#/clientes" data-route="clientes">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Clientes
+      </a>
+      <div class="nav-section">Operaciones</div>
+      <a href="#/whatsapp" data-route="whatsapp" class="wa-link">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        Chatbot WhatsApp
+        <span class="badge" id="bdg-wa" style="display:none"></span>
+      </a>
+      <a href="#/bandeja" data-route="bandeja">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Correo electronico
+        <span class="badge" id="bdg-bandeja" style="display:none"></span>
+      </a>
+      <div class="nav-section">Referencia</div>
+      <a href="#/catalogo" data-route="catalogo">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        Catalogo
+      </a>
+      <a href="#/historial" data-route="historial">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Actividad
+      </a>
+    </nav>
+
+    <div class="ceo-card">
+      <div class="ceo-name">Matias del Sol</div>
+      <div class="ceo-role">CEO &middot; POCK</div>
+    </div>
+
+    <div class="sidebar-foot">
+      <div>pock.cl</div>
+      <div style="margin-top:4px">+56 9 6216 2849</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex:1;min-width:0">
+        <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div style="min-width:0">
+          <h2 id="page-title">Hoy</h2>
+          <div class="subtitle" id="page-subtitle">Cargando...</div>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="updated" id="updated"></span>
+        <button class="btn btn-outline" id="reload-btn" onclick="reload()">Refrescar</button>
+      </div>
+    </div>
+    <div class="content" id="content"><div class="loading">Cargando...</div></div>
+  </main>
+</div>
+
+<div id="modal-root"></div>
+
+<script>
+// ============== CONFIG ==============
+const SUPABASE_URL = 'https://nrbcyaenkutonhdpspal.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yYmN5YWVua3V0b25oZHBzcGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxNjQ2MzgsImV4cCI6MjA4Mjc0MDYzOH0.A1DKD_Pqb1OSudrsGlDfge1NHvUZLaFf3mHN4DrsEMY';
+const N8N_BASE = 'https://n8n.aranedaoffice.cloud';
+const WA_SEND_URL = `${N8N_BASE}/webhook/pock-wa-send`;
+const AUTO_REFRESH_MS = 60_000;
+const CEO_NAME = 'Matias';
+
+// ============== UTILS ==============
+const $ = (s) => document.querySelector(s);
+const fmtCLP = (n) => '$ ' + (Number(n)||0).toLocaleString('es-CL');
+const fmtDate = (s) => { if(!s) return '-'; const d = new Date(s); return d.toLocaleDateString('es-CL') + ' ' + d.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'}); };
+const fmtDateShort = (s) => { if(!s) return '-'; return new Date(s).toLocaleDateString('es-CL'); };
+const ago = (s) => {
+  if (!s) return '-';
+  const diff = (Date.now() - new Date(s).getTime()) / 1000;
+  if (diff < 60) return 'hace un instante';
+  if (diff < 3600) return `hace ${Math.floor(diff/60)} min`;
+  if (diff < 86400) return `hace ${Math.floor(diff/3600)} h`;
+  if (diff < 604800) return `hace ${Math.floor(diff/86400)} dias`;
+  return fmtDateShort(s);
+};
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const saludo = () => {
+  const h = new Date().getHours();
+  if (h < 6) return 'Buenas noches';
+  if (h < 13) return 'Buenos dias';
+  if (h < 20) return 'Buenas tardes';
+  return 'Buenas noches';
+};
+
+const STATE_LABEL = { draft: 'Lista', sent: 'Enviada', accepted: 'Aceptada', rejected: 'Rechazada', expired: 'Vencida' };
+const DRAFT_LABEL = { generated: 'Por revisar', approved: 'Aprobada', sent: 'Enviada', discarded: 'Descartada' };
+const CAT_LABEL = { lead: 'Lead', cliente: 'Cliente', colaborador: 'Colaborador', proveedor: 'Proveedor', spam: 'Spam', desconocido: 'Sin clasificar' };
+
+async function rpc(name, body = {}) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`Error ${r.status}: ${await r.text()}`);
+  return r.json();
+}
+
+function toast(msg, type='success') {
+  const el = document.createElement('div');
+  el.className = type === 'error' ? 'err' : 'success-msg';
+  el.style.cssText = 'position:fixed;top:20px;right:20px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.2);max-width:340px';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.4s'; }, 2600);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function modal(html, footer = '') {
+  $('#modal-root').innerHTML = `<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}${footer ? `<div class="modal-f">${footer}</div>` : ''}</div></div>`;
+}
+function closeModal() { $('#modal-root').innerHTML = ''; }
+
+// ============== ROUTER ==============
+const PAGES = {
+  hoy: { title: 'Resumen ejecutivo', subtitle: 'Pulso del negocio en tiempo real', render: renderHoy },
+  analisis: { title: 'Analisis', subtitle: 'Funnel, velocidad y segmentacion', render: renderAnalisis },
+  leads: { title: 'Leads', subtitle: 'Quien esta pidiendo informacion ahora mismo', render: renderLeads },
+  cotizaciones: { title: 'Cotizaciones', subtitle: 'Pipeline de cotizaciones abiertas y cerradas', render: renderCotizaciones },
+  clientes: { title: 'Clientes', subtitle: 'Directorio completo con historial', render: renderClientes },
+  whatsapp: { title: 'WhatsApp', subtitle: 'Conversaciones via Chatwoot en tiempo real', render: renderWhatsapp },
+  bandeja: { title: 'Correo electronico', subtitle: 'Respuestas redactadas por la IA esperando aprobacion', render: renderBandeja },
+  catalogo: { title: 'Catalogo', subtitle: 'Productos y precios vigentes', render: renderCatalogo },
+  historial: { title: 'Actividad del sistema', subtitle: 'Que ha hecho la automatizacion en las ultimas horas', render: renderHistorial }
+};
+
+let currentRoute = 'hoy';
+let cache = { dashboard: null, dashboardAt: 0, chatbot: null, chatbotAt: 0, exec: null, execAt: 0 };
+
+async function getDashboard(force = false) {
+  if (!force && cache.dashboard && (Date.now() - cache.dashboardAt < 30_000)) return cache.dashboard;
+  cache.dashboard = await rpc('dashboard_full');
+  cache.dashboardAt = Date.now();
+  return cache.dashboard;
+}
+async function getChatbot(force = false) {
+  if (!force && cache.chatbot && (Date.now() - cache.chatbotAt < 30_000)) return cache.chatbot;
+  cache.chatbot = await rpc('chatwoot_metrics');
+  cache.chatbotAt = Date.now();
+  return cache.chatbot;
+}
+async function getExec(force = false) {
+  if (!force && cache.exec && (Date.now() - cache.execAt < 30_000)) return cache.exec;
+  cache.exec = await rpc('executive_dashboard');
+  cache.execAt = Date.now();
+  return cache.exec;
+}
+
+function setActiveNav(route) {
+  document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('active', a.dataset.route === route));
+}
+
+window.toggleSidebar = () => {
+  const sb = document.getElementById('sidebar');
+  const bd = document.getElementById('sidebar-backdrop');
+  const isOpen = sb.classList.toggle('open');
+  bd.classList.toggle('show', isOpen);
+};
+document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () => {
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-backdrop').classList.remove('show');
+  }
+}));
+
+async function navigate() {
+  const hash = location.hash.replace('#/', '') || 'hoy';
+  const page = PAGES[hash] || PAGES.hoy;
+  currentRoute = hash;
+  setActiveNav(hash);
+  $('#page-title').textContent = page.title;
+  $('#page-subtitle').textContent = page.subtitle;
+  $('#content').innerHTML = '<div class="loading"><span class="spinner dark"></span> Cargando...</div>';
+  try { await page.render(); }
+  catch (e) { $('#content').innerHTML = `<div class="err"><b>Error:</b> ${esc(e.message)}</div>`; console.error(e); }
+}
+
+function updateBadges(d, c) {
+  const setBdg = (id, n) => { const el = $('#bdg-' + id); if (n > 0) { el.textContent = n; el.style.display = 'inline-block'; } else el.style.display = 'none'; };
+  if (d) {
+    setBdg('bandeja', d.kpis.drafts_pending);
+    setBdg('leads', d.kpis.leads_24h);
+  }
+  if (c) setBdg('wa', c.open_conversations || c.conversations_24h || 0);
+}
+
+async function reload() {
+  const btn = $('#reload-btn');
+  btn.innerHTML = '<span class="spinner dark"></span> Refrescando';
+  cache.dashboard = null; cache.chatbot = null; cache.exec = null;
+  await navigate();
+  btn.innerHTML = 'Refrescar';
+}
+
+window.addEventListener('hashchange', navigate);
+
+// ============== PAGE: HOY (Resumen Ejecutivo CEO) ==============
+async function renderHoy() {
+  const [d, c, e] = await Promise.all([getDashboard(true), getChatbot(true), getExec(true)]);
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(e.generated_at);
+
+  const k = d.kpis;
+  const att = e.attention || {};
+  const cashIn = e.cash_in || {};
+  const fun = e.funnel || {};
+  const growthSign = e.growth_pct > 0 ? '+' : '';
+  const growthClass = e.growth_pct > 0 ? 'up' : e.growth_pct < 0 ? 'down' : '';
+  const growthArrow = e.growth_pct > 0 ? '▲' : e.growth_pct < 0 ? '▼' : '·';
+
+  // Atencion items
+  const attentionItems = [];
+  if (att.drafts_pending > 0) attentionItems.push({ icon: '✉', label: `${att.drafts_pending} borrador${att.drafts_pending===1?'':'es'} esperan aprobacion`, sub: 'En correo electronico', href: '#/bandeja', priority: att.drafts_old > 0 ? 'red' : 'warn' });
+  if (att.quotes_stale > 0) attentionItems.push({ icon: '◔', label: `${att.quotes_stale} cotizacion${att.quotes_stale===1?'':'es'} enviada${att.quotes_stale===1?'':'s'} hace mas de 7 dias`, sub: `${fmtCLP(att.quotes_stale_value)} sin respuesta - dale seguimiento`, href: '#/cotizaciones', priority: 'red' });
+  if (att.wa_stale > 0) attentionItems.push({ icon: '◌', label: `${att.wa_stale} conversacion${att.wa_stale===1?'':'es'} WhatsApp sin responder hace 24h+`, sub: 'Clientes esperando', href: '#/whatsapp', priority: 'warn' });
+  if (att.quotes_expiring > 0) attentionItems.push({ icon: '⌛', label: `${att.quotes_expiring} cotizacion${att.quotes_expiring===1?'':'es'} vence${att.quotes_expiring===1?'':'n'} en 7 dias`, sub: `${fmtCLP(att.quotes_expiring_value)} en riesgo de expirar`, href: '#/cotizaciones', priority: 'warn' });
+  if (att.wa_new > 0) attentionItems.push({ icon: '✦', label: `${att.wa_new} mensaje${att.wa_new===1?'':'s'} WhatsApp nuevo${att.wa_new===1?'':'s'}`, sub: 'Llegaron en las ultimas 24h', href: '#/whatsapp', priority: 'info' });
+
+  const html = `
+    <div class="hero">
+      <div class="hero-greet">${saludo()}</div>
+      <h2>${CEO_NAME}, asi va POCK hoy</h2>
+      <p>Pipeline ponderado: <b>${fmtCLP(e.pipeline_weighted)}</b> (forecast realista). Cerrado este mes: <b>${fmtCLP(e.mtd_closed)}</b>${e.growth_pct !== null ? ` <span style="color:${e.growth_pct>=0?'#86efac':'#fca5a5'}">${growthArrow} ${growthSign}${e.growth_pct}% vs mes anterior</span>` : ''}. ${attentionItems.length > 0 ? `<span style="color:#fcd34d"><b>${attentionItems.length} cosas requieren tu atencion</b> ↓</span>` : 'Todo bajo control.'}</p>
+    </div>
+
+    <!-- ATENCION REQUERIDA -->
+    ${attentionItems.length > 0 ? `
+    <div class="panel" style="border-color:var(--red);border-width:2px">
+      <div class="panel-header" style="background:#fef2f2;border-bottom-color:#fecaca">
+        <div><div class="panel-title" style="color:var(--red)">⚡ Atencion requerida</div><div class="panel-subtitle">Esto necesita decision o accion tuya hoy</div></div>
+      </div>
+      <div class="panel-body" style="display:grid;gap:8px">
+        ${attentionItems.map(a => `<a href="${a.href}" style="text-decoration:none;color:inherit;display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--gray-200);border-radius:10px;background:white;transition:all 0.15s" onmouseover="this.style.borderColor='var(--red)';this.style.transform='translateX(2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform=''">
+          <div style="width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:${a.priority==='red'?'#fef2f2':a.priority==='warn'?'#fef3c7':'#dbeafe'};color:${a.priority==='red'?'var(--red)':a.priority==='warn'?'var(--warn)':'var(--info)'};font-size:18px;font-weight:700;flex-shrink:0">${a.icon}</div>
+          <div style="flex:1"><div style="font-weight:600;color:var(--gray-900)">${a.label}</div><div class="muted" style="margin-top:2px">${a.sub}</div></div>
+          <div style="color:var(--gray-400);font-size:18px">→</div>
+        </a>`).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- KPIs PRINCIPALES (Snapshot Ejecutivo) -->
+    <h3 style="font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1.2px;margin:18px 0 10px">Snapshot ejecutivo</h3>
+    <div class="kpi-grid">
+      <div class="kpi accent">
+        <div class="kpi-label">Pipeline ponderado</div>
+        <div class="kpi-value">${fmtCLP(e.pipeline_weighted)}</div>
+        <div class="kpi-sub">Forecast realista &middot; bruto ${fmtCLP(e.pipeline_raw)}</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cerrado este mes</div>
+        <div class="kpi-value success">${fmtCLP(e.mtd_closed)}</div>
+        ${e.growth_pct !== null ? `<div class="kpi-trend ${growthClass}">${growthArrow} ${growthSign}${e.growth_pct}% vs mes anterior</div>` : `<div class="kpi-sub">${fmtCLP(e.last_month_closed)} mes pasado</div>`}
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Tasa de cierre (30d)</div>
+        <div class="kpi-value ${e.win_rate_30d >= 50 ? 'success' : e.win_rate_30d >= 30 ? 'warn' : e.win_rate_30d !== null ? 'red' : ''}">${e.win_rate_30d !== null ? e.win_rate_30d+'%' : '-'}</div>
+        <div class="kpi-sub">${e.won_30d} ganadas &middot; ${e.lost_30d} perdidas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Ticket promedio</div>
+        <div class="kpi-value">${fmtCLP(e.avg_deal_size)}</div>
+        <div class="kpi-sub">${e.avg_close_days ? Math.round(e.avg_close_days) + ' dias promedio cierre' : 'sin datos cierre'}</div>
+      </div>
+    </div>
+
+    <!-- FUNNEL + CASH IN -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Funnel de ventas (30 dias)</div><div class="panel-subtitle">De lead a venta cerrada</div></div></div>
+        <div class="panel-body">
+          ${renderFunnel(fun)}
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Cash-in proyectado</div><div class="panel-subtitle">Cotizaciones aceptadas por entrega</div></div></div>
+        <div class="panel-body">
+          <div class="bar-row"><div class="bar-label">30 dias</div><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, (Number(cashIn.next_30)||0)/Math.max(1,Math.max(Number(cashIn.next_30)||0,Number(cashIn.next_60)||0,Number(cashIn.next_90)||0))*100)}%"></div></div><div class="bar-value">${fmtCLP(cashIn.next_30)}</div></div>
+          <div class="bar-row"><div class="bar-label">60 dias</div><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, (Number(cashIn.next_60)||0)/Math.max(1,Math.max(Number(cashIn.next_30)||0,Number(cashIn.next_60)||0,Number(cashIn.next_90)||0))*100)}%"></div></div><div class="bar-value">${fmtCLP(cashIn.next_60)}</div></div>
+          <div class="bar-row"><div class="bar-label">90 dias</div><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, (Number(cashIn.next_90)||0)/Math.max(1,Math.max(Number(cashIn.next_30)||0,Number(cashIn.next_60)||0,Number(cashIn.next_90)||0))*100)}%"></div></div><div class="bar-value">${fmtCLP(cashIn.next_90)}</div></div>
+          <div style="margin-top:14px;padding:10px 12px;background:var(--gray-50);border-radius:8px;font-size:12px;color:var(--gray-700)"><b>+ pipeline ponderado 30d:</b> ${fmtCLP(cashIn.pipeline_30)} (esperado por probabilidad)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOP CUENTAS + WINS -->
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Top cuentas por valor</div><div class="panel-subtitle">Pipeline + cerrado historico</div></div></div>
+        <div class="panel-body flush">
+          ${(e.top_accounts || []).length === 0 ? '<div class="empty">Sin datos suficientes</div>' :
+            '<table><thead><tr><th>Cliente</th><th class="r">Pipeline</th><th class="r">Ganado</th></tr></thead><tbody>' +
+            e.top_accounts.map(a => `<tr class="row-click" onclick="openContactModal(${a.contact_id})">
+              <td><b>${esc(a.cliente||'?')}</b><div class="muted">${esc(a.empresa||'')}</div></td>
+              <td class="r">${Number(a.pipeline_open)>0?`<b>${fmtCLP(a.pipeline_open)}</b>`:'<span class="muted">-</span>'}</td>
+              <td class="r">${Number(a.ganado)>0?`<span style="color:var(--success);font-weight:600">${fmtCLP(a.ganado)}</span>`:'<span class="muted">-</span>'}</td>
+            </tr>`).join('') + '</tbody></table>'}
+        </div>
+        ${e.concentration_pct > 0 ? `<div style="padding:10px 18px;background:var(--gray-50);border-top:1px solid var(--gray-200);font-size:12px;color:${e.concentration_pct>60?'var(--red)':'var(--gray-700)'}"><b>Concentracion top 3:</b> ${e.concentration_pct}% del pipeline${e.concentration_pct>60?' — riesgo alto':''}</div>` : ''}
+      </div>
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Ultimas wins (30 dias)</div><div class="panel-subtitle">Cotizaciones aceptadas recientes</div></div></div>
+        <div class="panel-body flush">
+          ${(e.recent_wins || []).length === 0 ? '<div class="empty">Sin wins en 30 dias</div>' :
+            '<table><tbody>' + e.recent_wins.map(w => `<tr><td><b>${esc(w.cliente||'?')}</b><div class="muted">${esc(w.company||w.quote_number)}</div></td><td class="r"><b style="color:var(--success)">${fmtCLP(w.total)}</b><div class="muted">${ago(w.responded_at)}</div></td></tr>`).join('') + '</tbody></table>'}
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp pulse -->
+    <h3 style="font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1.2px;margin:22px 0 10px">WhatsApp via Chatwoot <span class="pill live" style="margin-left:8px">EN VIVO</span></h3>
+    <div class="kpi-grid">
+      <div class="kpi wa">
+        <div class="kpi-label">Abiertas</div>
+        <div class="kpi-value">${c.open_conversations || 0}</div>
+        <div class="kpi-sub">${c.conversations_24h || 0} activas hoy</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Mensajes 24h</div>
+        <div class="kpi-value">${c.messages_24h || 0}</div>
+        <div class="kpi-sub">${c.incoming_messages || 0} de clientes &middot; ${c.outgoing_messages || 0} de POCK</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Promedio por chat</div>
+        <div class="kpi-value">${c.avg_messages_per_conversation || 0}</div>
+        <div class="kpi-sub">mensajes/conversacion</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total historico</div>
+        <div class="kpi-value">${c.total_conversations || 0}</div>
+        <div class="kpi-sub">conversaciones desde el inicio</div>
+      </div>
+    </div>
+
+    ${k.errors_24h > 0 ? `<div class="info"><b>Atencion tecnica:</b> ${k.errors_24h} errores en automatizaciones ultimas 24h. <a href="#/historial">Revisar</a>.</div>` : ''}
+  `;
+  $('#content').innerHTML = html;
+}
+
+function renderFunnel(f) {
+  const stages = [
+    { label: 'Leads', value: f.leads || 0, color: '#dc2626' },
+    { label: 'Cotizadas', value: f.quotes_created || 0, color: '#ea580c' },
+    { label: 'Enviadas', value: f.quotes_sent || 0, color: '#d97706' },
+    { label: 'Aceptadas', value: f.quotes_accepted || 0, color: '#16a34a' }
+  ];
+  const max = Math.max(1, ...stages.map(s => s.value));
+  let html = '<div style="display:flex;flex-direction:column;gap:6px">';
+  stages.forEach((s, i) => {
+    const w = s.value / max * 100;
+    html += `<div style="display:flex;align-items:center;gap:10px">
+      <div style="min-width:70px;font-size:12px;color:var(--gray-700);font-weight:600">${s.label}</div>
+      <div style="flex:1;background:var(--gray-100);border-radius:6px;overflow:hidden;height:32px;position:relative">
+        <div style="width:${w}%;height:100%;background:${s.color};display:flex;align-items:center;justify-content:flex-end;padding:0 10px;color:white;font-weight:700;font-size:13px;transition:width 0.5s">${s.value}</div>
+      </div>
+    </div>`;
+    if (i < stages.length - 1) {
+      const rate = i === 0 ? f.lead_to_quote_rate : i === 1 ? f.quote_to_sent_rate : f.sent_to_won_rate;
+      html += `<div style="margin-left:80px;font-size:11px;color:var(--gray-500);font-weight:600">↓ ${rate || 0}% conversion</div>`;
+    }
+  });
+  html += '</div>';
+  return html;
+}
+
+// ============== PAGE: ANALISIS (drilldown profundo) ==============
+async function renderAnalisis() {
+  const e = await getExec(true);
+  $('#updated').textContent = 'Actualizado ' + ago(e.generated_at);
+
+  const v = e.velocity_chart || [];
+  const maxV = Math.max(1, ...v.map(w => Number(w.creadas) || 0));
+
+  const html = `
+    <div class="info"><b>Analisis profundo del negocio:</b> velocidad de ventas, conversion por segmento de cliente y tendencias. Ideal para planear estrategia mensual.</div>
+
+    <!-- Velocity -->
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Velocidad de ventas (8 semanas)</div><div class="panel-subtitle">Cotizaciones creadas vs cerradas por semana</div></div></div>
+      <div class="panel-body">
+        ${v.length === 0 ? '<div class="empty">Sin datos suficientes</div>' : v.map(w => `
+          <div class="bar-row">
+            <div class="bar-label">${new Date(w.semana).toLocaleDateString('es-CL', {day:'2-digit',month:'short'})}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${Math.round(Number(w.creadas)/maxV*100)}%;background:var(--gray-700)"></div></div>
+            <div class="bar-value">${w.creadas} / <span style="color:var(--success)">${w.ganadas} ✓</span></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Segmentos -->
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Performance por segmento de cliente</div><div class="panel-subtitle">Donde concentrar foco comercial</div></div></div>
+      <div class="panel-body flush">
+        ${(e.segments || []).length === 0 ? '<div class="empty">Sin datos</div>' :
+          '<table><thead><tr><th>Segmento</th><th class="r">Clientes</th><th class="r">Cotizaciones</th><th class="r">Pipeline</th><th class="r">Ganado historico</th><th class="r">Ticket prom.</th></tr></thead><tbody>' +
+          e.segments.map(s => `<tr>
+            <td><b>${esc(s.segmento)}</b></td>
+            <td class="r">${s.clientes}</td>
+            <td class="r">${s.cotizaciones}</td>
+            <td class="r"><b>${fmtCLP(s.pipeline_total)}</b></td>
+            <td class="r" style="color:var(--success);font-weight:600">${fmtCLP(s.ganado)}</td>
+            <td class="r">${Number(s.ticket_promedio) > 0 ? fmtCLP(s.ticket_promedio) : '<span class="muted">-</span>'}</td>
+          </tr>`).join('') + '</tbody></table>'}
+      </div>
+    </div>
+
+    <!-- KPIs operativos -->
+    <h3 style="font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1.2px;margin:18px 0 10px">Indicadores operativos (30 dias)</h3>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">Leads recibidos</div>
+        <div class="kpi-value">${e.leads_30d}</div>
+        <div class="kpi-sub">${e.leads_30d > 0 ? Math.round(e.leads_30d / 30 * 7) : 0} promedio semanal</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cotizaciones generadas</div>
+        <div class="kpi-value">${e.quotes_30d}</div>
+        <div class="kpi-sub">${e.quotes_30d > 0 && e.leads_30d > 0 ? Math.round(e.quotes_30d / e.leads_30d * 100) : 0}% conversion desde lead</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Ciclo de venta</div>
+        <div class="kpi-value">${e.avg_close_days ? Math.round(e.avg_close_days) : '-'}</div>
+        <div class="kpi-sub">dias promedio desde creacion a cierre</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Concentracion top 3</div>
+        <div class="kpi-value ${e.concentration_pct > 60 ? 'red' : e.concentration_pct > 40 ? 'warn' : ''}">${e.concentration_pct}%</div>
+        <div class="kpi-sub">${e.concentration_pct > 60 ? 'riesgo alto - diversificar' : 'distribucion saludable'}</div>
+      </div>
+    </div>
+
+    <!-- Top cuentas detalle -->
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Cuentas con mayor valor lifetime</div><div class="panel-subtitle">Pipeline abierto + cerrado historico</div></div></div>
+      <div class="panel-body flush">
+        ${(e.top_accounts || []).length === 0 ? '<div class="empty">Sin datos</div>' :
+          '<table><thead><tr><th>Cliente</th><th>Tipo</th><th class="r">Cotizaciones</th><th class="r">Pipeline abierto</th><th class="r">Ganado</th><th class="r">Total</th></tr></thead><tbody>' +
+          e.top_accounts.map(a => `<tr class="row-click" onclick="openContactModal(${a.contact_id})">
+            <td><b>${esc(a.cliente||'?')}</b><div class="muted">${esc(a.empresa||a.email||'')}</div></td>
+            <td><span class="pill ${a.contact_type}">${CAT_LABEL[a.contact_type] || a.contact_type}</span></td>
+            <td class="r">${a.cotizaciones}</td>
+            <td class="r">${fmtCLP(a.pipeline_open)}</td>
+            <td class="r" style="color:var(--success);font-weight:600">${fmtCLP(a.ganado)}</td>
+            <td class="r"><b>${fmtCLP(a.valor_total)}</b></td>
+          </tr>`).join('') + '</tbody></table>'}
+      </div>
+    </div>
+  `;
+  $('#content').innerHTML = html;
+}
+
+// ============== PAGE: WHATSAPP (Chatwoot integrado) ==============
+async function renderWhatsapp() {
+  const c = await getChatbot(true);
+  const d = await getDashboard();
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(c.generated_at);
+
+  const convs = await rpc('list_chatwoot_conversations', { p_limit: 50, p_status: null });
+
+  const hours = Array.from({length: 24}, (_, i) => {
+    const found = (c.hour_distribution || []).find(h => h.hora === i);
+    return { hora: i, mensajes: found ? Number(found.mensajes) : 0 };
+  });
+  const maxHour = Math.max(1, ...hours.map(h => h.mensajes));
+  const peakHour = hours.reduce((a, b) => b.mensajes > a.mensajes ? b : a, hours[0]);
+
+  const daily = c.daily_chart || [];
+  const maxDaily = Math.max(1, ...daily.map(d => Number(d.sesiones) || 0));
+
+  const html = `
+    <div class="info">
+      <b>WhatsApp Business + Chatwoot:</b> los mensajes llegan a Chatwoot y se sincronizan acá automáticamente. Podés abrir una conversación y responder directamente desde el panel — el mensaje se envía vía Chatwoot al cliente.
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi wa">
+        <div class="kpi-label">Conversaciones abiertas</div>
+        <div class="kpi-value">${c.open_conversations || 0}</div>
+        <div class="kpi-sub">requieren atencion</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Activas 24h</div>
+        <div class="kpi-value">${c.conversations_24h || 0}</div>
+        <div class="kpi-sub">${c.messages_24h || 0} mensajes intercambiados</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Hora pico</div>
+        <div class="kpi-value">${peakHour.mensajes > 0 ? peakHour.hora + ':00' : '-'}</div>
+        <div class="kpi-sub">${peakHour.mensajes} mensajes en la hora top</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total historico</div>
+        <div class="kpi-value">${c.total_conversations || 0}</div>
+        <div class="kpi-sub">conversaciones desde el inicio</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Actividad por dia</div><div class="panel-subtitle">Ultimos 14 dias - conversaciones unicas</div></div></div>
+        <div class="panel-body">
+          ${daily.length === 0 ? '<div class="empty">Sin datos aun. Cuando llegue el primer mensaje aparecera aqui.</div>' :
+            daily.map(d => `<div class="bar-row"><div class="bar-label">${new Date(d.dia).toLocaleDateString('es-CL', {day: '2-digit', month: 'short'})}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round((Number(d.sesiones)||0)/maxDaily*100)}%;background:var(--whatsapp)"></div></div><div class="bar-value">${d.sesiones}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><div><div class="panel-title">Cuando hablan los clientes</div><div class="panel-subtitle">Distribucion por hora del dia</div></div></div>
+        <div class="panel-body">
+          ${hours.filter(h => h.mensajes > 0).length === 0 ? '<div class="empty">Sin datos.</div>' :
+            hours.map(h => h.mensajes === 0 ? '' : `<div class="bar-row"><div class="bar-label">${h.hora.toString().padStart(2,'0')}:00</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(h.mensajes/maxHour*100)}%;background:var(--whatsapp)"></div></div><div class="bar-value">${h.mensajes}</div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Conversaciones recientes</div><div class="panel-subtitle">Click para abrir y responder</div></div></div>
+      <div class="panel-body flush">
+        ${convs.length === 0 ? `<div class="empty"><div class="empty-icon">~</div><div class="empty-title">Aun no llegan conversaciones</div>Cuando configures el webhook en Chatwoot apuntando a <code>${N8N_BASE}/webhook/pock-chatwoot-event</code>, se empezaran a sincronizar acá.</div>` :
+          '<table><thead><tr><th>Cliente</th><th>Ultimo mensaje</th><th>Estado</th><th>Mensajes</th><th>Cuando</th></tr></thead><tbody>' +
+          convs.map(c => `<tr class="row-click" onclick="openWaConversation(${c.id}, ${c.chatwoot_conversation_id})">
+            <td><b>${esc(c.contact_name||'Cliente sin nombre')}</b><div class="muted">${esc(c.contact_phone||c.contact_email||'-')}</div></td>
+            <td><div class="truncate" style="max-width:380px"><span class="muted">${c.last_msg_type==='outgoing'?'Vos:':'Cliente:'}</span> ${esc((c.last_message_preview||'').slice(0,120))}</div></td>
+            <td><span class="pill ${c.status==='open'?'lead':c.status==='resolved'?'accepted':'expired'}">${c.status || '-'}</span></td>
+            <td><b>${c.msg_count}</b></td>
+            <td><span class="muted">${ago(c.last_message_at)}</span></td>
+          </tr>`).join('') + '</tbody></table>'}
+      </div>
+    </div>
+  `;
+  $('#content').innerHTML = html;
+}
+
+let _activeConv = null;
+
+window.openWaConversation = async (convId, chatwootConvId) => {
+  _activeConv = { id: convId, chatwoot: chatwootConvId };
+  modal(`<div class="modal-h"><div class="modal-title">Cargando conversacion...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
+  await renderWaConversation();
+};
+
+async function renderWaConversation() {
+  if (!_activeConv) return;
+  try {
+    const data = await rpc('chatwoot_conversation_thread', { p_conversation_id: _activeConv.id });
+    const conv = data.conversation || {};
+    const msgs = data.messages || [];
+
+    const renderedMsgs = msgs.map(m => {
+      const isOutgoing = m.message_type === 'outgoing';
+      const author = isOutgoing ? (m.sender_name ? `${esc(m.sender_name)} (POCK)` : 'POCK') : esc(m.sender_name || conv.contact_name || 'Cliente');
+      const cls = isOutgoing ? 'ai' : 'human';
+      return `<div class="chat-msg ${cls}"><div class="chat-author">${author}${m.chatwoot_created_at ? ' &middot; '+fmtDate(m.chatwoot_created_at) : ''}</div>${esc(m.content||'').replace(/\n/g,'<br>')}</div>`;
+    }).join('');
+
+    const headerSub = [conv.contact_phone, conv.contact_email].filter(Boolean).join(' &middot; ') || `#${conv.chatwoot_conversation_id}`;
+
+    modal(`
+      <div class="modal-h"><div><div class="modal-title">${esc(conv.contact_name || 'Cliente')}</div><div class="muted" style="color:#ccc">${headerSub} &middot; ${msgs.length} mensajes</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-b" id="wa-thread" style="background:var(--gray-50);max-height:55vh;display:flex;flex-direction:column">
+        ${msgs.length === 0 ? '<div class="empty">Sin mensajes aun en esta conversacion.</div>' : renderedMsgs}
+      </div>
+      <div style="border-top:1px solid var(--gray-200);padding:14px 22px;background:white">
+        <div style="display:flex;gap:8px">
+          <textarea id="wa-reply" placeholder="Escribi tu respuesta... (Enter para enviar, Shift+Enter para nueva linea)" style="flex:1;min-height:60px;resize:vertical" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendWaReply()}"></textarea>
+          <button class="btn btn-primary" onclick="sendWaReply()" id="wa-send-btn" style="background:var(--whatsapp);align-self:flex-end">Enviar &uarr;</button>
+        </div>
+        <div class="muted" style="margin-top:6px">El mensaje se envia via Chatwoot al WhatsApp del cliente.</div>
+      </div>
+    `, '');
+
+    // Auto-scroll al final
+    setTimeout(() => { const t = document.getElementById('wa-thread'); if (t) t.scrollTop = t.scrollHeight; }, 50);
+  } catch (e) { closeModal(); toast(e.message, 'error'); }
+}
+
+window.sendWaReply = async () => {
+  const ta = document.getElementById('wa-reply');
+  const btn = document.getElementById('wa-send-btn');
+  if (!ta || !_activeConv) return;
+  const msg = ta.value.trim();
+  if (!msg) return;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Enviando';
+  try {
+    const r = await fetch(WA_SEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ conversation_id: _activeConv.chatwoot, message: msg })
+    });
+    if (!r.ok) throw new Error('No se pudo enviar (' + r.status + ')');
+    const result = await r.json();
+    if (!result.ok) throw new Error('Chatwoot respondio mal');
+    ta.value = '';
+    toast('Mensaje enviado al cliente.');
+    // Refresca la conversacion (esperamos 1.5s a que llegue el webhook back)
+    setTimeout(() => renderWaConversation(), 1500);
+  } catch (e) {
+    toast('Error al enviar: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Enviar &uarr;';
+  }
+};
+
+// ============== PAGE: LEADS (solo ver) ==============
+async function renderLeads() {
+  const d = await getDashboard();
+  const c = await getChatbot();
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(d.generated_at);
+  const leads = d.leads;
+
+  let html = `
+    <div class="info">
+      <b>Que son los leads:</b> personas que escribieron pidiendo informacion o cotizacion. El sistema los detecta automaticamente desde Gmail. Click en uno para ver su ficha completa.
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Leads ultimos 7 dias (${leads.length})</div><div class="panel-subtitle">Ordenados del mas reciente al mas antiguo</div></div></div>
+      <div class="panel-body flush">`;
+
+  if (leads.length === 0) {
+    html += `<div class="empty"><div class="empty-icon">~</div><div class="empty-title">Sin leads recientes</div>No llegaron consultas nuevas en los ultimos 7 dias.</div>`;
+  } else {
+    html += `<table><thead><tr><th>Cliente</th><th>Asunto</th><th>Cuando</th><th>Confianza IA</th></tr></thead><tbody>`;
+    leads.forEach(l => {
+      html += `<tr class="row-click" onclick="findContactAndOpen('${esc(l.from_address)}')">
+        <td><b>${esc(l.from_name||'?')}</b><div class="muted">${esc(l.from_address||'')}</div></td>
+        <td><div class="truncate">${esc(l.subject||'(sin asunto)')}</div><div class="muted truncate">${esc(l.reason||'')}</div></td>
+        <td><span class="muted">${ago(l.received_at)}</span></td>
+        <td>${l.confidence != null ? `<span class="pill ${l.confidence > 0.7 ? 'sent' : 'draft'}">${Math.round(l.confidence*100)}%</span>` : '-'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  html += `</div></div>`;
+  $('#content').innerHTML = html;
+}
+
+window.findContactAndOpen = async (email) => {
+  try {
+    const list = await rpc('list_contacts_summary', { p_limit: 1, p_search: email });
+    if (list && list.length > 0) openContactModal(list[0].id);
+    else toast('Cliente no encontrado en el directorio aun.', 'error');
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+// ============== PAGE: COTIZACIONES (En desarrollo) ==============
+async function renderCotizaciones() {
+  const d = await getDashboard();
+  const c = await getChatbot();
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(d.generated_at);
+  const quotes = d.quotes;
+
+  const totalPipeline = quotes.filter(q => ['draft','sent'].includes(q.status)).reduce((s,q)=>s+Number(q.total||0), 0);
+  const totalCerradas = quotes.filter(q => q.status === 'accepted').reduce((s,q)=>s+Number(q.total||0), 0);
+
+  let html = `
+    <div style="background:linear-gradient(135deg,var(--black),var(--gray-800));color:white;padding:24px 28px;border-radius:14px;margin-bottom:22px;position:relative;overflow:hidden">
+      <div style="display:inline-block;background:var(--red);color:white;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:1px;margin-bottom:10px">EN DESARROLLO</div>
+      <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">Modulo de cotizaciones — Proximamente</h2>
+      <p style="margin:0;opacity:0.85;font-size:14px;line-height:1.55;max-width:680px">Estamos finalizando el motor de cotizaciones automaticas: la IA va a extraer items desde el email o el WhatsApp del cliente, matchear contra el catalogo POCK (341 productos cargados), calcular IVA 19% y generar un PDF profesional listo para enviar. Por ahora podes <b>visualizar el pipeline con datos de muestra</b> mientras terminamos los ajustes finales.</p>
+    </div>
+
+    <div class="info">
+      <b>Vista preview:</b> Las cotizaciones que ves abajo son datos de demostracion para que veas como funcionara el modulo cuando este listo.
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi accent"><div class="kpi-label">Pipeline abierto</div><div class="kpi-value">${fmtCLP(totalPipeline)}</div><div class="kpi-sub">${quotes.filter(q => ['draft','sent'].includes(q.status)).length} cotizaciones</div></div>
+      <div class="kpi"><div class="kpi-label">Listas para enviar</div><div class="kpi-value warn">${quotes.filter(q => q.status === 'draft').length}</div><div class="kpi-sub">aun en borrador</div></div>
+      <div class="kpi"><div class="kpi-label">Enviadas esperando</div><div class="kpi-value">${quotes.filter(q => q.status === 'sent').length}</div><div class="kpi-sub">respuesta del cliente</div></div>
+      <div class="kpi"><div class="kpi-label">Cerradas ganadas</div><div class="kpi-value success">${fmtCLP(totalCerradas)}</div><div class="kpi-sub">${quotes.filter(q => q.status === 'accepted').length} cotizaciones aceptadas</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Todas las cotizaciones (${quotes.length})</div></div></div>
+      <div class="panel-body flush">`;
+
+  if (quotes.length === 0) {
+    html += `<div class="empty"><div class="empty-icon">$</div><div class="empty-title">Sin cotizaciones aun</div>Se crearan automaticamente cuando un lead pida cotizar por email o WhatsApp.</div>`;
+  } else {
+    html += `<table><thead><tr><th>N°</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Vence</th></tr></thead><tbody>`;
+    quotes.forEach(q => {
+      html += `<tr class="row-click" onclick="openQuoteModal(${q.id})">
+        <td><b>${esc(q.quote_number)}</b><div class="muted">${q.items_count} items</div></td>
+        <td>${esc(q.cliente||'?')}<div class="muted">${esc(q.email||'')}</div></td>
+        <td><b>${fmtCLP(q.total)}</b></td>
+        <td><span class="pill ${q.status}">${STATE_LABEL[q.status] || q.status}</span></td>
+        <td><span class="muted">${fmtDateShort(q.valid_until)}</span></td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  html += `</div></div>`;
+  $('#content').innerHTML = html;
+}
+
+window.openQuoteModal = async (id) => {
+  modal(`<div class="modal-h"><div class="modal-title">Cargando...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
+  try {
+    const data = await rpc('get_quotation_detail', { p_quotation_id: id });
+    const q = data.quotation, items = data.items;
+    const itemsHtml = items.map(i => `<tr><td>${esc(i.product_name||i.description)}<div class="muted">${esc(i.sku||'')}</div></td><td class="r">${i.quantity}</td><td class="r">${fmtCLP(i.unit_price)}</td><td class="r"><b>${fmtCLP(i.subtotal)}</b></td></tr>`).join('');
+    modal(`
+      <div class="modal-h"><div><div class="modal-title">Cotizacion ${esc(q.quote_number)}</div><div class="muted" style="color:#ccc">${esc(q.cliente_name||'?')} &middot; ${esc(q.cliente_email||'')}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-b">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div class="detail-row"><span class="k">Estado</span><span class="v"><span class="pill ${q.status}">${STATE_LABEL[q.status] || q.status}</span></span></div>
+          <div class="detail-row"><span class="k">Origen</span><span class="v">${esc(q.source)}</span></div>
+          <div class="detail-row"><span class="k">Creada</span><span class="v">${fmtDate(q.created_at)}</span></div>
+          <div class="detail-row"><span class="k">Vence</span><span class="v">${fmtDateShort(q.valid_until)}</span></div>
+        </div>
+        ${q.notes ? `<div class="info" style="margin-bottom:14px"><b>Notas:</b> ${esc(q.notes)}</div>` : ''}
+        <table style="margin-bottom:14px"><thead><tr><th>Producto</th><th class="r">Cant</th><th class="r">P. Unit</th><th class="r">Subtotal</th></tr></thead><tbody>${itemsHtml}</tbody></table>
+        <table style="max-width:320px;margin-left:auto;background:var(--gray-50);border-radius:8px"><tbody>
+          <tr><td>Subtotal</td><td class="r">${fmtCLP(q.subtotal)}</td></tr>
+          <tr><td>IVA 19%</td><td class="r">${fmtCLP(q.tax_amount)}</td></tr>
+          <tr style="font-size:16px;color:var(--red);font-weight:800"><td>TOTAL</td><td class="r">${fmtCLP(q.total)}</td></tr>
+        </tbody></table>
+      </div>
+    `, `
+      <button class="btn btn-outline" onclick="downloadQuoteHtml(${id})">Descargar HTML</button>
+      <div style="flex:1"></div>
+      ${q.status==='draft' ? `<button class="btn btn-dark" onclick="setQuoteStatus(${id},'sent')">Marcar como Enviada</button>` : ''}
+      ${q.status==='sent' ? `<button class="btn btn-outline" onclick="setQuoteStatus(${id},'rejected')">Rechazada</button><button class="btn btn-primary" onclick="setQuoteStatus(${id},'accepted')">Aceptada</button>` : ''}
+      <button class="btn btn-outline" onclick="closeModal()">Cerrar</button>
+    `);
+  } catch (e) { closeModal(); toast(e.message, 'error'); }
+};
+
+window.setQuoteStatus = async (id, status) => {
+  try {
+    await rpc('action_set_quotation_status', { p_quotation_id: id, p_status: status });
+    closeModal();
+    toast(`Cotizacion marcada como ${STATE_LABEL[status]}.`);
+    cache.dashboard = null;
+    await navigate();
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+window.downloadQuoteHtml = async (id) => {
+  try {
+    const r = await rpc('render_quotation_html', { p_quotation_id: id });
+    const blob = new Blob([r.html], {type: 'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `${r.quote_number}.html`;
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+// ============== PAGE: CLIENTES ==============
+async function renderClientes() {
+  const d = await getDashboard();
+  const c = await getChatbot();
+  updateBadges(d, c);
+  $('#content').innerHTML = `
+    <div class="info"><b>Directorio completo</b> de contactos. Click en un cliente para ver su historial de mensajes, cotizaciones y notas.</div>
+    <div class="panel">
+      <div class="filter-bar">
+        <input id="cli-search" class="input-search" placeholder="Buscar por nombre, email, empresa..." oninput="loadClientes()">
+        <select id="cli-type" onchange="loadClientes()">
+          <option value="">Todos los tipos</option>
+          <option value="lead">Leads</option>
+          <option value="cliente">Clientes</option>
+          <option value="colaborador">Colaboradores</option>
+          <option value="proveedor">Proveedores</option>
+        </select>
+      </div>
+      <div id="cli-list" class="panel-body flush"><div class="loading"><span class="spinner dark"></span></div></div>
+    </div>
+  `;
+  await loadClientes();
+}
+
+window.loadClientes = async () => {
+  const search = $('#cli-search')?.value || '';
+  const type = $('#cli-type')?.value || null;
+  try {
+    const list = await rpc('list_contacts_summary', { p_limit: 200, p_search: search, p_type: type || null });
+    let html = '';
+    if (!list || list.length === 0) html = `<div class="empty"><div class="empty-title">Sin contactos</div></div>`;
+    else {
+      html = `<table><thead><tr><th>Cliente</th><th>Tipo</th><th>Empresa</th><th>Mensajes</th><th>Cotizaciones</th><th>Pipeline</th><th>Ultimo contacto</th></tr></thead><tbody>`;
+      list.forEach(c => {
+        html += `<tr class="row-click" onclick="openContactModal(${c.id})">
+          <td><b>${esc(c.full_name||'?')}</b><div class="muted">${esc(c.email)}</div></td>
+          <td><span class="pill ${c.contact_type}">${CAT_LABEL[c.contact_type] || c.contact_type}</span></td>
+          <td>${esc(c.company||'-')}</td>
+          <td>${c.messages_count}</td>
+          <td>${c.quotes_count}</td>
+          <td>${Number(c.pipeline_clp) > 0 ? `<b>${fmtCLP(c.pipeline_clp)}</b>` : '<span class="muted">-</span>'}</td>
+          <td><span class="muted">${ago(c.last_activity_at)}</span></td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+    }
+    $('#cli-list').innerHTML = html;
+  } catch (e) { $('#cli-list').innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+};
+
+window.openContactModal = async (id) => {
+  modal(`<div class="modal-h"><div class="modal-title">Cargando cliente...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
+  try {
+    const data = await rpc('get_contact_history', { p_contact_id: id });
+    const c = data.contact;
+    const msgsHtml = data.messages.length === 0 ? '<div class="muted">Sin mensajes.</div>' : data.messages.map(m =>
+      `<div style="padding:10px;border-left:3px solid var(--red);background:var(--gray-50);margin-bottom:8px;border-radius:6px"><div style="display:flex;justify-content:space-between"><b>${esc(m.subject||'(sin asunto)')}</b><span class="pill ${m.category}">${CAT_LABEL[m.category]||m.category}</span></div><div class="muted">${fmtDate(m.received_at)}</div><div style="font-size:12px;margin-top:4px">${esc(m.snippet||'')}</div></div>`).join('');
+    const quotesHtml = data.quotes.length === 0 ? '<div class="muted">Sin cotizaciones.</div>' : `<table><thead><tr><th>N°</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${data.quotes.map(q =>
+      `<tr><td><b>${esc(q.quote_number)}</b></td><td>${fmtCLP(q.total)}</td><td><span class="pill ${q.status}">${STATE_LABEL[q.status]||q.status}</span></td><td>${fmtDateShort(q.created_at)}</td><td><button class="btn btn-outline btn-sm" onclick="closeModal();setTimeout(()=>openQuoteModal(${q.id}),200)">Abrir</button></td></tr>`).join('')}</tbody></table>`;
+    modal(`
+      <div class="modal-h"><div><div class="modal-title">${esc(c.full_name||'?')}</div><div class="muted" style="color:#ccc">${esc(c.email)}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-b">
+        <div class="detail-row"><span class="k">Tipo</span><span class="v"><span class="pill ${c.contact_type}">${CAT_LABEL[c.contact_type] || c.contact_type}</span></span></div>
+        ${c.phone ? `<div class="detail-row"><span class="k">Telefono</span><span class="v">${esc(c.phone)}</span></div>` : ''}
+        ${c.company ? `<div class="detail-row"><span class="k">Empresa</span><span class="v">${esc(c.company)}</span></div>` : ''}
+        <div class="detail-row"><span class="k">Ultimo contacto</span><span class="v">${ago(c.last_activity_at)}</span></div>
+        <div class="detail-row"><span class="k">Primera vez</span><span class="v">${fmtDate(c.created_at)}</span></div>
+        ${c.notes ? `<div class="info" style="margin-top:10px;white-space:pre-wrap">${esc(c.notes)}</div>` : ''}
+        <h4 style="margin:18px 0 10px;font-size:12px;color:var(--gray-500);text-transform:uppercase">Cotizaciones (${data.quotes.length})</h4>
+        ${quotesHtml}
+        <h4 style="margin:18px 0 10px;font-size:12px;color:var(--gray-500);text-transform:uppercase">Mensajes (${data.messages.length})</h4>
+        ${msgsHtml}
+      </div>
+    `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
+  } catch (e) { closeModal(); toast(e.message, 'error'); }
+};
+
+// ============== PAGE: BANDEJA IA (CEO ve, no aprueba) ==============
+async function renderBandeja() {
+  const d = await getDashboard();
+  const c = await getChatbot();
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(d.generated_at);
+  const drafts = d.drafts;
+  let html = `
+    <div class="info"><b>Como funciona:</b> cuando llega un email importante, la IA redacta una respuesta y la deja en borrador en Gmail. Aqui ves lo que esta esperando aprobacion. Click para leer el contenido completo.</div>
+    <div class="panel">
+      <div class="panel-header"><div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Estan en Gmail listos para revisar y enviar</div></div></div>
+      <div class="panel-body flush">`;
+  if (drafts.length === 0) {
+    html += `<div class="empty"><div class="empty-icon">✓</div><div class="empty-title">Bandeja al dia</div>No hay borradores pendientes.</div>`;
+  } else {
+    html += `<table><thead><tr><th>Cliente</th><th>Asunto</th><th>Hace</th></tr></thead><tbody>`;
+    drafts.forEach(b => {
+      html += `<tr class="row-click" onclick='openDraftView(${JSON.stringify(b).replace(/'/g,"&apos;")})'>
+        <td><b>${esc(b.cliente||'?')}</b><div class="muted">${esc(b.email||'')}</div></td>
+        <td><div class="truncate" style="font-weight:500">${esc(b.subject)}</div><div class="muted truncate" style="max-width:380px">${esc(b.summary||'')}</div></td>
+        <td><span class="muted">${ago(b.generated_at)}</span></td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  html += `</div></div>`;
+  $('#content').innerHTML = html;
+}
+
+window.openDraftView = (b) => {
+  modal(`
+    <div class="modal-h"><div><div class="modal-title">Borrador para ${esc(b.cliente||'?')}</div><div class="muted" style="color:#ccc">${esc(b.email||'')}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="detail-row"><span class="k">Asunto</span><span class="v">${esc(b.subject)}</span></div>
+      <div class="detail-row"><span class="k">Resumen IA</span><span class="v">${esc(b.summary||'-')}</span></div>
+      <div class="detail-row"><span class="k">Generado</span><span class="v">${fmtDate(b.generated_at)}</span></div>
+      <div style="margin-top:14px;padding:14px;background:var(--gray-50);border-radius:8px;font-family:Georgia,serif;white-space:pre-wrap;line-height:1.6">${esc(b.body||'')}</div>
+    </div>
+  `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
+};
+
+// ============== PAGE: CATALOGO (solo ver) ==============
+async function renderCatalogo() {
+  $('#content').innerHTML = `
+    <div class="info"><b>Catalogo POCK:</b> productos y precios vigentes que usa el sistema para cotizar.</div>
+    <div class="panel">
+      <div class="filter-bar">
+        <input id="cat-search" class="input-search" placeholder="Buscar producto..." oninput="loadCatalogo()">
+        <select id="cat-cat" onchange="loadCatalogo()">
+          <option value="">Todas las categorias</option>
+          <option value="bancas_sillas">Bancas y sillas</option>
+          <option value="mesas">Mesas</option>
+          <option value="basureros_puntos_limpios">Basureros y puntos limpios</option>
+          <option value="juegos_calistenia">Juegos y calistenia</option>
+          <option value="jardin">Jardin</option>
+          <option value="vialidad_cercos">Vialidad y cercos</option>
+          <option value="senaletica">Senaletica</option>
+          <option value="perfiles">Perfiles</option>
+          <option value="accesorios">Accesorios</option>
+          <option value="pallets">Pallets</option>
+          <option value="armado_proyectos">Armado / Proyectos</option>
+          <option value="servicios">Servicios</option>
+        </select>
+      </div>
+      <div id="cat-list" class="panel-body flush"><div class="loading"><span class="spinner dark"></span></div></div>
+    </div>
+  `;
+  await loadCatalogo();
+}
+
+window.loadCatalogo = async () => {
+  try {
+    const list = await rpc('list_products', { p_search: $('#cat-search')?.value || '', p_category: $('#cat-cat')?.value || '', p_limit: 500 });
+    let html = '';
+    if (!list || list.length === 0) html = `<div class="empty">Sin resultados</div>`;
+    else {
+      html = `<div class="muted" style="padding:10px 18px">${list.length} productos</div><table><thead><tr><th>SKU</th><th>Producto</th><th>Categoria</th><th class="r">Precio</th><th>Estado</th></tr></thead><tbody>`;
+      list.forEach(p => {
+        html += `<tr>
+          <td class="muted">${esc(p.sku||'-')}</td>
+          <td>${esc(p.name)}</td>
+          <td class="muted">${esc(p.category||'-')}</td>
+          <td class="r"><b>${fmtCLP(p.base_price)}</b></td>
+          <td>${p.is_active ? '<span class="pill sent">Activo</span>' : '<span class="pill discarded">Inactivo</span>'}</td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+    }
+    $('#cat-list').innerHTML = html;
+  } catch (e) { $('#cat-list').innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+};
+
+// ============== PAGE: HISTORIAL ==============
+async function renderHistorial() {
+  const d = await getDashboard();
+  const c = await getChatbot();
+  updateBadges(d, c);
+  $('#updated').textContent = 'Actualizado ' + ago(d.generated_at);
+  const logs = d.logs;
+  let html = `
+    <div class="info"><b>Actividad reciente:</b> que ha hecho el sistema automatico ultimamente. Util para detectar problemas o entender que esta procesando.</div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Eventos hoy</div><div class="kpi-value">${logs.filter(l => new Date(l.created_at).toDateString() === new Date().toDateString()).length}</div></div>
+      <div class="kpi"><div class="kpi-label">Exitosos</div><div class="kpi-value success">${logs.filter(l => l.status === 'success').length}</div></div>
+      <div class="kpi"><div class="kpi-label">Errores</div><div class="kpi-value ${logs.filter(l => l.status !== 'success').length > 0 ? 'red' : ''}">${logs.filter(l => l.status !== 'success').length}</div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><div class="panel-title">Ultimas ${logs.length} actividades</div></div>
+      <div class="panel-body flush">`;
+  if (logs.length === 0) html += `<div class="empty"><div class="empty-title">Sin actividad aun</div></div>`;
+  else {
+    html += `<table><thead><tr><th>Cuando</th><th>Que paso</th><th>Sobre</th><th>Resultado</th></tr></thead><tbody>`;
+    const wf = { email_classifier_v3: 'Clasifico email entrante', email_classifier: 'Clasifico email (sistema viejo)', daily_digest: 'Envio resumen diario', pock_cotizador: 'Creo cotizacion automatica' };
+    logs.forEach(l => {
+      html += `<tr>
+        <td><span class="muted">${ago(l.created_at)}</span><div class="muted" style="font-size:10px">${fmtDate(l.created_at)}</div></td>
+        <td>${wf[l.workflow_name] || esc(l.workflow_name)}</td>
+        <td>${l.category ? `<span class="pill ${l.category}">${CAT_LABEL[l.category] || l.category}</span>` : '-'}</td>
+        <td>${l.status === 'success' ? '<span style="color:var(--success);font-weight:600">Bien</span>' : `<span style="color:var(--red);font-weight:600">Error</span>${l.error_message ? `<div class="muted truncate">${esc(l.error_message)}</div>` : ''}`}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  html += `</div></div>`;
+  $('#content').innerHTML = html;
+}
+
+// ============== INIT ==============
+navigate();
+setInterval(() => { cache.dashboard = null; cache.chatbot = null; cache.exec = null; if (['hoy','whatsapp','bandeja','analisis'].includes(currentRoute)) navigate(); }, AUTO_REFRESH_MS);
+</script>
+</body>
+</html>

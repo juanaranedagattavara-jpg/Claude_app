@@ -1,0 +1,20 @@
+# Si usas Caddy en el VPS, agrega este bloque a tu Caddyfile.
+# Caddy maneja HTTPS automatico via Let's Encrypt.
+
+panel.aranedaoffice.cloud {
+    reverse_proxy localhost:8080
+
+    encode gzip
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    log {
+        output file /var/log/caddy/pock-panel.log
+        format console
+    }
+}

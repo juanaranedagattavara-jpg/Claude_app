@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  pock-dashboard:
+    build: .
+    image: pock-dashboard:latest
+    container_name: pock-dashboard
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - pock-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    labels:
+      - "com.pock.service=dashboard"
+      - "com.pock.version=1.0.0"
+
+networks:
+  pock-net:
+    driver: bridge
+
+# Despues, en tu reverse proxy del VPS (Caddy/Traefik/Nginx host),
+# apuntas https://panel.aranedaoffice.cloud (o el dominio que prefieras) -> http://localhost:8080
