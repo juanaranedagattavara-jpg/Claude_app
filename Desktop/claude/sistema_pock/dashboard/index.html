@@ -99,6 +99,14 @@
   .pill.colaborador { background: #e0e8f0; color: #2e5780; }
   .pill.spam, .pill.rechazado, .pill.rejected { background: var(--gray-100); color: var(--gray-700); }
   .pill.proveedor, .pill.desconocido, .pill.digest { background: var(--gray-100); color: var(--gray-700); }
+  .pill.cv { background: #e8f0fe; color: #1a56db; }
+
+  .tab-bar { display: flex; gap: 0; border-bottom: 2px solid var(--gray-200); margin-bottom: 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab-btn { padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--gray-500); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: color 0.15s; display: flex; align-items: center; gap: 6px; }
+  .tab-btn:hover { color: var(--gray-900); }
+  .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+  .tab-btn .tab-count { background: var(--gray-100); color: var(--gray-700); border-radius: 10px; padding: 1px 7px; font-size: 10px; font-weight: 700; }
+  .tab-btn.active .tab-count { background: var(--red-soft); color: var(--red); }
   .pill.draft, .pill.generated { background: #fff4e0; color: var(--warn); }
   .pill.sent, .pill.approved { background: #e0f0e0; color: var(--success); }
   .pill.accepted { background: #c8e6c2; color: #155f0f; }
@@ -187,9 +195,10 @@
     .topbar .subtitle { font-size: 11px; }
     .topbar .actions { gap: 6px; }
     .topbar .actions .updated { display: none; }
-    .content { padding: 14px; overflow-x: hidden; }
+    .content { padding: 14px; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
     .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .kpi { padding: 12px 14px; }
+    .kpi { padding: 12px 14px; min-width: 0; overflow: hidden; word-break: break-word; }
+    .info { word-break: break-word; overflow-wrap: break-word; }
     .kpi-value { font-size: 20px; }
     .kpi-label { font-size: 10px; }
     .kpi-sub { font-size: 10px; }
@@ -227,6 +236,8 @@
     .modal-f { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
     .modal-f .btn { flex: 1; min-width: 100px; justify-content: center; text-align: center; }
     .form-row { grid-template-columns: 1fr; }
+    .tab-bar { gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 14px; }
+    .tab-btn { padding: 8px 12px; font-size: 12px; }
     .filter-bar { padding: 10px 14px; flex-direction: column; }
     .filter-bar input, .filter-bar select { min-width: 100%; width: 100%; }
     .nav { padding: 18px 14px; }
@@ -250,10 +261,13 @@
     .panel-body [style*="display:grid"] { gap: 6px !important; }
   }
   @media (max-width: 480px) {
+    .sidebar { width: 100vw; }
     .kpi-grid { grid-template-columns: 1fr; }
+    .kpi { min-width: 0; overflow: hidden; }
+    .kpi-value { font-size: 18px; word-break: break-word; }
+    .kpi-label, .kpi-sub { word-break: break-word; }
     .topbar h2 { font-size: 16px; }
     .hero h2 { font-size: 18px; }
-    .kpi-value { font-size: 18px; }
     /* WhatsApp modal - narrow phones */
     #wa-thread { max-height: 35vh !important; }
     #wa-thread + div div[style*="display:flex"] { flex-direction: column; }
@@ -424,7 +438,7 @@ const PAGES = {
   cotizaciones: { title: 'Cotizaciones', subtitle: 'Pipeline de cotizaciones abiertas y cerradas', render: renderCotizaciones },
   clientes: { title: 'Clientes', subtitle: 'Directorio completo con historial', render: renderClientes },
   whatsapp: { title: 'WhatsApp', subtitle: 'Conversaciones via Chatwoot en tiempo real', render: renderWhatsapp },
-  bandeja: { title: 'Correo electronico', subtitle: 'Respuestas redactadas por la IA esperando aprobacion', render: renderBandeja },
+  bandeja: { title: 'Correo electronico', subtitle: 'Todos los correos procesados por el clasificador', render: renderBandeja },
   catalogo: { title: 'Catalogo', subtitle: 'Productos y precios vigentes', render: renderCatalogo },
   historial: { title: 'Actividad del sistema', subtitle: 'Que ha hecho la automatizacion en las ultimas horas', render: renderHistorial }
 };
@@ -1201,22 +1215,30 @@ window.openContactModal = async (id) => {
   } catch (e) { closeModal(); toast(e.message, 'error'); }
 };
 
-// ============== PAGE: BANDEJA IA (CEO ve, no aprueba) ==============
+// ============== PAGE: BANDEJA (todos los correos clasificados + borradores) ==============
+let bandejaFilter = null;
+let bandejaEmails = [];
+let bandejaCounts = {};
+
 async function renderBandeja() {
   const d = await getDashboard();
   const c = await getChatbot();
   updateBadges(d, c);
   $('#updated').textContent = 'Actualizado ' + ago(d.generated_at);
+
   const drafts = d.drafts;
-  let html = `
-    <div class="info"><b>Como funciona:</b> cuando llega un email importante, la IA redacta una respuesta y la deja en borrador en Gmail. Aqui ves lo que esta esperando aprobacion. Click para leer el contenido completo.</div>
-    <div class="panel">
-      <div class="panel-header"><div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Estan en Gmail listos para revisar y enviar</div></div></div>
-      <div class="panel-body flush">`;
-  if (drafts.length === 0) {
-    html += `<div class="empty"><div class="empty-icon">✓</div><div class="empty-title">Bandeja al dia</div>No hay borradores pendientes.</div>`;
-  } else {
-    html += `<table><thead><tr><th>Cliente</th><th>Asunto</th><th>Hace</th></tr></thead><tbody>`;
+  bandejaCounts = await rpc('email_category_counts') || {};
+  bandejaEmails = await rpc('list_emails_classified', { p_category: null, p_limit: 50 }) || [];
+  const totalEmails = Object.values(bandejaCounts).reduce((a, b) => a + b, 0);
+
+  let html = '';
+
+  // Drafts section
+  if (drafts.length > 0) {
+    html += `<div class="panel" style="margin-bottom:18px;border-left:4px solid var(--warn)">
+      <div class="panel-header"><div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Respuestas de la IA listas para revisar en Gmail</div></div></div>
+      <div class="panel-body flush">
+        <table><thead><tr><th>Cliente</th><th>Asunto</th><th>Hace</th></tr></thead><tbody>`;
     drafts.forEach(b => {
       html += `<tr class="row-click" onclick='openDraftView(${JSON.stringify(b).replace(/'/g,"&apos;")})'>
         <td><b>${esc(b.cliente||'?')}</b><div class="muted">${esc(b.email||'')}</div></td>
@@ -1225,21 +1247,115 @@ async function renderBandeja() {
       </tr>`;
     });
     html += `</tbody></table>`;
-    // Mobile cards
     html += `<div class="mobile-cards">`;
     drafts.forEach(b => {
       html += `<div class="m-card" onclick='openDraftView(${JSON.stringify(b).replace(/'/g,"&apos;")})'>
         <div class="m-card-header"><div class="m-card-title">${esc(b.cliente||'?')}</div><span class="muted">${ago(b.generated_at)}</span></div>
         <div class="m-card-sub">${esc(b.email||'')}</div>
         <div class="m-card-row" style="margin-top:4px"><span style="font-weight:500">${esc(b.subject)}</span></div>
-        ${b.summary ? `<div class="m-card-sub" style="margin-top:4px">${esc(b.summary).slice(0,100)}</div>` : ''}
       </div>`;
     });
-    html += `</div>`;
+    html += `</div></div></div>`;
   }
-  html += `</div></div>`;
+
+  // Tabs
+  const cats = [
+    { key: null, label: 'Todos', count: totalEmails },
+    { key: 'lead', label: 'Leads', count: bandejaCounts.lead || 0 },
+    { key: 'cliente', label: 'Clientes', count: bandejaCounts.cliente || 0 },
+    { key: 'colaborador', label: 'Colaboradores', count: bandejaCounts.colaborador || 0 },
+    { key: 'proveedor', label: 'Proveedores', count: bandejaCounts.proveedor || 0 },
+    { key: 'cv', label: 'CV', count: bandejaCounts.cv || 0 },
+    { key: 'spam', label: 'Spam', count: bandejaCounts.spam || 0 },
+    { key: 'desconocido', label: 'Otros', count: bandejaCounts.desconocido || 0 },
+  ].filter(c => c.key === null || c.count > 0);
+
+  html += `<div class="tab-bar" id="email-tabs">`;
+  cats.forEach(c => {
+    const active = bandejaFilter === c.key ? 'active' : '';
+    html += `<button class="tab-btn ${active}" onclick="filterEmails(${c.key === null ? 'null' : "'"+c.key+"'"})">
+      ${c.label}<span class="tab-count">${c.count}</span>
+    </button>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="panel"><div class="panel-body flush" id="emails-list"><div class="loading"><span class="spinner dark"></span></div></div></div>`;
   $('#content').innerHTML = html;
+  renderEmailList(bandejaEmails);
 }
+
+window.filterEmails = async (cat) => {
+  bandejaFilter = cat;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tab-btn');
+  const cats = [null, 'lead', 'cliente', 'colaborador', 'proveedor', 'cv', 'spam', 'desconocido'];
+  const idx = cats.indexOf(cat);
+  let found = false;
+  tabs.forEach(btn => {
+    if (!found && btn.textContent.trim().startsWith(
+      cat === null ? 'Todos' : cat === 'cv' ? 'CV' : cat.charAt(0).toUpperCase() + cat.slice(1)
+    )) { btn.classList.add('active'); found = true; }
+  });
+  if (!found && tabs[0]) tabs[0].classList.add('active');
+
+  const listEl = document.getElementById('emails-list');
+  listEl.innerHTML = '<div class="loading"><span class="spinner dark"></span></div>';
+  bandejaEmails = await rpc('list_emails_classified', { p_category: cat, p_limit: 50 }) || [];
+  renderEmailList(bandejaEmails);
+};
+
+function renderEmailList(emails) {
+  const listEl = document.getElementById('emails-list');
+  if (!emails || emails.length === 0) {
+    listEl.innerHTML = `<div class="empty"><div class="empty-icon">✓</div><div class="empty-title">Sin correos${bandejaFilter ? ' en esta categoria' : ''}</div></div>`;
+    return;
+  }
+  let html = `<table><thead><tr><th>De</th><th>Asunto</th><th>Categoria</th><th>Confianza</th><th>Fecha</th></tr></thead><tbody>`;
+  emails.forEach(e => {
+    const conf = e.confidence ? Math.round(e.confidence * 100) + '%' : '-';
+    const draftIcon = e.draft_status === 'generated' ? ' <span title="Borrador pendiente" style="color:var(--warn)">✎</span>' : '';
+    html += `<tr class="row-click" onclick='openEmailView(${JSON.stringify(e).replace(/'/g,"&apos;")})'>
+      <td><b>${esc(e.from_name||e.from_address||'?')}</b><div class="muted">${esc(e.from_address||'')}</div></td>
+      <td><div class="truncate" style="font-weight:500;max-width:300px">${esc(e.subject||'(sin asunto)')}</div><div class="muted truncate" style="max-width:300px">${esc(e.snippet||'')}</div></td>
+      <td><span class="pill ${e.category||''}">${esc(e.category||'?')}${draftIcon}</span></td>
+      <td><span class="muted">${conf}</span></td>
+      <td><span class="muted">${ago(e.received_at)}</span></td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+
+  html += `<div class="mobile-cards">`;
+  emails.forEach(e => {
+    const conf = e.confidence ? Math.round(e.confidence * 100) + '%' : '';
+    html += `<div class="m-card" onclick='openEmailView(${JSON.stringify(e).replace(/'/g,"&apos;")})'>
+      <div class="m-card-header">
+        <div class="m-card-title">${esc(e.from_name||e.from_address||'?')}</div>
+        <span class="pill ${e.category||''}">${esc(e.category||'?')}</span>
+      </div>
+      <div class="m-card-sub">${esc(e.from_address||'')}</div>
+      <div class="m-card-row" style="margin-top:4px"><span style="font-weight:500">${esc(e.subject||'(sin asunto)')}</span></div>
+      <div class="m-card-row"><span class="muted">${esc(e.snippet||'').slice(0,80)}</span><span class="muted">${ago(e.received_at)}${conf ? ' · '+conf : ''}</span></div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  listEl.innerHTML = html;
+}
+
+window.openEmailView = (e) => {
+  modal(`
+    <div class="modal-h"><div><div class="modal-title">${esc(e.subject||'(sin asunto)')}</div><div class="muted" style="color:#ccc">${esc(e.from_name||'')} &lt;${esc(e.from_address||'')}&gt;</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="detail-row"><span class="k">Categoria</span><span class="v"><span class="pill ${e.category||''}">${esc(e.category||'?')}</span></span></div>
+      <div class="detail-row"><span class="k">Confianza</span><span class="v">${e.confidence ? Math.round(e.confidence*100)+'%' : '-'}</span></div>
+      <div class="detail-row"><span class="k">Razon IA</span><span class="v">${esc(e.reason||'-')}</span></div>
+      <div class="detail-row"><span class="k">Contacto</span><span class="v">${esc(e.contact_name||'-')}${e.contact_company ? ' · '+esc(e.contact_company) : ''}</span></div>
+      <div class="detail-row"><span class="k">Recibido</span><span class="v">${fmtDate(e.received_at)}</span></div>
+      ${e.draft_status ? `<div class="detail-row"><span class="k">Borrador</span><span class="v"><span class="pill ${e.draft_status}">${esc(e.draft_status)}</span></span></div>` : ''}
+      <div style="margin-top:14px;padding:14px;background:var(--gray-50);border-radius:8px;white-space:pre-wrap;line-height:1.6;font-size:13px;color:var(--gray-700)">${esc(e.snippet||'Vista previa no disponible')}</div>
+    </div>
+  `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
+};
 
 window.openDraftView = (b) => {
   modal(`
