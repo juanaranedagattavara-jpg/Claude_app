@@ -166,6 +166,19 @@
   .bar-row .bar-fill { height: 100%; background: var(--red); border-radius: 4px; transition: width 0.4s; }
   .bar-row .bar-value { min-width: 32px; text-align: right; color: var(--gray-700); font-weight: 600; }
 
+  /* Ficha de contacto - timeline unificado */
+  .ficha-stat { background: var(--gray-50); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+  .ficha-stat .muted { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
+  .tl-item { display: flex; gap: 12px; padding: 12px; background: var(--gray-50); border-radius: 10px; border-left: 3px solid var(--gray-200); }
+  .tl-icon { width: 28px; height: 28px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .tl-body { flex: 1; min-width: 0; }
+  .tl-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .tl-channel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+  .tl-when { font-size: 11px; color: var(--gray-500); }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; word-break: break-word; }
+  .tl-preview { font-size: 12px; color: var(--gray-700); line-height: 1.5; word-break: break-word; }
+
   /* Chat messages */
   .chat-msg { padding: 10px 14px; border-radius: 12px; margin-bottom: 8px; max-width: 80%; font-size: 13px; line-height: 1.5; white-space: pre-wrap; }
   .chat-msg.human { background: var(--gray-100); margin-right: auto; border-bottom-left-radius: 4px; }
@@ -317,7 +330,7 @@
       <div class="nav-section">Operaciones</div>
       <a href="#/whatsapp" data-route="whatsapp" class="wa-link">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        Chatbot WhatsApp
+        WhatsApp
         <span class="badge" id="bdg-wa" style="display:none"></span>
       </a>
       <a href="#/bandeja" data-route="bandeja">
@@ -403,7 +416,7 @@ const saludo = () => {
 
 const STATE_LABEL = { draft: 'Lista', sent: 'Enviada', accepted: 'Aceptada', rejected: 'Rechazada', expired: 'Vencida' };
 const DRAFT_LABEL = { generated: 'Por revisar', approved: 'Aprobada', sent: 'Enviada', discarded: 'Descartada' };
-const CAT_LABEL = { lead: 'Lead', cliente: 'Cliente', colaborador: 'Colaborador', proveedor: 'Proveedor', spam: 'Spam', desconocido: 'Sin clasificar' };
+const CAT_LABEL = { lead: 'Lead', cliente: 'Cliente', colaborador: 'Colaborador', cv: 'CV', proveedor: 'Proveedor', spam: 'Spam', desconocido: 'Sin clasificar' };
 
 async function rpc(name, body = {}) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
@@ -822,10 +835,6 @@ async function renderWhatsapp() {
   const maxDaily = Math.max(1, ...daily.map(d => Number(d.sesiones) || 0));
 
   const html = `
-    <div class="info">
-      <b>WhatsApp Business + Chatwoot:</b> los mensajes llegan a Chatwoot y se sincronizan acá automáticamente. Podés abrir una conversación y responder directamente desde el panel — el mensaje se envía vía Chatwoot al cliente.
-    </div>
-
     <div class="kpi-grid">
       <div class="kpi wa">
         <div class="kpi-label">Conversaciones abiertas</div>
@@ -1189,30 +1198,105 @@ window.loadClientes = async () => {
 };
 
 window.openContactModal = async (id) => {
-  modal(`<div class="modal-h"><div class="modal-title">Cargando cliente...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
+  modal(`<div class="modal-h"><div class="modal-title">Cargando ficha...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
   try {
-    const data = await rpc('get_contact_history', { p_contact_id: id });
+    const [data, mergeData] = await Promise.all([
+      rpc('get_contact_timeline', { p_contact_id: id }),
+      rpc('suggest_contact_merge', { p_contact_id: id })
+    ]);
     const c = data.contact;
-    const msgsHtml = data.messages.length === 0 ? '<div class="muted">Sin mensajes.</div>' : data.messages.map(m =>
-      `<div style="padding:10px;border-left:3px solid var(--red);background:var(--gray-50);margin-bottom:8px;border-radius:6px"><div style="display:flex;justify-content:space-between"><b>${esc(m.subject||'(sin asunto)')}</b><span class="pill ${m.category}">${CAT_LABEL[m.category]||m.category}</span></div><div class="muted">${fmtDate(m.received_at)}</div><div style="font-size:12px;margin-top:4px">${esc(m.snippet||'')}</div></div>`).join('');
-    const quotesHtml = data.quotes.length === 0 ? '<div class="muted">Sin cotizaciones.</div>' : `<table><thead><tr><th>N°</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${data.quotes.map(q =>
+    const tl = data.timeline || [];
+    const quotes = data.quotes || [];
+    const matches = (mergeData && mergeData.matches) || [];
+
+    const initials = (c.full_name || c.email || '?').trim().split(/\s+/).slice(0,2).map(s => s[0]).join('').toUpperCase();
+
+    const channelIcons = {
+      email_in: { ico: '✉', color: 'var(--red)', label: 'Correo recibido' },
+      email_draft: { ico: '✎', color: 'var(--warn)', label: 'Borrador IA' },
+      whatsapp: { ico: '✆', color: 'var(--whatsapp)', label: 'WhatsApp' },
+      quote: { ico: '$', color: 'var(--success)', label: 'Cotizacion' }
+    };
+
+    const timelineHtml = tl.length === 0 ?
+      '<div class="empty"><div class="empty-title">Sin actividad aun</div>Cuando el contacto escriba por cualquier canal, aparecera aca.</div>' :
+      tl.map(t => {
+        const c = channelIcons[t.kind] || { ico: '•', color: 'var(--gray-500)', label: t.kind };
+        return `<div class="tl-item">
+          <div class="tl-icon" style="background:${c.color}">${c.ico}</div>
+          <div class="tl-body">
+            <div class="tl-head">
+              <span class="tl-channel" style="color:${c.color}">${c.label}</span>
+              <span class="tl-when">${ago(t.at)}</span>
+            </div>
+            <div class="tl-title">${esc(t.title||'(sin titulo)')}</div>
+            ${t.preview ? `<div class="tl-preview">${esc(String(t.preview).slice(0,180))}</div>` : ''}
+            ${t.meta ? `<span class="pill ${t.meta}" style="margin-top:4px">${esc(STATE_LABEL[t.meta] || DRAFT_LABEL[t.meta] || CAT_LABEL[t.meta] || t.meta)}</span>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+
+    const quotesHtml = quotes.length === 0 ? '<div class="muted">Sin cotizaciones.</div>' :
+      `<table><thead><tr><th>N°</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${quotes.map(q =>
       `<tr><td><b>${esc(q.quote_number)}</b></td><td>${fmtCLP(q.total)}</td><td><span class="pill ${q.status}">${STATE_LABEL[q.status]||q.status}</span></td><td>${fmtDateShort(q.created_at)}</td><td><button class="btn btn-outline btn-sm" onclick="closeModal();setTimeout(()=>openQuoteModal(${q.id}),200)">Abrir</button></td></tr>`).join('')}</tbody></table>`;
+
+    const mergeBanner = matches.length === 0 ? '' : `
+      <div style="background:#fef3c7;border-left:4px solid var(--warn);border-radius:8px;padding:12px 16px;margin-bottom:14px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">Posible duplicado detectado</div>
+        ${matches.map(m => `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba(0,0,0,0.05)">
+            <div>
+              <b>${esc(m.full_name||m.email||m.phone||'?')}</b>
+              <div class="muted">${esc(m.email||'')} ${m.phone ? ' &middot; '+esc(m.phone) : ''} &middot; coincide por ${esc(m.razon)}</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="mergeContacts(${id}, ${m.id})">Fusionar &uarr;</button>
+          </div>
+        `).join('')}
+      </div>`;
+
     modal(`
-      <div class="modal-h"><div><div class="modal-title">${esc(c.full_name||'?')}</div><div class="muted" style="color:#ccc">${esc(c.email)}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-h">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:white">${esc(initials)}</div>
+          <div>
+            <div class="modal-title">${esc(c.full_name||'?')}</div>
+            <div class="muted" style="color:#ccc">${esc(c.email||'-')}${c.phone ? ' &middot; '+esc(c.phone) : ''}</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
       <div class="modal-b">
-        <div class="detail-row"><span class="k">Tipo</span><span class="v"><span class="pill ${c.contact_type}">${CAT_LABEL[c.contact_type] || c.contact_type}</span></span></div>
-        ${c.phone ? `<div class="detail-row"><span class="k">Telefono</span><span class="v">${esc(c.phone)}</span></div>` : ''}
-        ${c.company ? `<div class="detail-row"><span class="k">Empresa</span><span class="v">${esc(c.company)}</span></div>` : ''}
-        <div class="detail-row"><span class="k">Ultimo contacto</span><span class="v">${ago(c.last_activity_at)}</span></div>
-        <div class="detail-row"><span class="k">Primera vez</span><span class="v">${fmtDate(c.created_at)}</span></div>
-        ${c.notes ? `<div class="info" style="margin-top:10px;white-space:pre-wrap">${esc(c.notes)}</div>` : ''}
-        <h4 style="margin:18px 0 10px;font-size:12px;color:var(--gray-500);text-transform:uppercase">Cotizaciones (${data.quotes.length})</h4>
+        ${mergeBanner}
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px">
+          <div class="ficha-stat"><div class="muted">Tipo</div><div><span class="pill ${c.contact_type}">${CAT_LABEL[c.contact_type] || c.contact_type}</span></div></div>
+          ${c.company ? `<div class="ficha-stat"><div class="muted">Empresa</div><b>${esc(c.company)}</b></div>` : ''}
+          <div class="ficha-stat"><div class="muted">Origen</div><b>${esc(c.source||'-')}</b></div>
+          <div class="ficha-stat"><div class="muted">Ultimo contacto</div><b>${ago(c.last_activity_at)}</b></div>
+          <div class="ficha-stat"><div class="muted">Cliente desde</div><b>${fmtDateShort(c.created_at)}</b></div>
+        </div>
+
+        ${c.notes ? `<div class="info" style="margin-bottom:14px;white-space:pre-wrap">${esc(c.notes)}</div>` : ''}
+
+        <h4 style="margin:18px 0 10px;font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.6px;font-weight:700">Cotizaciones (${quotes.length})</h4>
         ${quotesHtml}
-        <h4 style="margin:18px 0 10px;font-size:12px;color:var(--gray-500);text-transform:uppercase">Mensajes (${data.messages.length})</h4>
-        ${msgsHtml}
+
+        <h4 style="margin:22px 0 12px;font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.6px;font-weight:700">Historial unificado (${tl.length})</h4>
+        <div class="timeline">${timelineHtml}</div>
       </div>
     `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
   } catch (e) { closeModal(); toast(e.message, 'error'); }
+};
+
+window.mergeContacts = async (targetId, sourceId) => {
+  if (!confirm('Fusionar estos contactos? Se movera toda la actividad del duplicado al contacto actual.')) return;
+  try {
+    await rpc('merge_contacts', { p_target_id: targetId, p_source_id: sourceId });
+    closeModal();
+    toast('Contactos fusionados.');
+    cache.dashboard = null;
+    await navigate();
+  } catch (e) { toast('Error: ' + e.message, 'error'); }
 };
 
 // ============== PAGE: BANDEJA (todos los correos clasificados + borradores) ==============
@@ -1342,31 +1426,138 @@ function renderEmailList(emails) {
   listEl.innerHTML = html;
 }
 
-window.openEmailView = (e) => {
-  modal(`
-    <div class="modal-h"><div><div class="modal-title">${esc(e.subject||'(sin asunto)')}</div><div class="muted" style="color:#ccc">${esc(e.from_name||'')} &lt;${esc(e.from_address||'')}&gt;</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
-    <div class="modal-b">
-      <div class="detail-row"><span class="k">Categoria</span><span class="v"><span class="pill ${e.category||''}">${esc(e.category||'?')}</span></span></div>
-      <div class="detail-row"><span class="k">Confianza</span><span class="v">${e.confidence ? Math.round(e.confidence*100)+'%' : '-'}</span></div>
-      <div class="detail-row"><span class="k">Razon IA</span><span class="v">${esc(e.reason||'-')}</span></div>
-      <div class="detail-row"><span class="k">Contacto</span><span class="v">${esc(e.contact_name||'-')}${e.contact_company ? ' · '+esc(e.contact_company) : ''}</span></div>
-      <div class="detail-row"><span class="k">Recibido</span><span class="v">${fmtDate(e.received_at)}</span></div>
-      ${e.draft_status ? `<div class="detail-row"><span class="k">Borrador</span><span class="v"><span class="pill ${e.draft_status}">${esc(e.draft_status)}</span></span></div>` : ''}
-      <div style="margin-top:14px;padding:14px;background:var(--gray-50);border-radius:8px;white-space:pre-wrap;line-height:1.6;font-size:13px;color:var(--gray-700)">${esc(e.snippet||'Vista previa no disponible')}</div>
-    </div>
-  `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
+let _activeEmail = null;
+
+window.openEmailView = async (eSummary) => {
+  modal(`<div class="modal-h"><div class="modal-title">Cargando correo...</div></div><div class="modal-b"><div class="loading"><span class="spinner dark"></span></div></div>`);
+  try {
+    const data = await rpc('get_email_detail', { p_message_id: eSummary.id });
+    _activeEmail = data;
+    renderEmailDetail();
+  } catch (e) { closeModal(); toast(e.message, 'error'); }
 };
 
-window.openDraftView = (b) => {
+window.openDraftView = async (b) => {
+  // b.id es draft id; buscamos el message_id por thread_id
+  try {
+    const msgs = await rpc('list_emails_classified', { p_category: null, p_limit: 200 });
+    const found = (msgs || []).find(m => m.id && bandejaEmails.find(x => x.id === m.id));
+    // fallback: usar bandejaEmails activos para localizar
+    const candidate = (bandejaEmails || []).find(m => m.from_address === b.email);
+    if (candidate) return window.openEmailView(candidate);
+    // ultima opcion: render solo borrador
+    modal(`
+      <div class="modal-h"><div><div class="modal-title">Borrador para ${esc(b.cliente||'?')}</div><div class="muted" style="color:#ccc">${esc(b.email||'')}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-b">
+        <div class="detail-row"><span class="k">Asunto</span><span class="v">${esc(b.subject)}</span></div>
+        <div class="detail-row"><span class="k">Resumen IA</span><span class="v">${esc(b.summary||'-')}</span></div>
+        <textarea id="draft-body-edit" style="width:100%;min-height:280px;margin-top:14px;padding:14px;font-family:inherit;font-size:13px;line-height:1.6">${esc(b.body||'')}</textarea>
+      </div>
+    `, `
+      <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-outline" onclick="setDraftStatus(${b.id},'discarded')">Descartar</button>
+      <button class="btn btn-primary" onclick="approveDraft(${b.id})">Aprobar y enviar</button>
+    `);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+function renderEmailDetail() {
+  if (!_activeEmail) return;
+  const m = _activeEmail.message || {};
+  const d = _activeEmail.draft;
+  const c = _activeEmail.contact;
+  const catLabel = CAT_LABEL[m.category] || m.category || '?';
+
+  const recibido = `
+    <div style="background:var(--gray-50);border-radius:10px;padding:16px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px">
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--gray-900)">${esc(m.from_name||m.from_address||'?')}</div>
+          <div class="muted">${esc(m.from_address||'')}</div>
+        </div>
+        <span class="pill ${m.category||''}">${esc(catLabel)}</span>
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px"><b>Asunto:</b> ${esc(m.subject||'(sin asunto)')} &middot; ${fmtDate(m.received_at)}</div>
+      <div style="white-space:pre-wrap;line-height:1.55;font-size:13px;color:var(--gray-800);max-height:240px;overflow-y:auto">${esc(m.body || m.snippet || '(cuerpo no disponible)')}</div>
+    </div>`;
+
+  const iaPanel = `
+    <div style="background:#fef3c7;border-radius:10px;padding:12px 14px;margin-bottom:14px;border-left:3px solid var(--warn)">
+      <div style="font-size:11px;text-transform:uppercase;color:var(--gray-700);font-weight:700;letter-spacing:0.5px;margin-bottom:4px">Resumen de la IA</div>
+      <div style="font-size:13px;color:var(--gray-900);line-height:1.5"><b>Categoria:</b> ${esc(catLabel)} (${m.confidence ? Math.round(m.confidence*100)+'% confianza' : '-'})</div>
+      <div style="font-size:13px;color:var(--gray-700);margin-top:4px">${esc(m.reason||'-')}</div>
+      ${d && d.summary ? `<div style="font-size:13px;color:var(--gray-700);margin-top:6px"><b>Resumen del borrador:</b> ${esc(d.summary)}</div>` : ''}
+    </div>`;
+
+  const draftPanel = d ? `
+    <div style="background:white;border:2px solid var(--success);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:11px;text-transform:uppercase;color:var(--success);font-weight:700;letter-spacing:0.5px">Borrador IA editable</div>
+        <span class="pill ${d.status||''}">${DRAFT_LABEL[d.status] || d.status}</span>
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px"><b>Para:</b> ${esc(m.from_address)} &middot; <b>Asunto:</b> ${esc(d.subject||m.subject)}</div>
+      <textarea id="draft-body-edit" style="width:100%;min-height:240px;padding:12px;font-family:inherit;font-size:13px;line-height:1.6;border:1px solid var(--gray-200);border-radius:8px;resize:vertical">${esc(stripHtml(d.body||''))}</textarea>
+      <div class="muted" style="margin-top:6px">Editar el texto antes de aprobar. Se guarda en Supabase al aprobar.</div>
+    </div>` : `
+    <div class="empty" style="padding:30px 20px">
+      <div class="empty-title">Sin borrador generado</div>
+      Este correo se clasifico como <b>${esc(catLabel)}</b> y no requiere respuesta automatica.
+    </div>`;
+
+  const ctxBtn = c && c.id ? `<button class="btn btn-outline" onclick="closeModal();setTimeout(()=>openContactModal(${c.id}),200)">Ver ficha contacto</button>` : '';
+  const draftActions = d ? `
+    <button class="btn btn-outline" onclick="setDraftStatus(${d.id},'discarded')">Descartar</button>
+    <button class="btn btn-primary" onclick="approveDraft(${d.id})">Aprobar y enviar</button>
+  ` : '';
+
   modal(`
-    <div class="modal-h"><div><div class="modal-title">Borrador para ${esc(b.cliente||'?')}</div><div class="muted" style="color:#ccc">${esc(b.email||'')}</div></div><button class="modal-close" onclick="closeModal()">×</button></div>
-    <div class="modal-b">
-      <div class="detail-row"><span class="k">Asunto</span><span class="v">${esc(b.subject)}</span></div>
-      <div class="detail-row"><span class="k">Resumen IA</span><span class="v">${esc(b.summary||'-')}</span></div>
-      <div class="detail-row"><span class="k">Generado</span><span class="v">${fmtDate(b.generated_at)}</span></div>
-      <div style="margin-top:14px;padding:14px;background:var(--gray-50);border-radius:8px;font-family:Georgia,serif;white-space:pre-wrap;line-height:1.6">${esc(b.body||'')}</div>
+    <div class="modal-h">
+      <div>
+        <div class="modal-title">Correo recibido</div>
+        <div class="muted" style="color:#ccc">${esc(m.from_name||m.from_address)} &middot; ${ago(m.received_at)}</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
     </div>
-  `, `<button class="btn btn-outline" onclick="closeModal()">Cerrar</button>`);
+    <div class="modal-b">
+      ${recibido}
+      ${iaPanel}
+      ${draftPanel}
+    </div>
+  `, `
+    ${ctxBtn}
+    <div style="flex:1"></div>
+    <button class="btn btn-outline" onclick="closeModal()">Cerrar</button>
+    ${draftActions}
+  `);
+}
+
+function stripHtml(s) {
+  if (!s) return '';
+  const div = document.createElement('div');
+  div.innerHTML = s;
+  return div.textContent || div.innerText || '';
+}
+
+window.approveDraft = async (draftId) => {
+  const ta = document.getElementById('draft-body-edit');
+  const newBody = ta ? ta.value.trim() : null;
+  try {
+    await rpc('update_email_draft', { p_draft_id: draftId, p_body: newBody, p_status: 'approved' });
+    closeModal();
+    toast('Borrador aprobado. Se marca listo para envio.');
+    cache.dashboard = null;
+    await navigate();
+  } catch (e) { toast('Error: ' + e.message, 'error'); }
+};
+
+window.setDraftStatus = async (draftId, status) => {
+  try {
+    await rpc('update_email_draft', { p_draft_id: draftId, p_body: null, p_status: status });
+    closeModal();
+    toast(status === 'discarded' ? 'Borrador descartado.' : 'Borrador actualizado.');
+    cache.dashboard = null;
+    await navigate();
+  } catch (e) { toast('Error: ' + e.message, 'error'); }
 };
 
 // ============== PAGE: CATALOGO (solo ver) ==============
