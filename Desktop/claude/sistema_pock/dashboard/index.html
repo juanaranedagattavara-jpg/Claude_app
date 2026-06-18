@@ -1222,7 +1222,9 @@ window.openContactModal = async (id) => {
         let onclick = '';
         if (t.kind === 'email_in') onclick = `onclick="closeModal();setTimeout(()=>openEmailView({id:${t.ref_id}}),200)"`;
         else if (t.kind === 'email_draft' && t.sub) onclick = `onclick="closeModal();setTimeout(()=>openEmailView({id:${t.sub}}),200)"`;
-        return `<div class="tl-item" style="cursor:${onclick?'pointer':'default'}" ${onclick}>
+        else if (t.kind === 'quote') onclick = `onclick="closeModal();setTimeout(()=>openQuoteModal(${t.ref_id}),200)"`;
+        else if (t.kind === 'whatsapp' && t.sub) onclick = `onclick="closeModal();setTimeout(()=>openWaConversation(${t.ref_id},${t.sub}),200)"`;
+        return `<div class="tl-item" style="cursor:pointer" ${onclick}>
           <div class="tl-icon" style="background:${ch.color}">${ch.ico}</div>
           <div class="tl-body">
             <div class="tl-head">
