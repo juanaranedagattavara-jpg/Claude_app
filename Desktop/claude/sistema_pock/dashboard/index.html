@@ -264,8 +264,15 @@
     .bar-row .bar-value { font-size: 11px; min-width: 28px; }
     /* Quote modal detail grid */
     .modal-b [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-    /* WhatsApp reply textarea */
-    .modal-b textarea, .modal textarea { font-size: 16px; /* prevent zoom on iOS */ }
+    /* Textareas in modals */
+    .modal-b textarea, .modal textarea { font-size: 16px !important; min-height: 180px !important; /* prevent zoom on iOS */ }
+    /* Email detail modal - stack panels */
+    .modal-b > div[style*="border-radius:10px"] { padding: 12px !important; }
+    .modal-b > div[style*="border:2px solid"] { padding: 12px !important; }
+    .modal-b > div[style*="border:2px solid"] textarea { min-height: 160px !important; }
+    /* Ficha stats grid */
+    .modal-b > div[style*="grid-template-columns:repeat"] { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+    .ficha-stat { padding: 8px 10px !important; font-size: 12px; }
     /* WhatsApp conversation modal - mobile fixes */
     #wa-thread { max-height: 40vh !important; }
     #wa-thread + div { padding: 10px 14px !important; }
@@ -287,6 +294,15 @@
     #wa-thread + div div[style*="display:flex"] { flex-direction: column; }
     #wa-thread + div div[style*="display:flex"] button { align-self: stretch !important; }
     #wa-thread .chat-msg { max-width: 95%; }
+    /* Email modal footer buttons stack */
+    .modal-f { flex-direction: column; }
+    .modal-f .btn { width: 100%; min-width: unset; }
+    /* Ficha stats single column on tiny screens */
+    .modal-b > div[style*="grid-template-columns:repeat"] { grid-template-columns: 1fr !important; }
+    /* Timeline items */
+    .tl-item { padding: 10px !important; }
+    .tl-title { font-size: 13px; }
+    .tl-preview { font-size: 11px; }
   }
 </style>
 </head>
@@ -1318,11 +1334,14 @@ async function renderBandeja() {
 
   let html = '';
 
-  // Drafts section
+  // Drafts section - collapsible
   if (drafts.length > 0) {
     html += `<div class="panel" style="margin-bottom:18px;border-left:4px solid var(--warn)">
-      <div class="panel-header"><div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Respuestas de la IA listas para revisar en Gmail</div></div></div>
-      <div class="panel-body flush">
+      <div class="panel-header" style="cursor:pointer" onclick="const b=document.getElementById('drafts-body');const a=document.getElementById('drafts-arrow');b.style.display=b.style.display==='none'?'':'none';a.style.transform=b.style.display==='none'?'rotate(-90deg)':''">
+        <div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Respuestas de la IA listas para revisar</div></div>
+        <span id="drafts-arrow" style="font-size:18px;transition:transform 0.2s">▾</span>
+      </div>
+      <div class="panel-body flush" id="drafts-body">
         <table><thead><tr><th>Cliente</th><th>Asunto</th><th>Hace</th></tr></thead><tbody>`;
     drafts.forEach(b => {
       html += `<tr class="row-click" onclick='openDraftView(${JSON.stringify(b).replace(/'/g,"&apos;")})'>
