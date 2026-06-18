@@ -372,8 +372,7 @@
     </div>
 
     <div class="sidebar-foot">
-      <div>pock.cl</div>
-      <div style="margin-top:4px">+56 9 6216 2849</div>
+      <div>Sistema Pock v3</div>
     </div>
   </aside>
 
@@ -1339,9 +1338,9 @@ async function renderBandeja() {
     html += `<div class="panel" style="margin-bottom:18px;border-left:4px solid var(--warn)">
       <div class="panel-header" style="cursor:pointer" onclick="const b=document.getElementById('drafts-body');const a=document.getElementById('drafts-arrow');b.style.display=b.style.display==='none'?'':'none';a.style.transform=b.style.display==='none'?'rotate(-90deg)':''">
         <div><div class="panel-title">Borradores pendientes (${drafts.length})</div><div class="panel-subtitle">Respuestas de la IA listas para revisar</div></div>
-        <span id="drafts-arrow" style="font-size:18px;transition:transform 0.2s">▾</span>
+        <span id="drafts-arrow" style="font-size:18px;transition:transform 0.2s;transform:rotate(-90deg)">▾</span>
       </div>
-      <div class="panel-body flush" id="drafts-body">
+      <div class="panel-body flush" id="drafts-body" style="display:none">
         <table><thead><tr><th>Cliente</th><th>Asunto</th><th>Hace</th></tr></thead><tbody>`;
     drafts.forEach(b => {
       html += `<tr class="row-click" onclick='openDraftView(${JSON.stringify(b).replace(/'/g,"&apos;")})'>
