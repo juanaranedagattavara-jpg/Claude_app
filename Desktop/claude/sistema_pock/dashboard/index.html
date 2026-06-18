@@ -170,7 +170,8 @@
   .ficha-stat { background: var(--gray-50); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
   .ficha-stat .muted { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
   .timeline { display: flex; flex-direction: column; gap: 10px; }
-  .tl-item { display: flex; gap: 12px; padding: 12px; background: var(--gray-50); border-radius: 10px; border-left: 3px solid var(--gray-200); }
+  .tl-item { display: flex; gap: 12px; padding: 12px; background: var(--gray-50); border-radius: 10px; border-left: 3px solid var(--gray-200); transition: background 0.15s; }
+  .tl-item[onclick]:hover { background: var(--red-soft); border-left-color: var(--red); }
   .tl-icon { width: 28px; height: 28px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
   .tl-body { flex: 1; min-width: 0; }
   .tl-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
@@ -876,7 +877,7 @@ async function renderWhatsapp() {
     </div>
 
     <div class="panel">
-      <div class="panel-header"><div><div class="panel-title">Conversaciones recientes</div><div class="panel-subtitle">Click para abrir y responder</div></div></div>
+      <div class="panel-header"><div><div class="panel-title">Conversaciones recientes</div><div class="panel-subtitle">Click para ver el hilo</div></div></div>
       <div class="panel-body flush">
         ${convs.length === 0 ? `<div class="empty"><div class="empty-icon">~</div><div class="empty-title">Aun no llegan conversaciones</div>Cuando configures el webhook en Chatwoot apuntando a <code>${N8N_BASE}/webhook/pock-chatwoot-event</code>, se empezaran a sincronizar acá.</div>` :
           '<table><thead><tr><th>Cliente</th><th>Ultimo mensaje</th><th>Estado</th><th>Mensajes</th><th>Cuando</th></tr></thead><tbody>' +
@@ -929,12 +930,8 @@ async function renderWaConversation() {
       <div class="modal-b" id="wa-thread" style="background:var(--gray-50);max-height:55vh;display:flex;flex-direction:column">
         ${msgs.length === 0 ? '<div class="empty">Sin mensajes aun en esta conversacion.</div>' : renderedMsgs}
       </div>
-      <div style="border-top:1px solid var(--gray-200);padding:14px 22px;background:white">
-        <div style="display:flex;gap:8px">
-          <textarea id="wa-reply" placeholder="Escribi tu respuesta... (Enter para enviar, Shift+Enter para nueva linea)" style="flex:1;min-height:60px;resize:vertical" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendWaReply()}"></textarea>
-          <button class="btn btn-primary" onclick="sendWaReply()" id="wa-send-btn" style="background:var(--whatsapp);align-self:flex-end">Enviar &uarr;</button>
-        </div>
-        <div class="muted" style="margin-top:6px">El mensaje se envia via Chatwoot al WhatsApp del cliente.</div>
+      <div style="border-top:1px solid var(--gray-200);padding:10px 22px;background:white">
+        <div class="muted" style="font-size:12px">Solo lectura — para responder usa el chatbot de WhatsApp directamente.</div>
       </div>
     `, '');
 
@@ -1221,12 +1218,15 @@ window.openContactModal = async (id) => {
     const timelineHtml = tl.length === 0 ?
       '<div class="empty"><div class="empty-title">Sin actividad aun</div>Cuando el contacto escriba por cualquier canal, aparecera aca.</div>' :
       tl.map(t => {
-        const c = channelIcons[t.kind] || { ico: '•', color: 'var(--gray-500)', label: t.kind };
-        return `<div class="tl-item">
-          <div class="tl-icon" style="background:${c.color}">${c.ico}</div>
+        const ch = channelIcons[t.kind] || { ico: '•', color: 'var(--gray-500)', label: t.kind };
+        let onclick = '';
+        if (t.kind === 'email_in') onclick = `onclick="closeModal();setTimeout(()=>openEmailView({id:${t.ref_id}}),200)"`;
+        else if (t.kind === 'email_draft' && t.sub) onclick = `onclick="closeModal();setTimeout(()=>openEmailView({id:${t.sub}}),200)"`;
+        return `<div class="tl-item" style="cursor:${onclick?'pointer':'default'}" ${onclick}>
+          <div class="tl-icon" style="background:${ch.color}">${ch.ico}</div>
           <div class="tl-body">
             <div class="tl-head">
-              <span class="tl-channel" style="color:${c.color}">${c.label}</span>
+              <span class="tl-channel" style="color:${ch.color}">${ch.label}</span>
               <span class="tl-when">${ago(t.at)}</span>
             </div>
             <div class="tl-title">${esc(t.title||'(sin titulo)')}</div>
